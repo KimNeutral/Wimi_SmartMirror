@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26403.7
+VisualStudioVersion = 15.0.26430.15
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wimi", "Wimi\Wimi.csproj", "{B83632FD-DA4B-4F7B-927B-96D9C986A23F}"
 EndProject
@@ -12,6 +12,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DSEmotion", "DSEmotion\DSEmotion.csproj", "{5A5C4332-81A4-4865-847D-6C9EF7CBD3E0}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DSBus", "DSBus\DSBus.csproj", "{CD271C12-85C4-4BEC-8230-08A6B70E2E78}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DSDHT", "DSDHT\DSDHT.csproj", "{F1B283EE-FC98-4C47-91A2-4642C3DF3713}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Sensors.Dht", "Sensors.Dht\Sensors.Dht.vcxproj", "{2CD70A4F-9EED-4CDA-9E07-1A2BD33B4976}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -109,6 +113,36 @@ Global
 		{CD271C12-85C4-4BEC-8230-08A6B70E2E78}.Release|x64.Build.0 = Release|x64
 		{CD271C12-85C4-4BEC-8230-08A6B70E2E78}.Release|x86.ActiveCfg = Release|x86
 		{CD271C12-85C4-4BEC-8230-08A6B70E2E78}.Release|x86.Build.0 = Release|x86
+		{F1B283EE-FC98-4C47-91A2-4642C3DF3713}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F1B283EE-FC98-4C47-91A2-4642C3DF3713}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F1B283EE-FC98-4C47-91A2-4642C3DF3713}.Debug|ARM.ActiveCfg = Debug|ARM
+		{F1B283EE-FC98-4C47-91A2-4642C3DF3713}.Debug|ARM.Build.0 = Debug|ARM
+		{F1B283EE-FC98-4C47-91A2-4642C3DF3713}.Debug|x64.ActiveCfg = Debug|x64
+		{F1B283EE-FC98-4C47-91A2-4642C3DF3713}.Debug|x64.Build.0 = Debug|x64
+		{F1B283EE-FC98-4C47-91A2-4642C3DF3713}.Debug|x86.ActiveCfg = Debug|x86
+		{F1B283EE-FC98-4C47-91A2-4642C3DF3713}.Debug|x86.Build.0 = Debug|x86
+		{F1B283EE-FC98-4C47-91A2-4642C3DF3713}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F1B283EE-FC98-4C47-91A2-4642C3DF3713}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F1B283EE-FC98-4C47-91A2-4642C3DF3713}.Release|ARM.ActiveCfg = Release|ARM
+		{F1B283EE-FC98-4C47-91A2-4642C3DF3713}.Release|ARM.Build.0 = Release|ARM
+		{F1B283EE-FC98-4C47-91A2-4642C3DF3713}.Release|x64.ActiveCfg = Release|x64
+		{F1B283EE-FC98-4C47-91A2-4642C3DF3713}.Release|x64.Build.0 = Release|x64
+		{F1B283EE-FC98-4C47-91A2-4642C3DF3713}.Release|x86.ActiveCfg = Release|x86
+		{F1B283EE-FC98-4C47-91A2-4642C3DF3713}.Release|x86.Build.0 = Release|x86
+		{2CD70A4F-9EED-4CDA-9E07-1A2BD33B4976}.Debug|Any CPU.ActiveCfg = Debug|Win32
+		{2CD70A4F-9EED-4CDA-9E07-1A2BD33B4976}.Debug|ARM.ActiveCfg = Debug|ARM
+		{2CD70A4F-9EED-4CDA-9E07-1A2BD33B4976}.Debug|ARM.Build.0 = Debug|ARM
+		{2CD70A4F-9EED-4CDA-9E07-1A2BD33B4976}.Debug|x64.ActiveCfg = Debug|x64
+		{2CD70A4F-9EED-4CDA-9E07-1A2BD33B4976}.Debug|x64.Build.0 = Debug|x64
+		{2CD70A4F-9EED-4CDA-9E07-1A2BD33B4976}.Debug|x86.ActiveCfg = Debug|Win32
+		{2CD70A4F-9EED-4CDA-9E07-1A2BD33B4976}.Debug|x86.Build.0 = Debug|Win32
+		{2CD70A4F-9EED-4CDA-9E07-1A2BD33B4976}.Release|Any CPU.ActiveCfg = Release|Win32
+		{2CD70A4F-9EED-4CDA-9E07-1A2BD33B4976}.Release|ARM.ActiveCfg = Release|ARM
+		{2CD70A4F-9EED-4CDA-9E07-1A2BD33B4976}.Release|ARM.Build.0 = Release|ARM
+		{2CD70A4F-9EED-4CDA-9E07-1A2BD33B4976}.Release|x64.ActiveCfg = Release|x64
+		{2CD70A4F-9EED-4CDA-9E07-1A2BD33B4976}.Release|x64.Build.0 = Release|x64
+		{2CD70A4F-9EED-4CDA-9E07-1A2BD33B4976}.Release|x86.ActiveCfg = Release|Win32
+		{2CD70A4F-9EED-4CDA-9E07-1A2BD33B4976}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

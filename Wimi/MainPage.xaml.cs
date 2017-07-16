@@ -27,5 +27,10 @@ namespace Wimi
         {
             this.InitializeComponent();
         }
+
+        private void BusText_Loaded(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
