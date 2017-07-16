@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{0A206E9E-314A-4DF2-8D07-3A28BB4857B0}</ProjectGuid>
+    <ProjectGuid>{229D7005-CDA9-4583-8B79-BA0C7BB52B4E}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DSWeather</RootNamespace>
-    <AssemblyName>DSWeather</AssemblyName>
+    <RootNamespace>DSHue</RootNamespace>
+    <AssemblyName>DSHue</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.15063.0</TargetPlatformVersion>
@@ -106,14 +106,29 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
+    <Compile Include="Hue.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Properties\DSWeather.rd.xml" />
+    <EmbeddedResource Include="Properties\DSHue.rd.xml" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>5.2.3</Version>
     </PackageReference>
+    <PackageReference Include="Q42.HueApi">
+      <Version>3.4.3</Version>
+    </PackageReference>
+    <PackageReference Include="Q42.HueApi.ColorConverters">
+      <Version>3.4.0</Version>
+    </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\DSEmotion\DSEmotion\DSEmotion.csproj">
+      <Project>{5a5c4332-81a4-4865-847d-6c9ef7cbd3e0}</Project>
+      <Name>DSEmotion</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

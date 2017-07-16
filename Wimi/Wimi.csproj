@@ -107,6 +107,10 @@
     <None Include="Wimi_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\Jang\2017.Jul.15 05-19-41 Facial Recognition Door.jpg" />
+    <Content Include="Assets\Jeon\2017.Jul.15 14-55-30 Facial Recognition Door.jpg" />
+    <Content Include="Assets\Jo\2017.Jul.15 05-38-29 Facial Recognition Door.jpg" />
+    <Content Include="Assets\KimD\2017.Jul.15 05-16-40 Facial Recognition Door.jpg" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />
@@ -130,6 +134,25 @@
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>5.2.3</Version>
     </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Assets\Chris\" />
+    <Folder Include="Assets\KimJ\" />
+    <Folder Include="Assets\Park\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DSEmotion\DSEmotion.csproj">
+      <Project>{5a5c4332-81a4-4865-847d-6c9ef7cbd3e0}</Project>
+      <Name>DSEmotion</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DSFace\DSFace.csproj">
+      <Project>{93d6fb40-1382-45e7-9e2d-d5ce692764e1}</Project>
+      <Name>DSFace</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DSHue\DSHue.csproj">
+      <Project>{229d7005-cda9-4583-8b79-ba0c7bb52b4e}</Project>
+      <Name>DSHue</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
