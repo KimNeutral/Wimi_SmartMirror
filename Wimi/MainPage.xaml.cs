@@ -1,17 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
+﻿using DSBus;
+using DSEmotion;
+using DSMusic;
+using System.Diagnostics;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 
 //test
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
@@ -21,16 +13,42 @@ namespace Wimi
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class MainPage : Page
+    public partial class MainPage : Page
     {
+        Bus bus = new Bus();
+
+        Music mu = new Music();
+
         public MainPage()
         {
             this.InitializeComponent();
         }
 
-        private void BusText_Loaded(object sender, RoutedEventArgs e)
+        private async void BusText_Loaded(object sender, RoutedEventArgs e)
         {
+            bool yn = await bus.LoadBusInfo();
 
+            if (yn)
+            {
+                foreach(var t in bus.BusListInfo)
+                {
+                    Debug.WriteLine(t.note);
+                    Debug.WriteLine(t.number);
+                    Debug.WriteLine(t.position);
+                    Debug.WriteLine(t.state);
+                }
+            }
         }
+
+        private async void Grid_Loaded(object sender, RoutedEventArgs e)
+        {
+            initSynthesizer();
+            InitializeRecognizer();
+
+            await Webcam.InitializeCameraAsync();
+            captureElement.Source = Webcam.mediaCapture;
+            await Webcam.StartCameraPreview();
+        }
+
     }
 }

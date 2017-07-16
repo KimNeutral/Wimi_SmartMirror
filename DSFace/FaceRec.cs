@@ -19,7 +19,7 @@ namespace DSFace
         public List<DPerson> Persons { get; }
 
         private string NameId = "wl";
-        private bool IsInit = false;
+        private bool isInit = false;
 
         public FaceRec()
         {
@@ -55,7 +55,8 @@ namespace DSFace
             }
 
             await TrainAsync();
-            IsInit = true;
+            isInit = true;
+            Debug.WriteLine("Initalize Completed");
         }
 
         private bool LoadList()
@@ -239,6 +240,10 @@ namespace DSFace
 
         public async Task<IdentifyResult[]> IdentifyAsync(Stream stream)
         {
+            if (!isInit)
+            {
+                return new IdentifyResult[0];
+            }
             var faces = await _faceServiceClient.DetectAsync(stream);
             var faceIds = faces.Select(face => face.FaceId).ToArray();
 
@@ -256,6 +261,10 @@ namespace DSFace
 
         public async Task<string[]> GetIdentifiedNameAsync(Stream stream)
         {
+            if (!isInit)
+            {
+                return new string[0];
+            }
             IdentifyResult[] a = await IdentifyAsync(stream);
             List<string> name = new List<string>();
             foreach (IdentifyResult identifyResult in a)
@@ -287,6 +296,11 @@ namespace DSFace
             {
                 Debug.WriteLine("TrainAsync - " + e.Message);
             }
+        }
+
+        public bool IsInit()
+        {
+            return isInit;
         }
     }
 }

@@ -25,6 +25,10 @@ namespace DSBus
             }
         } 
 
+        /// <summary>
+        /// 대구시 버스 정보 읽어오기
+        /// </summary>
+        /// <returns>true일경우 버스정보 존재 false일경우 버스정보 없음</returns>
         public async Task<bool> LoadBusInfo()
         {
             Init();

@@ -125,7 +125,7 @@
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\DSEmotion\DSEmotion\DSEmotion.csproj">
+    <ProjectReference Include="..\DSEmotion\DSEmotion.csproj">
       <Project>{5a5c4332-81a4-4865-847d-6c9ef7cbd3e0}</Project>
       <Name>DSEmotion</Name>
     </ProjectReference>

@@ -7,7 +7,23 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <TextBlock x:Name="BusText" FontSize="50" Loaded="BusText_Loaded">asdf</TextBlock>
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Margin="20" Loaded="Grid_Loaded">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width=".5*"></ColumnDefinition>
+            <ColumnDefinition Width=".5*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="0">
+            <CaptureElement x:Name="captureElement"
+                            Margin="20" Width="320" 
+                            VerticalAlignment="Top" 
+                            HorizontalAlignment="Left"/>
+            <Button x:Name="btnCapture" Content="인식" Click="btnCapture_Click"/>
+        </Grid>
+        <Grid Grid.Column="1">
+            <TextBlock x:Name="tbFaceName"/>
+        </Grid>
+
+
+        <TextBlock x:Name="resultTextBlock"/>
     </Grid>
 </Page>
