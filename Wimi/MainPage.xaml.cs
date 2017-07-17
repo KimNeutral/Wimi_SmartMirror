@@ -21,7 +21,7 @@ namespace Wimi
         {
             this.InitializeComponent();
 
-            ClockTimer.Tick += Timer_Tick;
+            ClockTimer.Tick += ClockTimer_Tick;
             ClockTimer.Interval = new TimeSpan(0, 0, 1);
             ClockTimer.Start();
         }
