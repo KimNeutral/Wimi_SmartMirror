@@ -13,7 +13,7 @@ using System.Diagnostics;
 
 namespace DSWeather
 {
-    public class Weather
+    public partial class Weather
     {
         public bool isLoadedWeather = false;
         public bool isLoadedDust = false;

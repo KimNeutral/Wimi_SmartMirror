@@ -49,6 +49,7 @@ namespace Wimi
 #if PC_MODE
             Getschedule();
 #endif
+            GetForecastInfo();
         }
 
 
