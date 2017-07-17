@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Windows.UI.Xaml.Controls;
 using DSWeather;
@@ -14,7 +11,7 @@ namespace Wimi
         Weather weather = new Weather();
         List<ForecastInfo> lForcastInfo = new List<ForecastInfo>();
 
-        async Task<string> GetCurTemperture()
+        async Task<string> GetCurTempertureAsync()
         {
             SKWeather.Minutely min = await weather.GetCurrentWeatherAsync();
             string temp = min.temperature.tc;
@@ -24,13 +21,13 @@ namespace Wimi
 
         private async void tbWeather_Loaded(object sender, RoutedEventArgs e)
         {
-            string temp = await GetCurTemperture();
+            string temp = await GetCurTempertureAsync();
             tbWeather.Text = temp;
         }
 
         async void GetForecastInfo()
         {
-            lForcastInfo = await weather.GetForecastInfo();
+            lForcastInfo = await weather.GetForecastInfoByCountAsync();
             lbForcastInfo.ItemsSource = lForcastInfo;
         }
     }

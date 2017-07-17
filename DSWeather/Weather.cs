@@ -5,10 +5,7 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
-//using WimiSample.Dust;
-//using WimiSample.Weather;
 using static DSWeather.SKWeather;
-using DSWeather;
 using System.Diagnostics;
 
 namespace DSWeather

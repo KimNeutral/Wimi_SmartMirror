@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Xml;
@@ -12,7 +11,7 @@ namespace DSWeather
     {
 
 
-        public async Task<List<ForecastInfo>> GetForecastInfo(int count = 5)
+        public async Task<List<ForecastInfo>> GetForecastInfoByCountAsync(int count = 5)
         {
             List<ForecastInfo> lForcastInfo = new List<ForecastInfo>();
             XmlDocument docX = new XmlDocument(); // XmlDocument 생성

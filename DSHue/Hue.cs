@@ -3,11 +3,9 @@ using Q42.HueApi.Interfaces;
 using Q42.HueApi.Models.Bridge;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.IO.IsolatedStorage;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using DSEmotion;
 using Q42.HueApi.ColorConverters;
@@ -32,7 +30,7 @@ namespace DSHue
             }
         }
 
-        public async void HueLight(DSEmotion.Emotion emotion)
+        public async void HueLight(Emotion emotion)
         {
             var command = new LightCommand();
             command.On = true;
