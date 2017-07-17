@@ -16,7 +16,9 @@ namespace Wimi
         private async void tbWeather_Loaded(object sender, RoutedEventArgs e)
         {
             SKWeather.Minutely min = await weather.GetCurrentWeatherAsync();
-            tbWeather.Text = min.temperature.tc;
+            string temp = min.temperature.tc;
+            temp = temp.Substring(0, temp.Length - 1);
+            tbWeather.Text = temp;
         }
     }
 }

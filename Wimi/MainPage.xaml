@@ -14,19 +14,60 @@
         </Grid.ColumnDefinitions>
         <Grid Grid.Column="0">
             <CaptureElement x:Name="captureElement"
-                            Margin="20" Width="320" 
+                            Margin="20" Width="0" Height="0"
                             VerticalAlignment="Top" 
                             HorizontalAlignment="Left"/>
             <Button x:Name="btnCapture" Content="인식" Click="btnCapture_Click"/>
         </Grid>
         <Grid Grid.Column="1">
             <StackPanel>
+                <TextBlock x:Name="tbClock" FontSize="100" HorizontalAlignment="Right" FontFamily="Segoe UI Light"/>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                    <TextBlock x:Name="tbWeather" FontSize="60" Loaded="tbWeather_Loaded"/>
+                    <TextBlock Text="℃" FontSize="60"/>
+                </StackPanel>
                 <TextBlock x:Name="tbFaceName"/>
-                <TextBlock x:Name="tbWeather" Loaded="tbWeather_Loaded"/>
                 <TextBlock x:Name="tbEmotion"/>
-                <TextBlock x:Name="resultTextBlock"/>
+                <TextBlock x:Name="resultTextBlock" FontFamily="Segoe UI Light"/>
                 <MediaElement x:Name="mediaElement" AutoPlay="True" AreTransportControlsEnabled="True"/>
+                <ListBox x:Name="lbBusInfo">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Margin="5">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="100"/>
+                                    <ColumnDefinition Width="100"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <!--<ColumnDefinition Width="*"/>-->
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" Text="{Binding number}" Margin="24,0,0,0"/>
+                                <TextBlock Grid.Column="1" Text="{Binding state}" Margin="24,0,0,0"/>
+                                <TextBlock Grid.Column="2" Text="{Binding position}" Margin="24,0,0,0"/>
+                                <!--<TextBlock Grid.Column="3" Text="{Binding note}" Margin="24,0,0,0"/>-->
+                            </Grid>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+                <ListBox x:Name="lbScheduleInfo">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Margin="5">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="100"/>
+                                    <ColumnDefinition Width="100"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <!--<ColumnDefinition Width="*"/>-->
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" Text="{Binding subject}" Margin="24,0,0,0"/>
+                                <TextBlock Grid.Column="1" Text="{Binding dt}" Margin="24,0,0,0"/>
+                                <TextBlock Grid.Column="2" Text="{Binding detailes}" Margin="24,0,0,0"/>
+                                <!--<TextBlock Grid.Column="3" Text="{Binding note}" Margin="24,0,0,0"/>-->
+                            </Grid>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
             </StackPanel>
         </Grid>
+        
     </Grid>
 </Page>

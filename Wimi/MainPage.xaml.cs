@@ -1,6 +1,7 @@
 ﻿using DSBus;
 using DSEmotion;
 using DSMusic;
+using System;
 using System.Diagnostics;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -15,29 +16,22 @@ namespace Wimi
     /// </summary>
     public partial class MainPage : Page
     {
-        Bus bus = new Bus();
-
+        DispatcherTimer ClockTimer = new DispatcherTimer();
+        
         Music mu = new Music();
 
         public MainPage()
         {
             this.InitializeComponent();
+
+            ClockTimer.Tick += Timer_Tick;
+            ClockTimer.Interval = new TimeSpan(0, 0, 1);
+            ClockTimer.Start();
         }
 
-        private async void BusText_Loaded(object sender, RoutedEventArgs e)
+        private void ClockTimer_Tick(object sender, object e)
         {
-            bool yn = await bus.LoadBusInfo();
-
-            if (yn)
-            {
-                foreach(var t in bus.BusListInfo)
-                {
-                    Debug.WriteLine(t.note);
-                    Debug.WriteLine(t.number);
-                    Debug.WriteLine(t.position);
-                    Debug.WriteLine(t.state);
-                }
-            }
+            tbClock.Text = DateTime.Now.ToString("HH:mm");
         }
 
         private async void Grid_Loaded(object sender, RoutedEventArgs e)
@@ -50,6 +44,11 @@ namespace Wimi
             await Webcam.StartCameraPreview();
 
             await face.InitListAsync();
+
+            GetBusInfo();
+#if PC_MODE
+            Getschedule();
+#endif
         }
 
 

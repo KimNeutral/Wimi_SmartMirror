@@ -29,10 +29,11 @@ namespace DSBus
         /// 대구시 버스 정보 읽어오기
         /// </summary>
         /// <returns>true일경우 버스정보 존재 false일경우 버스정보 없음</returns>
-        public async Task<bool> LoadBusInfo()
+        public async Task<List<BusInfo>> LoadBusInfo()
         {
             Init();
-            string url = @"http://m.businfo.go.kr/bp/m/realTime.do?act=arrInfo&bsId=7111041200&bsNm=%B1%B8%C1%F6%B8%E9%BB%E7%B9%AB%BC%D2%B0%C7%B3%CA";
+            //string url = @"http://m.businfo.go.kr/bp/m/realTime.do?act=arrInfo&bsId=7111041200&bsNm=%B1%B8%C1%F6%B8%E9%BB%E7%B9%AB%BC%D2%B0%C7%B3%CA";
+            string url = @"http://m.businfo.go.kr/bp/m/realTime.do?act=arrInfo&bsId=7021020600&bsNm=%BA%B9%C7%F6%BF%C0%B0%C5%B8%AE1"; //복현동
             HttpClient http = new HttpClient();
             byte[] b = await http.GetByteArrayAsync(url);
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
@@ -92,9 +93,9 @@ namespace DSBus
                 });
             }
             if (BusListInfo.Count == 0)
-                return false;
+                return null;
             else
-                return true;
+                return BusListInfo;
         }
 
     }
