@@ -228,7 +228,6 @@
     <None Include="..\..\..\..\..\..\..\OneDrive\IoT\Data Sheets\DHT11.pdf" />
     <None Include="..\..\..\..\..\..\..\OneDrive\IoT\Data Sheets\DHT22.pdf" />
     <None Include="..\..\..\..\..\..\..\OneDrive\IoT\Hackster.io\DHT11\DHT11-Technical-Data-Sheet-Translated-Version.pdf" />
-    <None Include="..\..\..\..\..\Downloads\dht-master\source\Windows 10 IoT Core\DHT Solution.zip" />
     <None Include="Dht.1.0.0.nupkg" />
   </ItemGroup>
   <ItemGroup>
