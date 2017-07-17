@@ -42,8 +42,8 @@ namespace Wimi
 
         private async void Grid_Loaded(object sender, RoutedEventArgs e)
         {
-            initSynthesizer();
-            InitializeRecognizer();
+            //initSynthesizer();
+            //InitializeRecognizer();
 
             await Webcam.InitializeCameraAsync();
             captureElement.Source = Webcam.mediaCapture;
