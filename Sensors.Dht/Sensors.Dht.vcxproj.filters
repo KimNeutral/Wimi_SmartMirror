@@ -25,5 +25,6 @@
       <Filter>Documents</Filter>
     </None>
     <None Include="Dht.1.0.0.nupkg" />
+    <None Include="..\..\..\..\..\Downloads\dht-master\source\Windows 10 IoT Core\DHT Solution.zip" />
   </ItemGroup>
 </Project>

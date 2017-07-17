@@ -106,7 +106,7 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="DSWeather.cs" />
+    <Compile Include="Weather.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SKWeather.cs" />
     <EmbeddedResource Include="Properties\DSWeather.rd.xml" />

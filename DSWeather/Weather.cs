@@ -10,9 +10,9 @@ using Newtonsoft.Json;
 using static DSWeather.SKWeather;
 using DSWeather;
 
-namespace weatherPractice
+namespace DSWeather
 {
-    public class DSWeather
+    public class Weather
     {
         public bool isLoadedWeather = false;
         public bool isLoadedDust = false;
@@ -27,7 +27,7 @@ namespace weatherPractice
         //var resourceUri = new Uri("http://apis.skplanetx.com/weather/current/minutely?version=1&&stnid=828");
         //var cts = new CancellationTokenSource();
 
-        public DSWeather(){} //생성자 필요없음
+        public Weather(){} //생성자 필요없음
 
         public async Task<Minutely> GetCurrentWeatherAsync()
         {
