@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using Windows.ApplicationModel.Core;
 using Windows.Media.SpeechRecognition;
 using Windows.UI.Core;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
 namespace Wimi
@@ -13,9 +15,12 @@ namespace Wimi
         private MainPage rootPage;
         private CoreDispatcher dispatcher; //UI쓰레드 화면 업데이트를 위해 필요.
         private SpeechRecognizer speechRecognizer;
+        private DispatcherTimer timer;
 
         private bool isListening;
+        private bool iscalled = false;
 
+        private int cntTime = 0;
         //제약조건
         private SpeechRecognitionListConstraint helloConstraint;
         private SpeechRecognitionListConstraint noticeConstraint;
@@ -57,10 +62,11 @@ namespace Wimi
         private async Task InitializeRecognizer()
         {
             isListening = false;
-
+            timer = new DispatcherTimer();
             rootPage = this;
             dispatcher = CoreWindow.GetForCurrentThread().Dispatcher;
-
+            timer.Interval = new TimeSpan(0, 0, 1);
+            timer.Tick += Timer_Tick;
             bool permissionGained = await AudioCapturePermissions.RequestMicrophonePermission();
             if (permissionGained)
             {
@@ -110,6 +116,16 @@ namespace Wimi
 
         }
 
+        private void Timer_Tick(object sender, object e)
+        {
+            cntTime++;
+            if(cntTime == 10)
+            {
+                iscalled = false;
+                cntTime = 0;
+            }
+        }
+
 
         private async void ContinuousRecognitionSession_ResultGenerated(SpeechContinuousRecognitionSession sender, SpeechContinuousRecognitionResultGeneratedEventArgs args)
         {
@@ -120,64 +136,99 @@ namespace Wimi
             {
                 tag = args.Result.Constraint.Tag;
             }
-
-            if (args.Result.Confidence == SpeechRecognitionConfidence.Medium ||
-                args.Result.Confidence == SpeechRecognitionConfidence.High)
+            if (iscalled == false)
             {
-                await dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                if (args.Result.Confidence == SpeechRecognitionConfidence.Medium ||
+                    args.Result.Confidence == SpeechRecognitionConfidence.High ||
+                    args.Result.Confidence == SpeechRecognitionConfidence.Low)
                 {
-                    resultTextBlock.Text = string.Format("Heard: '{0}', (Tag: '{1}', Confidence: {2})", args.Result.Text, tag, args.Result.Confidence.ToString());
-                    if (!string.IsNullOrEmpty(tag))
+                    await dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                     {
-                        if (tag == "hello")
+                        resultTextBlock.Text = string.Format("Heard: '{0}', (Tag: '{1}', Confidence: {2})", args.Result.Text, tag, args.Result.Confidence.ToString());
+                        if (!string.IsNullOrEmpty(tag))
                         {
-                            SetVoice("왜 불러?");
+                            if (tag == "hello")
+                            {
+                                SetVoice("왜 불러?");
+                                iscalled = true;
+                                if (!timer.IsEnabled)
+                                {
+                                    timer.Start();
+                                }
+                            }
                         }
-                        else if (tag == "sleep")
+
+                    });
+                }
+            }
+            else if (iscalled == true)
+            {
+                await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.N‌​ormal, () => { timer.Stop(); });
+                
+                iscalled = false;
+                cntTime = 0;
+                if (args.Result.Confidence == SpeechRecognitionConfidence.Medium ||
+                    args.Result.Confidence == SpeechRecognitionConfidence.High ||
+                    args.Result.Confidence == SpeechRecognitionConfidence.Low)
+                {
+                    await dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                    {
+                        resultTextBlock.Text = string.Format("Heard: '{0}', (Tag: '{1}', Confidence: {2})", args.Result.Text, tag, args.Result.Confidence.ToString());
+                        if (!string.IsNullOrEmpty(tag))
                         {
-                            SetVoice("자버려");
+                            if (tag == "hello")
+                            {
+                                SetVoice("왜 또 불러?");
+                                iscalled = true;
+                            }
+                            else if (tag == "sleep")
+                            {
+                                SetVoice("가서 자세요");
+                            }
+                            else
+                            {
+                            }
+                        }
+
+                    });
+                }
+                //태그보니까 신뢰도 low라도 꽤 잘알아들어서 low도 위에 규칙에 포함함
+                /*else if (args.Result.Confidence == SpeechRecognitionConfidence.Low)
+                {
+                    await dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                    {
+                        //TODO: 인식이 잘 안되었어도(low) 동작은 하게 해봄
+                        resultTextBlock.Text = string.Format("인식률이 낮습니다. (Heard: '{0}', Tag: {1}, Confidence: {2})", args.Result.Text, tag, args.Result.Confidence.ToString());
+                        if (!string.IsNullOrEmpty(tag))
+                        {
+                            if (tag == "hello")
+                            {
+                                SetVoice("왜 불러?");
+                            }
+                            else
+                            {
+                            }
                         }
                         else
                         {
+                            SetVoice("다시 말해주세요.");
+                            resultTextBlock.Text = string.Format("음성인식이 실패하였습니다.");
                         }
-                    }
-
-                });
-            }
-            else if (args.Result.Confidence == SpeechRecognitionConfidence.Low)
-            {
-                await dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                    });
+                }/**/
+                //rejected된 인식은 그냥 폐기하는게 정신건강에 이로울듯
+                /*else if (args.Result.Confidence == SpeechRecognitionConfidence.Rejected)
                 {
-                    //TODO: 인식이 잘 안되었어도(low) 동작은 하게 해봄
-                    resultTextBlock.Text = string.Format("인식률이 낮습니다. (Heard: '{0}', Tag: {1}, Confidence: {2})", args.Result.Text, tag, args.Result.Confidence.ToString());
-                    if (!string.IsNullOrEmpty(tag))
+                    await dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                     {
-                        if (tag == "hello")
-                        {
-                            SetVoice("왜 불러?");
-                        }
-                        else
-                        {
-                        }
-                    }
-                    else
-                    {
-                        SetVoice("다시 말해주세요.");
-                        resultTextBlock.Text = string.Format("음성인식이 실패하였습니다.");
-                    }
-                });
-            }
-            else if (args.Result.Confidence == SpeechRecognitionConfidence.Rejected)
-            {
-                await dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-                {
-                    SetVoice("다시 말해주세요."); //Please say it again. //Tell me again. //What did you say? //Say what? //다른건 발음이 이상하게 나옴 ㅋㅋ
+                        SetVoice("다시 말해주세요."); //Please say it again. //Tell me again. //What did you say? //Say what? //다른건 발음이 이상하게 나옴 ㅋㅋ
                     resultTextBlock.Text = string.Format("음성인식이 실패하였습니다.");
-                });
-            }
-            else
-            {
-                Debug.WriteLine("ContinuousRecognitionSession_ResultGenerated?????");
+                    });
+                }/**/
+                else
+                {
+                    Debug.WriteLine("ContinuousRecognitionSession_ResultGenerated?????");
+                }
             }
         }
 

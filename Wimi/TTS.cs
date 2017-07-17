@@ -37,7 +37,7 @@ namespace Wimi
             media = new MediaElement();
             media.Volume = 1;
             synthesizer = new SpeechSynthesizer();
-
+            
             speechContext = ResourceContext.GetForCurrentView();
             speechContext.Languages = new string[] { SpeechSynthesizer.DefaultVoice.Language };
 
@@ -47,7 +47,7 @@ namespace Wimi
 
             // Get the currently selected voice.
             VoiceInformation currentVoice = synthesizer.Voice;
-
+            
             foreach (VoiceInformation voice in voices.OrderBy(p => p.Language))
             {
                 synthesizer.Voice = voice;
