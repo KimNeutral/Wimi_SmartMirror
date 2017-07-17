@@ -20,10 +20,13 @@
             <Button x:Name="btnCapture" Content="인식" Click="btnCapture_Click"/>
         </Grid>
         <Grid Grid.Column="1">
-            <TextBlock x:Name="tbFaceName"/>
+            <StackPanel>
+                <TextBlock x:Name="tbFaceName"/>
+                <TextBlock x:Name="tbWeather" Loaded="tbWeather_Loaded"/>
+                <TextBlock x:Name="tbEmotion"/>
+                <TextBlock x:Name="resultTextBlock"/>
+                <MediaElement x:Name="mediaElement" AutoPlay="True" AreTransportControlsEnabled="True"/>
+            </StackPanel>
         </Grid>
-
-
-        <TextBlock x:Name="resultTextBlock"/>
     </Grid>
 </Page>

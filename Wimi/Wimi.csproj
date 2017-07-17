@@ -102,6 +102,9 @@
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="MusicView.cs">
+      <DependentUpon>MainPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TTS.cs" />
     <Compile Include="VoiceRecog.cs" />
@@ -153,10 +156,6 @@
     <ProjectReference Include="..\DSBus\DSBus.csproj">
       <Project>{cd271c12-85c4-4bec-8230-08a6b70e2e78}</Project>
       <Name>DSBus</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\DSDHT\DSDHT.csproj">
-      <Project>{f1b283ee-fc98-4c47-91a2-4642c3df3713}</Project>
-      <Name>DSDHT</Name>
     </ProjectReference>
     <ProjectReference Include="..\DSEmotion\DSEmotion.csproj">
       <Project>{5a5c4332-81a4-4865-847d-6c9ef7cbd3e0}</Project>

@@ -16,7 +16,7 @@ namespace DSEmotion
 
     public class EmotionUtil
     {
-        public static Emotion getEmotionByString(string emotion)
+        public static Emotion GetEmotionByString(string emotion)
         {
             emotion = emotion.ToLower();
             switch (emotion)

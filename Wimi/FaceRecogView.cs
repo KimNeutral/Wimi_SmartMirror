@@ -8,6 +8,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.Storage;
 using System.IO;
+using DSEmotion;
 
 namespace Wimi
 {
@@ -32,6 +33,17 @@ namespace Wimi
                     tbFaceName.Text = faces.FirstOrDefault();
                 }
             }
+
+            using (Stream s = await captured.OpenStreamForReadAsync())
+            {
+                Dictionary<Guid, Emotion> emotions = await face.GetEmotionByGuidAsync(null, s);
+                foreach (var emo in emotions)
+                {
+                    tbEmotion.Text = emo.Value.ToString();
+                }
+            }
+
+            PlayMusic(EmotionUtil.GetEmotionByString(tbEmotion.Text));
         }
     }
 }

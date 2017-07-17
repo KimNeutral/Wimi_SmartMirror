@@ -141,7 +141,7 @@ namespace DSFace
                 {
                     EmotionScores sc = faceAttributes.ElementAt(i).Emotion;
                     var rankedList = sc.ToRankedList();
-                    emotions.Add(faceIds.ElementAt(i), DSEmotion.EmotionUtil.getEmotionByString(rankedList.ElementAt(0).Key));
+                    emotions.Add(faceIds.ElementAt(i), DSEmotion.EmotionUtil.GetEmotionByString(rankedList.ElementAt(0).Key));
                 }
                 return emotions;
             }

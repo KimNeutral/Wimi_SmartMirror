@@ -76,7 +76,7 @@ namespace Wimi
                 }
 
                 speechRecognizer = new SpeechRecognizer();
-
+                
 #if true //timeout 안되도록 1시간정도로 설정
                 //speechRecognizer.Timeouts.EndSilenceTimeout = new TimeSpan(1, 0, 0);
                 //speechRecognizer.Timeouts.InitialSilenceTimeout = new TimeSpan(1, 0, 0);
