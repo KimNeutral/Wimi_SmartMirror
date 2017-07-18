@@ -14,7 +14,6 @@ namespace Wimi
     public partial class MainPage : Page
     {
         DispatcherTimer ClockTimer = new DispatcherTimer();
-        
         Music mu = new Music();
 
         public MainPage()
