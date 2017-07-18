@@ -41,10 +41,23 @@
         </Grid>
         <Grid Grid.Column="1">
             <StackPanel>
-                <TextBlock x:Name="tbClock" FontSize="100" HorizontalAlignment="Right" FontFamily="Segoe UI Light"/>
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                    <TextBlock x:Name="tbWeather" FontSize="60" Loaded="tbWeather_Loaded"/>
-                    <TextBlock Text="℃" FontSize="60"/>
+                <TextBlock x:Name="tbDateTime" Margin="0,0,40,0"
+                           FontSize="19"
+                           HorizontalAlignment="Right"></TextBlock>
+                <TextBlock x:Name="tbTime" Margin="0,-5,35,0"
+                           HorizontalAlignment="Right"
+                           FontSize="86" FontWeight="Bold" FontFamily="Arial" Foreground="WhiteSmoke"></TextBlock>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Loaded="tbWeather_Loaded">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock x:Name="tbSky" 
+                               FontSize="40" />
+                        <TextBlock x:Name="tbTc" Margin="12,0,0,0" 
+                               FontSize="120"/>
+                        <TextBlock Text="℃" Margin="0,32,0,0" FontSize="42" FontWeight="Normal"/>
+                    </StackPanel>
+
+                    <!--<TextBlock x:Name="tbWeather" FontSize="60" Loaded="tbWeather_Loaded"/>
+                    <TextBlock Text="℃" FontSize="60"/>-->
                 </StackPanel>
                 <TextBlock x:Name="tbFaceName"/>
                 <TextBlock x:Name="tbEmotion"/>

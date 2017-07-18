@@ -21,8 +21,8 @@ namespace Wimi
 
         private async void tbWeather_Loaded(object sender, RoutedEventArgs e)
         {
-            string temp = await GetCurTempertureAsync();
-            tbWeather.Text = temp;
+            string temperature = await GetCurTempertureAsync();
+            tbTc.Text = temperature;
         }
 
         async void GetForecastInfo()
