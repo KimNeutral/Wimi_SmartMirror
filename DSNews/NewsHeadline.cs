@@ -7,15 +7,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 
-namespace Wimi
+namespace DSNews
 {
-    class NewsHeadline
+    public  class NewsHeadline
     {
         String Politics_Url = "http://www.iheadlinenews.co.kr/rss/clickTop.xml";
 
-
-
-        private static async Task<List<string>> getHeadlineAsync()
+        public async Task<List<string>> getHeadlineAsync()
         {
            
             List<String> result = new List<string>(); 
