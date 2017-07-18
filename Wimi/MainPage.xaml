@@ -15,7 +15,7 @@
         <Grid Grid.Column="0">
             <StackPanel>
             <CaptureElement x:Name="captureElement"
-                            Margin="20" Width="0" Height="0"
+                            Margin="20" Width="300"
                             VerticalAlignment="Top" 
                             HorizontalAlignment="Left"/>
             <Button x:Name="btnCapture" Content="인식" Click="btnCapture_Click"/>

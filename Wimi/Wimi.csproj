@@ -102,7 +102,9 @@
     <Compile Include="CalendarView.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="NewsHeadline.cs" />
+    <Compile Include="Email.cs">
+      <DependentUpon>MainPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="FaceRecogView.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
@@ -127,13 +129,16 @@
     <AppxManifest Include="Package.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
+    <None Include="client_id.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Wimi_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Assets\Jang\2017.Jul.15 05-19-41 Facial Recognition Door.jpg" />
-    <Content Include="Assets\Jeon\2017.Jul.15 14-55-30 Facial Recognition Door.jpg" />
-    <Content Include="Assets\Jo\2017.Jul.15 05-38-29 Facial Recognition Door.jpg" />
-    <Content Include="Assets\KimD\2017.Jul.15 05-16-40 Facial Recognition Door.jpg" />
+    <Content Include="Assets\김대용\2017.Jul.15 05-16-40 Facial Recognition Door.jpg" />
+    <Content Include="Assets\장용윤\2017.Jul.15 05-19-41 Facial Recognition Door.jpg" />
+    <Content Include="Assets\전영준\2017.Jul.15 14-55-30 Facial Recognition Door.jpg" />
+    <Content Include="Assets\조현재\2017.Jul.15 05-38-29 Facial Recognition Door.jpg" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />
@@ -154,14 +159,17 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Google.Apis.Gmail.v1">
+      <Version>1.27.1.922</Version>
+    </PackageReference>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>5.2.3</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Assets\Chris\" />
-    <Folder Include="Assets\KimJ\" />
-    <Folder Include="Assets\Park\" />
+    <Folder Include="Assets\김진우\" />
+    <Folder Include="Assets\박지석\" />
+    <Folder Include="Assets\크리스\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DSBus\DSBus.csproj">

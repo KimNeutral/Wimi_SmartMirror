@@ -279,7 +279,10 @@ namespace DSFace
                     {
                         var candidateId = identifyResult.Candidates[0].PersonId;
                         var person = DPerson.GetDPersonByGuidFromList(Persons, candidateId);
-                        name.Add(person.Name);
+                        if(person != null)
+                        {
+                            name.Add(person.Name);
+                        }
                     }
                 }
             }

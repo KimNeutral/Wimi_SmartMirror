@@ -109,7 +109,14 @@ namespace DSFace
             StorageFile file = await ApplicationData.Current.TemporaryFolder.CreateFileAsync(fileName, collisionOption);
 
             // Captures and stores new Jpeg image file
-            await mediaCapture.CapturePhotoToStorageFileAsync(ImageEncodingProperties.CreateJpeg(), file);
+            try
+            {
+                await mediaCapture.CapturePhotoToStorageFileAsync(ImageEncodingProperties.CreateJpeg(), file);
+            }
+            catch(Exception e)
+            {
+                return null;
+            }
 
             // Return image file
             return file;
