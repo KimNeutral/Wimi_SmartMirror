@@ -96,7 +96,9 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="AudioCapturePermissions.cs" />
-    <Compile Include="BusView.cs" />
+    <Compile Include="BusView.cs">
+      <DependentUpon>MainPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="CalendarView.cs" />
     <Compile Include="NewsHeadline.cs" />
     <Compile Include="FaceRecogView.cs">
