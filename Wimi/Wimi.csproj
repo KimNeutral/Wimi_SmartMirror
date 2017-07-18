@@ -99,7 +99,9 @@
     <Compile Include="BusView.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="CalendarView.cs" />
+    <Compile Include="CalendarView.cs">
+      <DependentUpon>MainPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="NewsHeadline.cs" />
     <Compile Include="FaceRecogView.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
