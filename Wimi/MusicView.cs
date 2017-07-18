@@ -15,7 +15,7 @@ namespace Wimi
     {
         Music music = new Music();
 
-        public async void PlayMusic(Emotion emotion)
+        public async void PlayMusicByEmotionAsync(Emotion emotion)
         {
             string musicName = music.MusicByEmotion(emotion);
             using (IRandomAccessStream s = await music.GetMusicStream(musicName))
@@ -24,6 +24,16 @@ namespace Wimi
                 mediaElement.SetSource(s, type);
                 mediaElement.Play();
             }
+        }
+
+        public void PauseMusic()
+        {
+            mediaElement.Pause();
+        }
+
+        public void StopMusic()
+        {
+            mediaElement.Stop();
         }
     }
 }
