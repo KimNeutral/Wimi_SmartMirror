@@ -3,6 +3,7 @@ namespace DSEmotion
 {
     public enum Emotion
     {
+        none,
         anger,
         contempt,
         disgust,
@@ -11,7 +12,6 @@ namespace DSEmotion
         neutral,
         sadness,
         surprise,
-        Err
     }
 
     public class EmotionUtil
@@ -38,7 +38,7 @@ namespace DSEmotion
                 case "surprise":
                     return Emotion.surprise;
             }
-            return Emotion.Err;
+            return Emotion.none;
         }
     }
 }
