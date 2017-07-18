@@ -24,8 +24,6 @@ namespace Wimi
             ClockTimer.Tick += ClockTimer_Tick;
             ClockTimer.Interval = new TimeSpan(0, 0, 2);
             ClockTimer.Start();
-
-            GetCredential();
         }
 
         private void ClockTimer_Tick(object sender, object e)
@@ -44,9 +42,6 @@ namespace Wimi
         {
             initSynthesizer();
             InitializeRecognizer();
-
-            var list = await GetEmailInfo();
-            Debug.WriteLine(list[0].Subject);
 
             await Webcam.InitializeCameraAsync();
             captureElement.Source = Webcam.mediaCapture;
