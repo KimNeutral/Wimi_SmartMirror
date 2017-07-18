@@ -49,6 +49,7 @@ namespace DSHue
             command.On = true;
             switch (emotion)
             {
+                // none은 불을 끌때 사용
                 case Emotion.none:
                     command.TurnOff();
                     break;
@@ -102,6 +103,7 @@ namespace DSHue
             {
                 IBridgeLocator locator = new HttpBridgeLocator();
                 ///bridgeIPSs == 검색된  브릿지들
+                //에러날시 Emotion확인
                 IEnumerable<LocatedBridge> bridgeIPs = await locator.LocateBridgesAsync(TimeSpan.FromSeconds(5));
                 ///검색된 브릿지들중 첫번째 선택
                 LocatedBridge bridge = bridgeIPs.FirstOrDefault();
