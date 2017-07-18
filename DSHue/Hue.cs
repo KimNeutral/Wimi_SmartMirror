@@ -77,7 +77,7 @@ namespace DSHue
                 IBridgeLocator locator = new HttpBridgeLocator();
                 ///bridgeIPSs == 검색된  브릿지들
                 IEnumerable<LocatedBridge> bridgeIPs = await locator.LocateBridgesAsync(TimeSpan.FromSeconds(5));
-                ///검색된 브릿지들중 첫번째 선택
+                ///검색된 브릿지들중 첫번째 선택f
                 LocatedBridge bridge = bridgeIPs.FirstOrDefault();
                 if (bridge == null)
                 {
