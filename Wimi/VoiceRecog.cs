@@ -24,10 +24,8 @@ namespace Wimi
         //제약조건
         private SpeechRecognitionListConstraint helloConstraint;
         private SpeechRecognitionListConstraint noticeConstraint;
-        private SpeechRecognitionListConstraint FoodConstraint;
-        private SpeechRecognitionListConstraint TimeTableConstraint;
-        private SpeechRecognitionListConstraint EventConstraint;
-        private SpeechRecognitionListConstraint ParcelConstraint;
+        private SpeechRecognitionListConstraint ShowWeatherConstraint;
+        private SpeechRecognitionListConstraint TellWeatherConstraint;
 
 
         public async void Recognize()
@@ -136,6 +134,7 @@ namespace Wimi
             {
                 tag = args.Result.Constraint.Tag;
             }
+            //Debug.WriteLine(iscalled);
             if (iscalled == false)
             {
                 if (args.Result.Confidence == SpeechRecognitionConfidence.Medium ||
@@ -149,7 +148,7 @@ namespace Wimi
                         {
                             if (tag == "hello")
                             {
-                                SetVoice("왜 불러?");
+                                //SetVoice("왜 불러?");
                                 iscalled = true;
                                 if (!timer.IsEnabled)
                                 {
@@ -184,9 +183,17 @@ namespace Wimi
                             else if (tag == "sleep")
                             {
                                 SetVoice("가서 자세요");
+                                iscalled = false;
                             }
-                            else
+                            /*else if(tag == "ShowWeather")
                             {
+                                SetVoice("오늘의 날씨입니다.");
+                                iscalled = false;
+                            }/**/
+                            else if(tag == "TellWeather")
+                            {
+                                TellmeWeatherAsync();
+                                iscalled = false;
                             }
                         }
 
@@ -217,11 +224,11 @@ namespace Wimi
                     });
                 }/**/
                 //rejected된 인식은 그냥 폐기하는게 정신건강에 이로울듯
-                /*else if (args.Result.Confidence == SpeechRecognitionConfidence.Rejected)
+                /**/else if (args.Result.Confidence == SpeechRecognitionConfidence.Rejected)
                 {
                     await dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                     {
-                        SetVoice("다시 말해주세요."); //Please say it again. //Tell me again. //What did you say? //Say what? //다른건 발음이 이상하게 나옴 ㅋㅋ
+                        //SetVoice("다시 말해주세요."); //Please say it again. //Tell me again. //What did you say? //Say what? //다른건 발음이 이상하게 나옴 ㅋㅋ
                     resultTextBlock.Text = string.Format("음성인식이 실패하였습니다.");
                     });
                 }/**/
@@ -274,29 +281,30 @@ namespace Wimi
 
         public void AddConstraints()
         {
-            helloConstraint = new SpeechRecognitionListConstraint(new List<string>() { "wimi" }, "hello");
-            noticeConstraint = new SpeechRecognitionListConstraint(new List<string>() { "I am tired" }, "sleep");
-            FoodConstraint = new SpeechRecognitionListConstraint(new List<string>() { "Gupsik" }, "lunch");
-            TimeTableConstraint = new SpeechRecognitionListConstraint(new List<string>() { "SiGanpyo" }, "table");
-            EventConstraint = new SpeechRecognitionListConstraint(new List<string>() { "Event" }, "event");
-            ParcelConstraint = new SpeechRecognitionListConstraint(new List<string>() { "Teckbae" }, "parcel");
+            //{"들을 내용1", "내용2"},"태그이름");
+            helloConstraint = new SpeechRecognitionListConstraint(new List<string>()
+            { "wimi", "Hello" }, "hello");
+            noticeConstraint = new SpeechRecognitionListConstraint(new List<string>()
+            { "I am tired" ,"i'm too tired"}, "sleep");
+            ShowWeatherConstraint = new SpeechRecognitionListConstraint(new List<string>()
+            { "show me forecast", "show me Weather", "show me weather forecast","nalssi boyeojwo"}, "ShowWeather");
+            TellWeatherConstraint = new SpeechRecognitionListConstraint(new List<string>()
+            { "Tell me forecast", "Tell me Weather", "Tell me weather forecast","nalssi allyeojwo","today Weather"}, "TellWeather");
+
+
 
             speechRecognizer.Constraints.Add(helloConstraint);
             speechRecognizer.Constraints.Add(noticeConstraint);
-            speechRecognizer.Constraints.Add(FoodConstraint);
-            speechRecognizer.Constraints.Add(TimeTableConstraint);
-            speechRecognizer.Constraints.Add(EventConstraint);
-            speechRecognizer.Constraints.Add(ParcelConstraint);
+            speechRecognizer.Constraints.Add(ShowWeatherConstraint);
+            speechRecognizer.Constraints.Add(TellWeatherConstraint);
         }
 
         public void RemoveConstraints()
         {
             speechRecognizer.Constraints.Remove(helloConstraint);
             speechRecognizer.Constraints.Remove(noticeConstraint);
-            speechRecognizer.Constraints.Remove(FoodConstraint);
-            speechRecognizer.Constraints.Remove(TimeTableConstraint);
-            speechRecognizer.Constraints.Remove(EventConstraint);
-            speechRecognizer.Constraints.Remove(ParcelConstraint);
+            speechRecognizer.Constraints.Remove(ShowWeatherConstraint);
+            speechRecognizer.Constraints.Remove(TellWeatherConstraint);
         }
     }
 }

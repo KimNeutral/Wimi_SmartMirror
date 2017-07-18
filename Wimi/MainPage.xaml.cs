@@ -1,5 +1,6 @@
 ﻿using DSMusic;
 using System;
+using System.Diagnostics;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
@@ -21,7 +22,7 @@ namespace Wimi
             this.InitializeComponent();
 
             ClockTimer.Tick += ClockTimer_Tick;
-            ClockTimer.Interval = new TimeSpan(0, 0, 1);
+            ClockTimer.Interval = new TimeSpan(0, 0, 2);
             ClockTimer.Start();
         }
 
@@ -47,12 +48,15 @@ namespace Wimi
             await Webcam.StartCameraPreview();
 
             await face.InitListAsync();
+            await InitFaceRec();
 
             GetBusInfo();
 #if PC_MODE
             Getschedule();
 #endif
             GetForecastInfo();
+
+
         }
 
 

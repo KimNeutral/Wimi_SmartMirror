@@ -19,6 +19,7 @@ namespace DSWeather
         public class Sky
         {
             public string name { get; set; }
+            public string code { get; set; }
         }
 
         public class Station
@@ -26,12 +27,17 @@ namespace DSWeather
             public string name { get; set; }
         }
 
+       
+
+
+
         public class Minutely // 1
         {
             public string timeObservation { get; set; }
             public Station station { get; set; }
             public Sky sky { get; set; }
             public Temperature temperature { get; set; }
+            public string humidity { get; set; }
         }
 
     }
