@@ -43,13 +43,13 @@ namespace DSHue
         /// </summary>
         /// <param name="emotion"></param>
         
-        public async void HueLight(DSEmotion.Emotion emotion)
+        public async void HueLightWithColor(DSEmotion.Emotion emotion)
         {
             var command = new LightCommand();
             command.On = true;
             switch (emotion)
             {
-                // none은 불을 끌때 사용
+                //
                 case Emotion.none:
                     command.TurnOff();
                     break;
@@ -81,6 +81,23 @@ namespace DSHue
             //command.On = true;
             client.SendCommandAsync(command);
         }
+
+        public async void HueLightOn()
+        {
+            var command = new LightCommand();
+            command.On = true;
+            //true로 만으로 불이 켜지는지 확인
+            command.TurnOn();
+            client.SendCommandAsync(command);
+        }
+
+        public async void HueLightOff()
+        {
+            var command = new LightCommand();
+            command.TurnOff();
+            client.SendCommandAsync(command);
+        }
+
         /// <summary>
         /// IP주소를 반환 해줌
         /// </summary>
@@ -103,7 +120,6 @@ namespace DSHue
             {
                 IBridgeLocator locator = new HttpBridgeLocator();
                 ///bridgeIPSs == 검색된  브릿지들
-                //에러날시 Emotion확인
                 IEnumerable<LocatedBridge> bridgeIPs = await locator.LocateBridgesAsync(TimeSpan.FromSeconds(5));
                 ///검색된 브릿지들중 첫번째 선택
                 LocatedBridge bridge = bridgeIPs.FirstOrDefault();

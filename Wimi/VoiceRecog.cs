@@ -134,7 +134,7 @@ namespace Wimi
             {
                 tag = args.Result.Constraint.Tag;
             }
-            Debug.WriteLine(iscalled);
+            //Debug.WriteLine(iscalled);
             if (iscalled == false)
             {
                 if (args.Result.Confidence == SpeechRecognitionConfidence.Medium ||

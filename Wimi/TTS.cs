@@ -33,8 +33,8 @@ namespace Wimi
             
             WeatherResult += nowWeather.station.name +"의 오늘 날씨는 현재 "
                 +nowWeather.temperature.tc + "도 습도 " + nowWeather.humidity + "퍼센트, ";
-            Debug.WriteLine(nowWeather.humidity);
-            Debug.WriteLine(nowWeather.sky.code);
+            //Debug.WriteLine(nowWeather.humidity);
+            
             switch (nowWeather.sky.code)
             {
                 case "SKY_A01": WeatherResult += "맑은 날씨입니다."; break;
