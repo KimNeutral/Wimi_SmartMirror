@@ -27,7 +27,14 @@ namespace Wimi
 
         private void ClockTimer_Tick(object sender, object e)
         {
-            tbClock.Text = DateTime.Now.ToString("HH:mm");
+            SetTime(); // tbClock.Text = DateTime.Now.ToString("HH:mm");
+        }
+
+        public void SetTime()
+        {
+            DateTime dt = DateTime.Now;
+            tbDateTime.Text = dt.ToString("D");
+            tbTime.Text = string.Format("{0:D2}:{1:D2}", dt.Hour, dt.Minute);
         }
 
         private async void Grid_Loaded(object sender, RoutedEventArgs e)
