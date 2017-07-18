@@ -129,10 +129,10 @@
     <None Include="Wimi_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Assets\Jang\2017.Jul.15 05-19-41 Facial Recognition Door.jpg" />
-    <Content Include="Assets\Jeon\2017.Jul.15 14-55-30 Facial Recognition Door.jpg" />
-    <Content Include="Assets\Jo\2017.Jul.15 05-38-29 Facial Recognition Door.jpg" />
-    <Content Include="Assets\KimD\2017.Jul.15 05-16-40 Facial Recognition Door.jpg" />
+    <Content Include="Assets\김대용\2017.Jul.15 05-16-40 Facial Recognition Door.jpg" />
+    <Content Include="Assets\장용윤\2017.Jul.15 05-19-41 Facial Recognition Door.jpg" />
+    <Content Include="Assets\전영준\2017.Jul.15 14-55-30 Facial Recognition Door.jpg" />
+    <Content Include="Assets\조현재\2017.Jul.15 05-38-29 Facial Recognition Door.jpg" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />
@@ -157,11 +157,7 @@
       <Version>5.2.3</Version>
     </PackageReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Assets\Chris\" />
-    <Folder Include="Assets\KimJ\" />
-    <Folder Include="Assets\Park\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\DSBus\DSBus.csproj">
       <Project>{cd271c12-85c4-4bec-8230-08a6b70e2e78}</Project>
