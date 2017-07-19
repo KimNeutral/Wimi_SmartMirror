@@ -49,14 +49,14 @@ namespace Wimi
             captureElement.Source = Webcam.mediaCapture;
             await Webcam.StartCameraPreview();
 
-            //await face.InitListAsync();
-            //await InitFaceRec();
+            await face.InitListAsync();
+            await InitFaceRec();
 
             GetBusInfo();
 #if PC_MODE
             Getschedule();
 #endif
-            //await GetForecastInfo();
+            await GetForecastInfo();
 
             await GetNewsInfo();
 

@@ -14,6 +14,10 @@ namespace Wimi
         async Task<string> GetCurTempertureAsync()
         {
             SKWeatherHourly.Hourly min = await weather.GetCurrentWeatherHourlyAsync();
+            if(min == null)
+            {
+                return null;
+            }
             string temp = min.temperature.tc;
             temp = temp.Substring(0, temp.Length - 1);
             return temp;
@@ -22,7 +26,10 @@ namespace Wimi
         private async void tbWeather_Loaded(object sender, RoutedEventArgs e)
         {
             string temperature = await GetCurTempertureAsync();
-            tbTc.Text = temperature;
+            if(temperature != null)
+            {
+                tbTc.Text = temperature;
+            }
         }
 
         async Task GetForecastInfo()

@@ -154,6 +154,22 @@ namespace DSHue
             return true;
         }
 
+        public async Task<bool> SetColor(string color) ///컴잇 및 이 주석 삭제
+        {
+            var colorTable = new Dictionary<string, string>()
+            {
+                { "red", "DF0101" }, { "orange", "FF4000" }, { "yellow", "FFFF00" }, { "green", "0B610B" },
+                { "blue", "0101DF" }, { "purple", "5F04B4" }, { "pink", "FF0080" }, { "white", "FFFFFF" }
+            };
+
+            var command = new LightCommand();
+            command.On = true;
+            command.TurnOn().SetColor(new RGBColor(colorTable[color]));
+            await client.SendCommandAsync(command);
+
+            return true;
+        }
+
         /// <summary>
         /// IP주소를 반환 해줌
         /// </summary>

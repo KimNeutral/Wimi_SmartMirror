@@ -13,7 +13,7 @@ namespace DSNews
     {
         String Politics_Url = "http://www.iheadlinenews.co.kr/rss/clickTop.xml";
 
-        public async Task<List<News>> GetHeadlineAsync()
+        public async Task<List<News>> GetHeadlineAsync(int count = 5)
         {
            
             List<News> result = new List<News>(); 
@@ -24,7 +24,7 @@ namespace DSNews
                 //xml URL로드
                 //xmld.Load(url);
                 var httpClient = new HttpClient();
-                HttpResponseMessage response = await httpClient.GetAsync(new Uri("http://www.iheadlinenews.co.kr/rss/clickTop.xml"));
+                HttpResponseMessage response = await httpClient.GetAsync(new Uri("http://rss.donga.com/total.xml"));
                 var jsonStream = await response.Content.ReadAsStreamAsync();
                 xmld.Load(jsonStream);
             }
@@ -41,18 +41,20 @@ namespace DSNews
             XmlNodeList titleList = xmld.GetElementsByTagName("title");
             XmlNodeList linkList = xmld.GetElementsByTagName("link");
             XmlNodeList descList = xmld.GetElementsByTagName("description");
-            XmlNodeList authorList = xmld.GetElementsByTagName("author");
             XmlNodeList pubDateList = xmld.GetElementsByTagName("pubDate");
 
             //result += "--뉴스 헤드라인--\n";
-            for (int i = 1; i < titleList.Count; i ++)
+            for (int i = 2; i < titleList.Count; i ++)
             {
+                if (i - 1 > count)
+                {
+                    break;
+                }
                 News news = new News();
                 news.title = titleList[i].InnerText;
                 news.link = linkList[i].InnerText;
                 news.descrption = descList[i].InnerText;
-                news.author = authorList[i-1].InnerText;
-                news.pubDate = pubDateList[i-1].InnerText;
+                news.pubDate = pubDateList[i].InnerText;
                 result.Add(news);
             }
 
@@ -65,7 +67,6 @@ namespace DSNews
         public string title { get; set; }
         public string link { get; set; }
         public string descrption { get; set; }
-        public string author { get; set; }
         public string pubDate { get; set; }
     }
 }
