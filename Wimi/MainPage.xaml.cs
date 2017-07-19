@@ -48,8 +48,8 @@ namespace Wimi
             captureElement.Source = Webcam.mediaCapture;
             await Webcam.StartCameraPreview();
 
-            //await face.InitListAsync();
-            //await InitFaceRec();
+            await face.InitListAsync();
+            await InitFaceRec();
 
             GetBusInfo();
 #if PC_MODE
@@ -66,6 +66,9 @@ namespace Wimi
 
             await Webcam.StopCameraPreview();
             Webcam.mediaCapture.Dispose();
+
+            CleanSpeechRecognizer();
+            RemoveConstraints();
         }
     }
 }
