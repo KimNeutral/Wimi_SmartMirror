@@ -53,6 +53,7 @@
                 </ListBox>
             </StackPanel>
         </Grid>
+        <!--오른쪽 영역-->
         <Grid Grid.Column="1" VerticalAlignment="Top">
             <StackPanel HorizontalAlignment="Right">
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
@@ -85,10 +86,10 @@
                     <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE1DC;"  Margin="12,0,12,0"
                            FontSize="60" VerticalAlignment="Top" HorizontalAlignment="Center"
                            Foreground="White"></TextBlock>
-                    <ListBox x:Name="lbScheduleInfo" HorizontalAlignment="Right" Background="Transparent">
+                    <ListBox x:Name="lbScheduleInfo" HorizontalAlignment="Right" Background="Transparent" IsHitTestVisible="False">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
-                                <Grid Margin="0,-12,0,0" HorizontalAlignment="Left">
+                                <Grid Margin="0,-12,0,0" HorizontalAlignment="Left" Width="430">
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="Auto"/>
                                         <RowDefinition Height="50"/>
@@ -105,31 +106,34 @@
                     </ListBox>
                 </StackPanel>
 
-                
-                
-                <ListBox x:Name="lbBusInfo" Margin="0,24,0,0" Background="Transparent">
-                    <ListBox.ItemTemplate>
-                        <DataTemplate>
-                            <Grid Margin="5">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="100"/>
-                                    <ColumnDefinition Width="100"/>
-                                    <ColumnDefinition Width="*"/>
-                                    <!--<ColumnDefinition Width="*"/>-->
-                                </Grid.ColumnDefinitions>
-                                <TextBlock Grid.Column="0" Text="{Binding number}" Margin="24,0,0,0"/>
-                                <TextBlock Grid.Column="1" Text="{Binding state}" Margin="24,0,0,0"/>
-                                <TextBlock Grid.Column="2" Text="{Binding position}" Margin="24,0,0,0"/>
-                                <!--<TextBlock Grid.Column="3" Text="{Binding note}" Margin="24,0,0,0"/>-->
-                            </Grid>
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
-                </ListBox>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,12,0,12">
+                    <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xEB47;"  Margin="12,0,12,0"
+                           FontSize="60" VerticalAlignment="Top" HorizontalAlignment="Center"
+                           Foreground="White"></TextBlock>
+                    <ListBox x:Name="lbBusInfo" Margin="0,24,0,0" Background="Transparent" IsHitTestVisible="False">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Margin="5" HorizontalAlignment="Left" Width="430">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="50"/>
+                                        <ColumnDefinition Width="100"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <!--<ColumnDefinition Width="*"/>-->
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Text="{Binding number}" Margin="0,0,0,0"/>
+                                    <TextBlock Grid.Column="1" Text="{Binding state}" Margin="0,0,0,0"/>
+                                    <TextBlock Grid.Column="2" Text="{Binding position}" Margin="0,0,0,0"/>
+                                    <!--<TextBlock Grid.Column="3" Text="{Binding note}" Margin="24,0,0,0"/>-->
+                                </Grid>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </StackPanel>
             </StackPanel>
         </Grid>
 
         <TextBlock x:Name="resultTextBlock" Margin="30" Grid.Column="1" 
-                   FontFamily="Segoe UI Light" FontSize="32" Foreground="LightCyan" FontWeight="Bold"
+                   FontFamily="Segoe UI Light" FontSize="24" Foreground="LightCyan" FontWeight="Bold"
                    HorizontalAlignment="Right"
                    VerticalAlignment="Bottom"/>
 
