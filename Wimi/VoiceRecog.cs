@@ -9,11 +9,15 @@ using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
+using DSHue;
 
 namespace Wimi
 {
     public partial class MainPage : Page
     {
+        Hue HueControl = new Hue(); //Hue제어 하기 위해 생성
+        bool HueAtrBoll = false; //Hue제어 할때 await를
+
         private MainPage rootPage;
         private CoreDispatcher dispatcher; //UI쓰레드 화면 업데이트를 위해 필요.
         private SpeechRecognizer speechRecognizer;
@@ -31,7 +35,8 @@ namespace Wimi
         private SpeechRecognitionListConstraint StopMusicConstraint;
         private SpeechRecognitionListConstraint PauseMusicConstraint;
         //조-명
-        /*private SpeechRecognitionListConstraint TurnOnLightConstraint;
+        /**/
+        private SpeechRecognitionListConstraint TurnOnLightConstraint;
         private SpeechRecognitionListConstraint TurnOffLightConstraint;
         private SpeechRecognitionListConstraint ChangeLightModeOn;
         private SpeechRecognitionListConstraint ChangeLightModeOff;
@@ -98,7 +103,7 @@ namespace Wimi
                 }
 
                 speechRecognizer = new SpeechRecognizer();
-                
+
 #if true //timeout 안되도록 1시간정도로 설정
                 //speechRecognizer.Timeouts.EndSilenceTimeout = new TimeSpan(1, 0, 0);
                 //speechRecognizer.Timeouts.InitialSilenceTimeout = new TimeSpan(1, 0, 0);
@@ -204,42 +209,42 @@ namespace Wimi
                             case "StopMusic":
                                 StopMusic();
                                 break;
-                            /*case "LightModeOn":
-
+                            case "LightModeOn":
+                                HueAtrBoll = await HueControl.HueEffect(1);
                                 break;
                             case "LightModeOff":
-
+                                HueAtrBoll = await HueControl.HueEffect(0);
                                 break;
                             case "TurnOn":
-
+                                HueAtrBoll = await HueControl.HueLightOn();
                                 break;
                             case "TurnOff":
-
+                                HueAtrBoll = await HueControl.HueLightOff();
                                 break;
                             case "RedColor":
-
+                                HueAtrBoll = await HueControl.SetColor("red");
                                 break;
                             case "OrangeColor":
-
+                                HueAtrBoll = await HueControl.SetColor("orange");
                                 break;
                             case "YellowColor":
-
+                                HueAtrBoll = await HueControl.SetColor("yellow");
                                 break;
                             case "GreenColor":
-
+                                HueAtrBoll = await HueControl.SetColor("green");
                                 break;
                             case "BLueColor":
-
+                                HueAtrBoll = await HueControl.SetColor("blue");
                                 break;
                             case "PurpleColor":
-
+                                HueAtrBoll = await HueControl.SetColor("purple");
                                 break;
                             case "PinkColor":
-
+                                HueAtrBoll = await HueControl.SetColor("pink");
                                 break;
                             case "WhiteColor":
-
-                                break;/**/
+                                HueAtrBoll = await HueControl.SetColor("white");
+                                break;
 
                         }
                         /*if (tag == "Hello")
@@ -280,7 +285,7 @@ namespace Wimi
                 await dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                 {
                     //SetVoice("다시 말해주세요."); //Please say it again. //Tell me again. //What did you say? //Say what? //다른건 발음이 이상하게 나옴 ㅋㅋ
-                resultTextBlock.Text = string.Format("음성인식이 실패하였습니다.");
+                    resultTextBlock.Text = string.Format("음성인식이 실패하였습니다.");
                 });
             }
             else
@@ -288,7 +293,7 @@ namespace Wimi
                 Debug.WriteLine("ContinuousRecognitionSession_ResultGenerated?????");
             }
         }
-        
+
 
         private async void ContinuousRecognitionSession_Completed(SpeechContinuousRecognitionSession sender, SpeechContinuousRecognitionCompletedEventArgs args)
         {
@@ -365,7 +370,8 @@ namespace Wimi
             PauseMusicConstraint = new SpeechRecognitionListConstraint(new List<string>()
             { "Pause Music"}, "PauseMusic");
             //조명명령어 추가 파이팅 ㅎ
-            /*TurnOnLightConstraint = new SpeechRecognitionListConstraint(new List<string>()
+            /**/
+            TurnOnLightConstraint = new SpeechRecognitionListConstraint(new List<string>()
             { "turn On the Light"}, "TurnOn");
             TurnOffLightConstraint = new SpeechRecognitionListConstraint(new List<string>()
             { "turn On the Light"}, "TurnOff");

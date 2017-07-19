@@ -17,6 +17,7 @@ namespace DSHue
 {
     public class Hue
     {
+        bool colorLoopAtr = false;
         string ip = string.Empty;
         string key = string.Empty;
         ILocalHueClient client = null;
@@ -105,17 +106,24 @@ namespace DSHue
         }
 
         /// <summary>
+        /// -1 OR 인자X == 루프모드 변환 ex)첫번쨰는 루프 진입, 두번째는 루프 빠져나오기
         /// 0 == 루프 끄기 AND 루프를 빠져나옴(원래 색으로),
         /// 1 == 루프(무한),
         /// 반환형 bool타입의 true
         /// </summary>
         /// <param name="property"></param>
-        public async Task<bool> HueEffect(int property)
+        public async Task<bool> HueEffect(int property = -1)
         {
             var command = new LightCommand();
             command.On = true;
             switch (property)
             {
+                case -1: ////////////////////////////// NeedTest
+                    if(colorLoopAtr == false)
+                        command.Effect = Effect.ColorLoop;
+                    else
+                        command.Effect = Effect.None;
+                    break;
                 case 0:
                     command.Effect = Effect.None;
                     break;
