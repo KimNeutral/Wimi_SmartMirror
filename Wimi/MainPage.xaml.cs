@@ -41,6 +41,7 @@ namespace Wimi
 
         private async void Grid_Loaded(object sender, RoutedEventArgs e)
         {
+            initMusicList();
             initSynthesizer();
             InitializeRecognizer();
 

@@ -119,7 +119,7 @@
                    HorizontalAlignment="Right"
                    VerticalAlignment="Bottom"/>
 
-        <MediaElement x:Name="mediaElement" Grid.Column="0" Height="500"
+        <MediaElement x:Name="mediaElement" Grid.Column="0" Height="500" VerticalAlignment="Bottom"
                       AutoPlay="True" AreTransportControlsEnabled="True"/>
     </Grid>
 </Page>

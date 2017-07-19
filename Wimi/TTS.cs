@@ -70,7 +70,7 @@ namespace Wimi
             TTSDispatcherTimer.Tick += TTSDispatcherTimer_Tick;
             TTSDispatcherTimer.Interval = new TimeSpan(0, 0, 3);
 
-            media = new MediaElement();
+            media = mediaElement;//new MediaElement();
             media.Volume = 1;
             synthesizer = new SpeechSynthesizer();
             
