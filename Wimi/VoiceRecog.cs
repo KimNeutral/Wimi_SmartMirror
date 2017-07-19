@@ -30,6 +30,20 @@ namespace Wimi
         private SpeechRecognitionListConstraint PlayMusicConstraint;
         private SpeechRecognitionListConstraint StopMusicConstraint;
         private SpeechRecognitionListConstraint PauseMusicConstraint;
+        //조-명
+        /*private SpeechRecognitionListConstraint TurnOnLightConstraint;
+        private SpeechRecognitionListConstraint TurnOffLightConstraint;
+        private SpeechRecognitionListConstraint ChangeLightModeOn;
+        private SpeechRecognitionListConstraint ChangeLightModeOff;
+
+        private SpeechRecognitionListConstraint RedColorLightConstraint;
+        private SpeechRecognitionListConstraint OrangeColorLightConstraint;
+        private SpeechRecognitionListConstraint YellowColorLightConstraint;
+        private SpeechRecognitionListConstraint GreenColorLightConstraint;
+        private SpeechRecognitionListConstraint BlueColorLightConstraint;
+        private SpeechRecognitionListConstraint PinkColorLightConstraint;
+        private SpeechRecognitionListConstraint PurpleColorLightConstraint;
+        private SpeechRecognitionListConstraint WhiteColorLightConstraint;/**/
 
         public async void Recognize()
         {
@@ -168,7 +182,67 @@ namespace Wimi
                     resultTextBlock.Text = string.Format("Heard: '{0}', (Tag: '{1}', Confidence: {2})", args.Result.Text, tag, args.Result.Confidence.ToString());
                     if (!string.IsNullOrEmpty(tag))
                     {
-                        if (tag == "Hello")
+                        switch (tag)
+                        {
+                            case "Hello":
+                                SetVoice("왜 불러?");
+                                break;
+                            case "Sleep":
+                                SetVoice("가서 자세요");
+                                break;
+                            case "ShowWeather":
+                                break;
+                            case "TellWeather":
+                                TellmeWeatherAsync();
+                                break;
+                            case "PlayMusic":
+                                await PlayMusic();
+                                break;
+                            case "PauseMusic":
+                                PauseMusic();
+                                break;
+                            case "StopMusic":
+                                StopMusic();
+                                break;
+                            /*case "LightModeOn":
+
+                                break;
+                            case "LightModeOff":
+
+                                break;
+                            case "TurnOn":
+
+                                break;
+                            case "TurnOff":
+
+                                break;
+                            case "RedColor":
+
+                                break;
+                            case "OrangeColor":
+
+                                break;
+                            case "YellowColor":
+
+                                break;
+                            case "GreenColor":
+
+                                break;
+                            case "BLueColor":
+
+                                break;
+                            case "PurpleColor":
+
+                                break;
+                            case "PinkColor":
+
+                                break;
+                            case "WhiteColor":
+
+                                break;/**/
+
+                        }
+                        /*if (tag == "Hello")
                         {
                             SetVoice("왜 불러?");
                         }
@@ -196,7 +270,7 @@ namespace Wimi
                         else if (tag == "StopMusic")
                         {
                             StopMusic();
-                        }
+                        }/**/
                     }
 
                 });
@@ -226,7 +300,7 @@ namespace Wimi
                     isListening = false;
                 });
             }
-            if (args.Status == SpeechRecognitionResultStatus.TimeoutExceeded)
+            if (args.Status == SpeechRecognitionResultStatus.PauseLimitExceeded)
             {
                 await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                 {
@@ -245,7 +319,7 @@ namespace Wimi
             {
                 Debug.WriteLine("SpeechRecognizer_StateChanged, state = {0}", args.State);
             });
-            if (args.State.Equals("PauseLimitExceeded"))
+            if (args.State.Equals(SpeechRecognitionResultStatus.PauseLimitExceeded))
             {
                 Debug.WriteLine("*********PauseLimitExceeded*********");
                 RemoveConstraints();
@@ -294,6 +368,31 @@ namespace Wimi
             { "Stop Music"}, "StopMusic");
             PauseMusicConstraint = new SpeechRecognitionListConstraint(new List<string>()
             { "Pause Music"}, "PauseMusic");
+            //조명명령어 추가 파이팅 ㅎ
+            /*TurnOnLightConstraint = new SpeechRecognitionListConstraint(new List<string>()
+            { "turn On the Light"}, "TurnOn");
+            TurnOffLightConstraint = new SpeechRecognitionListConstraint(new List<string>()
+            { "turn On the Light"}, "TurnOff");
+            ChangeLightModeOn = new SpeechRecognitionListConstraint(new List<string>()
+            { "Change Light Mode On","Loop colors start"}, "LightModeOn");
+            ChangeLightModeOff = new SpeechRecognitionListConstraint(new List<string>()
+            { "Change Light Mode Off","Loop colors stop"}, "LightModeOff");
+            RedColorLightConstraint = new SpeechRecognitionListConstraint(new List<string>()
+            { "Change color Red","turn on Red Light","Red Light"}, "RedColor");
+            YellowColorLightConstraint = new SpeechRecognitionListConstraint(new List<string>()
+            { "Change color Orange","turn on Orange Light","Orange Light"}, "OrangeColor");
+            OrangeColorLightConstraint = new SpeechRecognitionListConstraint(new List<string>()
+            { "Change color Yellow","turn on Yellow Light","Yellow Light"}, "YellowColor");
+            GreenColorLightConstraint = new SpeechRecognitionListConstraint(new List<string>()
+            { "Change color Green","turn on Green Light","Green Light"}, "GreenColor");
+            BlueColorLightConstraint = new SpeechRecognitionListConstraint(new List<string>()
+            { "Change color Blue","turn on Blue Light","Blue Light"}, "BlueColor");
+            PinkColorLightConstraint = new SpeechRecognitionListConstraint(new List<string>()
+            { "Change color Pink","turn on Pink Light","Pink Light"}, "PinkColor");
+            PurpleColorLightConstraint = new SpeechRecognitionListConstraint(new List<string>()
+            { "Change color purple","turn on purple Light","purple Light"}, "PurpleColor");
+            WhiteColorLightConstraint = new SpeechRecognitionListConstraint(new List<string>()
+            { "Change color white","turn on white Light","white Light"}, "WhiteColor");/**/
 
             speechRecognizer.Constraints.Add(helloConstraint);
             speechRecognizer.Constraints.Add(noticeConstraint);
@@ -303,6 +402,18 @@ namespace Wimi
             speechRecognizer.Constraints.Add(PlayMusicConstraint);
             speechRecognizer.Constraints.Add(StopMusicConstraint);
             speechRecognizer.Constraints.Add(PauseMusicConstraint);
+            /*speechRecognizer.Constraints.Add(TurnOnLightConstraint);
+            speechRecognizer.Constraints.Add(TurnOffLightConstraint);
+            speechRecognizer.Constraints.Add(ChangeLightModeOn);
+            speechRecognizer.Constraints.Add(ChangeLightModeOff);
+            speechRecognizer.Constraints.Add(RedColorLightConstraint);
+            speechRecognizer.Constraints.Add(YellowColorLightConstraint);
+            speechRecognizer.Constraints.Add(OrangeColorLightConstraint);
+            speechRecognizer.Constraints.Add(GreenColorLightConstraint);
+            speechRecognizer.Constraints.Add(BlueColorLightConstraint);
+            speechRecognizer.Constraints.Add(PinkColorLightConstraint);
+            speechRecognizer.Constraints.Add(PurpleColorLightConstraint);
+            speechRecognizer.Constraints.Add(WhiteColorLightConstraint);/**/
 
         }
 
@@ -316,6 +427,18 @@ namespace Wimi
             speechRecognizer.Constraints.Remove(PlayMusicConstraint);
             speechRecognizer.Constraints.Remove(StopMusicConstraint);
             speechRecognizer.Constraints.Remove(PauseMusicConstraint);
+            /*speechRecognizer.Constraints.Remove(TurnOnLightConstraint);
+            speechRecognizer.Constraints.Remove(TurnOffLightConstraint);
+            speechRecognizer.Constraints.Remove(ChangeLightModeOn);
+            speechRecognizer.Constraints.Remove(ChangeLightModeOff);
+            speechRecognizer.Constraints.Remove(RedColorLightConstraint);
+            speechRecognizer.Constraints.Remove(YellowColorLightConstraint);
+            speechRecognizer.Constraints.Remove(OrangeColorLightConstraint);
+            speechRecognizer.Constraints.Remove(GreenColorLightConstraint);
+            speechRecognizer.Constraints.Remove(BlueColorLightConstraint);
+            speechRecognizer.Constraints.Remove(PinkColorLightConstraint);
+            speechRecognizer.Constraints.Remove(PurpleColorLightConstraint);
+            speechRecognizer.Constraints.Remove(WhiteColorLightConstraint);/**/
         }
     }
 }
