@@ -37,7 +37,7 @@ namespace Wimi
             {
                 await GetForecastInfo();
             }
-            int hour = 0;
+            int hour = -1;
 
             foreach(var forcast in lForcastInfo)
             {
