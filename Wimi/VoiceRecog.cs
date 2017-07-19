@@ -208,7 +208,7 @@ namespace Wimi
                                 StopMusic();
                                 break;
                             case "PlayMusic":
-                                PlayMusic();
+                                await PlayRandomMusic();
                                 break;
                             case "LightModeOn":
                                 HueAtrBool = await HueControl.HueEffect(1);

@@ -86,7 +86,7 @@ namespace Wimi
         }
         public void PlayMusic()
         {
-            Debug.WriteLine("음악 resume");
+            //Debug.WriteLine("음악 resume");
             mediaElement.Play();
         }
 
