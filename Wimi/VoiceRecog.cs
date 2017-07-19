@@ -305,9 +305,7 @@ namespace Wimi
                 await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                 {
                     Debug.WriteLine("*********PauseLimitExceeded*********");
-                    RemoveConstraints();
-                    CleanSpeechRecognizer();
-                    InitializeRecognizer();
+
                     Recognize();
                 });
             }
@@ -322,9 +320,7 @@ namespace Wimi
             if (args.State.Equals(SpeechRecognitionResultStatus.PauseLimitExceeded))
             {
                 Debug.WriteLine("*********PauseLimitExceeded*********");
-                RemoveConstraints();
-                CleanSpeechRecognizer();
-                await InitializeRecognizer();
+
                 Recognize();
             }
         }
