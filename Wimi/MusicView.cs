@@ -20,7 +20,7 @@ namespace Wimi
                                 "응급실", "쩔어", "톰보이", "호구", "아는사람 얘기" };
         bool[] random = new bool[20];
 
-        public async void PlayMusicByEmotionAsync(Emotion emotion)
+        public async Task PlayMusicByEmotionAsync(Emotion emotion)
         {
             string musicName = music.MusicByEmotion(emotion);
             using (IRandomAccessStream s = await music.GetMusicStream(musicName))
@@ -62,11 +62,10 @@ namespace Wimi
             do
             {
                 num = ran.Next();
-                num = (num % 20) + 1;
-            } while (random[num] != true);
+                num = (num % 20);
+            } while (random[num] == true);
 
             return MusicNames[num] + ".mp3";
-
         }
 
         public void PauseMusic()

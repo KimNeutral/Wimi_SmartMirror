@@ -93,7 +93,7 @@ namespace Wimi
                 }
             }
 
-            PlayMusic(EmotionUtil.GetEmotionByString(tbEmotion.Text));
+            await PlayMusicByEmotionAsync(EmotionUtil.GetEmotionByString(tbEmotion.Text));
         }
     }
 }
