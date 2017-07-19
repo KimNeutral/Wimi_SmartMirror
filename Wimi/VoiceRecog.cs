@@ -177,8 +177,8 @@ namespace Wimi
             //Debug.WriteLine(iscalled);
 
             if (args.Result.Confidence == SpeechRecognitionConfidence.Medium ||
-                args.Result.Confidence == SpeechRecognitionConfidence.High ||
-                args.Result.Confidence == SpeechRecognitionConfidence.Low)
+                args.Result.Confidence == SpeechRecognitionConfidence.High/* ||
+                args.Result.Confidence == SpeechRecognitionConfidence.Low/**/)
             {
                 await dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
                 {
@@ -248,35 +248,6 @@ namespace Wimi
                                 break;
 
                         }
-                        /*if (tag == "Hello")
-                        {
-                            SetVoice("왜 불러?");
-                        }
-                        else if (tag == "Sleep")
-                        {
-                            SetVoice("가서 자세요");
-                        }
-                        else if (tag == "ShowWeather")
-                        {
-                            //SetVoice("오늘의 날씨입니다.");
-                        }
-                        else if (tag == "TellWeather")
-                        {
-                            TellmeWeatherAsync();
-                        }
-                        else if (tag == "PlayMusic")
-                        {
-                            await PlayMusic();
-
-                        }
-                        else if (tag == "PauseMusic")
-                        {
-                            PauseMusic();
-                        }
-                        else if (tag == "StopMusic")
-                        {
-                            StopMusic();
-                        }/**/
                     }
 
                 });
