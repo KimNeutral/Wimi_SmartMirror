@@ -233,7 +233,7 @@ namespace Wimi
                             case "GreenColor":
                                 HueAtrBoll = await HueControl.SetColor("green");
                                 break;
-                            case "BLueColor":
+                            case "BlueColor":
                                 HueAtrBoll = await HueControl.SetColor("blue");
                                 break;
                             case "PurpleColor":
@@ -404,7 +404,7 @@ namespace Wimi
             speechRecognizer.Constraints.Add(PlayMusicConstraint);
             speechRecognizer.Constraints.Add(StopMusicConstraint);
             speechRecognizer.Constraints.Add(PauseMusicConstraint);
-            /*speechRecognizer.Constraints.Add(TurnOnLightConstraint);
+            speechRecognizer.Constraints.Add(TurnOnLightConstraint);
             speechRecognizer.Constraints.Add(TurnOffLightConstraint);
             speechRecognizer.Constraints.Add(ChangeLightModeOn);
             speechRecognizer.Constraints.Add(ChangeLightModeOff);
@@ -415,7 +415,7 @@ namespace Wimi
             speechRecognizer.Constraints.Add(BlueColorLightConstraint);
             speechRecognizer.Constraints.Add(PinkColorLightConstraint);
             speechRecognizer.Constraints.Add(PurpleColorLightConstraint);
-            speechRecognizer.Constraints.Add(WhiteColorLightConstraint);/**/
+            speechRecognizer.Constraints.Add(WhiteColorLightConstraint);
 
         }
 
@@ -429,7 +429,7 @@ namespace Wimi
             speechRecognizer.Constraints.Remove(PlayMusicConstraint);
             speechRecognizer.Constraints.Remove(StopMusicConstraint);
             speechRecognizer.Constraints.Remove(PauseMusicConstraint);
-            /*speechRecognizer.Constraints.Remove(TurnOnLightConstraint);
+            speechRecognizer.Constraints.Remove(TurnOnLightConstraint);
             speechRecognizer.Constraints.Remove(TurnOffLightConstraint);
             speechRecognizer.Constraints.Remove(ChangeLightModeOn);
             speechRecognizer.Constraints.Remove(ChangeLightModeOff);
@@ -440,7 +440,7 @@ namespace Wimi
             speechRecognizer.Constraints.Remove(BlueColorLightConstraint);
             speechRecognizer.Constraints.Remove(PinkColorLightConstraint);
             speechRecognizer.Constraints.Remove(PurpleColorLightConstraint);
-            speechRecognizer.Constraints.Remove(WhiteColorLightConstraint);/**/
+            speechRecognizer.Constraints.Remove(WhiteColorLightConstraint);
         }
     }
 }
