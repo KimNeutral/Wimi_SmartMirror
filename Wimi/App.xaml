@@ -5,4 +5,10 @@
     xmlns:local="using:Wimi"
     RequestedTheme="Dark">
 
+    <Application.Resources>
+        <Style x:Name="TextBlockStyle" TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="Segoe UI Light"></Setter>
+            <!--<Setter Property="FontFamily" Value="/Font/NanumBarunGothic.ttf#NanumBarunGothic"></Setter>-->
+        </Style>
+    </Application.Resources>
 </Application>

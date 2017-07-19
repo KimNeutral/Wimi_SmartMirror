@@ -19,34 +19,40 @@
                             VerticalAlignment="Top" 
                             HorizontalAlignment="Left"/>
             <Button x:Name="btnCapture" Content="인식" Click="btnCapture_Click"/>
-            <ListBox x:Name="lbForcastInfo">
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <Grid Margin="5">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="100"/>
-                                <ColumnDefinition Width="100"/>
-                                <ColumnDefinition Width="*"/>
-                                <!--<ColumnDefinition Width="*"/>-->
-                            </Grid.ColumnDefinitions>
-                            <TextBlock Grid.Column="0" Text="{Binding hour}" Margin="24,0,0,0"/>
-                            <TextBlock Grid.Column="1" Text="{Binding temperture}" Margin="24,0,0,0"/>
-                            <TextBlock Grid.Column="2" Text="{Binding stat}" Margin="24,0,0,0"/>
-                            <!--<TextBlock Grid.Column="3" Text="{Binding note}" Margin="24,0,0,0"/>-->
-                        </Grid>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
+                <ListBox x:Name="lbForcastInfo">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Margin="5">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="100"/>
+                                    <ColumnDefinition Width="100"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <!--<ColumnDefinition Width="*"/>-->
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" Text="{Binding hour}" Margin="24,0,0,0"/>
+                                <TextBlock Grid.Column="1" Text="{Binding temperture}" Margin="24,0,0,0"/>
+                                <TextBlock Grid.Column="2" Text="{Binding stat}" Margin="24,0,0,0"/>
+                                <!--<TextBlock Grid.Column="3" Text="{Binding note}" Margin="24,0,0,0"/>-->
+                            </Grid>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
             </StackPanel>
         </Grid>
-        <Grid Grid.Column="1">
-            <StackPanel>
-                <TextBlock x:Name="tbDateTime" Margin="0,0,40,0"
+        <Grid Grid.Column="1" VerticalAlignment="Top">
+            <StackPanel HorizontalAlignment="Right">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                    <TextBlock x:Name="tbVoiceRecogReady" FontFamily="Segoe MDL2 Assets" Text="&#xEC54;" FontSize="60" VerticalAlignment="Center" Foreground="DeepPink" Margin="0,20,0,0"></TextBlock>
+                    <StackPanel Margin="24,0,0,0">
+                        <TextBlock x:Name="tbDateTime" Margin="0,0,40,0"
                            FontSize="19"
                            HorizontalAlignment="Right"></TextBlock>
-                <TextBlock x:Name="tbTime" Margin="0,-5,35,0"
+                        <TextBlock x:Name="tbTime" Margin="0,-5,35,0"
                            HorizontalAlignment="Right"
                            FontSize="86" FontWeight="Bold" FontFamily="Arial" Foreground="WhiteSmoke"></TextBlock>
+                    </StackPanel>
+                </StackPanel>
+
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Loaded="tbWeather_Loaded">
                     <StackPanel Orientation="Horizontal">
                         <TextBlock x:Name="tbSky" 
@@ -61,9 +67,33 @@
                 </StackPanel>
                 <TextBlock x:Name="tbFaceName"/>
                 <TextBlock x:Name="tbEmotion"/>
-                <TextBlock x:Name="resultTextBlock" FontFamily="Segoe UI Light"/>
-                <MediaElement x:Name="mediaElement" AutoPlay="True" AreTransportControlsEnabled="True"/>
-                <ListBox x:Name="lbBusInfo">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                    <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE1DC;"  Margin="12,0,12,0"
+                           FontSize="60" VerticalAlignment="Top" HorizontalAlignment="Center"
+                           Foreground="White"></TextBlock>
+                    <ListBox x:Name="lbScheduleInfo" HorizontalAlignment="Right" Background="Transparent">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Margin="0,-12,0,0" HorizontalAlignment="Left">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="50"/>
+                                        <!--<ColumnDefinition Width="*"/>-->
+                                        <!--<ColumnDefinition Width="*"/>-->
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Grid.Row="0" Text="{Binding subject}" FontSize="32" FontWeight="Bold" Margin="0,0,0,0"/>
+                                    <TextBlock Grid.Row="1" Text="{Binding dt}" FontSize="22" FontWeight="SemiBold" Margin="0,0,0,0"/>
+                                    <!--<TextBlock Grid.Column="2" Text="{Binding detailes}" Margin="24,0,0,0"/>-->
+                                    <!--<TextBlock Grid.Column="3" Text="{Binding note}" Margin="24,0,0,0"/>-->
+                                </Grid>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </StackPanel>
+
+                
+                
+                <ListBox x:Name="lbBusInfo" Margin="0,24,0,0" Background="Transparent">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <Grid Margin="5">
@@ -81,26 +111,14 @@
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                 </ListBox>
-                <ListBox x:Name="lbScheduleInfo">
-                    <ListBox.ItemTemplate>
-                        <DataTemplate>
-                            <Grid Margin="5">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="100"/>
-                                    <ColumnDefinition Width="100"/>
-                                    <ColumnDefinition Width="*"/>
-                                    <!--<ColumnDefinition Width="*"/>-->
-                                </Grid.ColumnDefinitions>
-                                <TextBlock Grid.Column="0" Text="{Binding subject}" Margin="24,0,0,0"/>
-                                <TextBlock Grid.Column="1" Text="{Binding dt}" Margin="24,0,0,0"/>
-                                <TextBlock Grid.Column="2" Text="{Binding detailes}" Margin="24,0,0,0"/>
-                                <!--<TextBlock Grid.Column="3" Text="{Binding note}" Margin="24,0,0,0"/>-->
-                            </Grid>
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
-                </ListBox>
             </StackPanel>
         </Grid>
-        
+
+        <TextBlock x:Name="resultTextBlock" Margin="30" Grid.Column="1" 
+                   FontFamily="Segoe UI Light" FontSize="32" Foreground="LightCyan" FontWeight="Bold"
+                   HorizontalAlignment="Right"
+                   VerticalAlignment="Bottom"/>
+
+        <MediaElement x:Name="mediaElement" AutoPlay="True" AreTransportControlsEnabled="True"/>
     </Grid>
 </Page>

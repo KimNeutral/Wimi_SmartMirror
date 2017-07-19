@@ -21,11 +21,11 @@ namespace DSHue
         string key = string.Empty;
         ILocalHueClient client = null;
         /// <summary>
-        /// Hue를 사용할수있게 세팅 및 불끄기
+        /// Hue를 사용할수있게 세팅 과 불끄기
         /// </summary>
         public async void Init()
         {
-            if(client == null)
+            if (client == null)
             {
                 ip = await GetIP();
                 client = new LocalHueClient(ip);
@@ -33,23 +33,23 @@ namespace DSHue
                 client.Initialize(key);
                 var command = new LightCommand();
                 command.TurnOff();
-                client.SendCommandAsync(command);
+                await client.SendCommandAsync(command);
             }
         }
 
         /// <summary>
-        /// Emotion.____형태의 매개변수 전달
-        /// emotion.none은 불끄기
+        /// Emotion.____형태의 매개변수를 받음,
+        /// emotion.none은 불끄기,
+        /// 반환형 bool타입의 true
         /// </summary>
         /// <param name="emotion"></param>
-        
-        public async void HueLightWithColor(DSEmotion.Emotion emotion)
+
+        public async Task<bool> HueLightWithEmotion(DSEmotion.Emotion emotion)
         {
             var command = new LightCommand();
             command.On = true;
             switch (emotion)
             {
-                //
                 case Emotion.none:
                     command.TurnOff();
                     break;
@@ -78,24 +78,80 @@ namespace DSHue
                     command.TurnOn().SetColor(new RGBColor("FF0080"));
                     break;
             }
-            //command.On = true;
-            client.SendCommandAsync(command);
+            await client.SendCommandAsync(command);
+            return true;
         }
 
-        public async void HueLightOn()
+        /// <summary>
+        /// 반환형 bool타입의 true
+        /// </summary>
+        public async Task<bool> HueLightOn()
         {
             var command = new LightCommand();
             command.On = true;
-            //true로 만으로 불이 켜지는지 확인
-            command.TurnOn();
-            client.SendCommandAsync(command);
+            await client.SendCommandAsync(command);
+            return true;
         }
 
-        public async void HueLightOff()
+        /// <summary>
+        /// 반환형 bool타입의 true
+        /// </summary>
+        public async Task<bool> HueLightOff()
         {
             var command = new LightCommand();
-            command.TurnOff();
-            client.SendCommandAsync(command);
+            command.On = false;
+            await client.SendCommandAsync(command);
+            return true;
+        }
+
+        /// <summary>
+        /// 0 == 루프 끄기 AND 루프를 빠져나옴(원래 색으로),
+        /// 1 == 루프(무한),
+        /// 반환형 bool타입의 true
+        /// </summary>
+        /// <param name="property"></param>
+        public async Task<bool> HueEffect(int property)
+        {
+            var command = new LightCommand();
+            command.On = true;
+            switch (property)
+            {
+                case 0:
+                    command.Effect = Effect.None;
+                    break;
+                case 1:
+                    command.Effect = Effect.ColorLoop;
+                    break;
+            }
+            await client.SendCommandAsync(command);
+            return true;
+        }
+
+        /// <summary>
+        /// 0 == 알람 끄기 OR 없음, 
+        /// 1 == 1번 깜박, 
+        /// 2 == 15번 깜박,
+        /// 반환형 bool타입의 true
+        /// </summary>
+        /// <param name="cnt"></param>
+        public async Task<bool> HueAlert(int cnt)
+        {
+            var command = new LightCommand();
+            command.On = true;
+            switch (cnt)
+            {
+                case 0:
+                    command.Alert = Alert.None;
+                    break;
+                case 1:
+                    command.Alert = Alert.Once;
+                    break;
+                case 2:
+                    command.Alert = Alert.Multiple;
+                    break;
+            }
+            await client.SendCommandAsync(command);
+            return true;
         }
 
         /// <summary>
@@ -110,7 +166,7 @@ namespace DSHue
             IsolatedStorageFile filePath = IsolatedStorageFile.GetUserStoreForApplication();
             if (filePath.FileExists(fileName))
             {
-                using(StreamReader readFile = new StreamReader(new IsolatedStorageFileStream(fileName, FileMode.Open, FileAccess.Read, filePath)))
+                using (StreamReader readFile = new StreamReader(new IsolatedStorageFileStream(fileName, FileMode.Open, FileAccess.Read, filePath)))
                 {
                     ip = readFile.ReadLine();
                 }
@@ -120,6 +176,7 @@ namespace DSHue
             {
                 IBridgeLocator locator = new HttpBridgeLocator();
                 ///bridgeIPSs == 검색된  브릿지들
+                ///브릿지를 찾지않고 함수를 빠져나올시 HueLight주석후 확인
                 IEnumerable<LocatedBridge> bridgeIPs = await locator.LocateBridgesAsync(TimeSpan.FromSeconds(5));
                 ///검색된 브릿지들중 첫번째 선택
                 LocatedBridge bridge = bridgeIPs.FirstOrDefault();
@@ -154,7 +211,7 @@ namespace DSHue
 
             ///저장 경로를 실행파일(?)의 경로
             IsolatedStorageFile filePath = IsolatedStorageFile.GetUserStoreForApplication();
-            if(filePath.FileExists(fileName))
+            if (filePath.FileExists(fileName))
             {
                 using (StreamReader readFile = new StreamReader(new IsolatedStorageFileStream(fileName, FileMode.Open, FileAccess.Read, filePath)))
                 {

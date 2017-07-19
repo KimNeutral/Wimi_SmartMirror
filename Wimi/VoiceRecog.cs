@@ -4,9 +4,11 @@ using System.Diagnostics;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Core;
 using Windows.Media.SpeechRecognition;
+using Windows.UI;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media;
 
 namespace Wimi
 {
@@ -106,8 +108,10 @@ namespace Wimi
 
                 Recognize();
 
-                SetVoice("음성인식이 시작되었습니다.");
+                //SetVoice("음성인식이 시작되었습니다.");
                 resultTextBlock.Text = string.Format("음성인식이 시작되었습니다.");
+                //tbVoiceRecogReady.Foreground = new SolidColorBrush(Colors.LightGreen);
+                tbVoiceRecogReady.Text = "\xE1D6"; //E1D6 //EC71
             }
             else
             {
