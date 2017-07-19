@@ -103,10 +103,10 @@ namespace Wimi
                 speechRecognizer = new SpeechRecognizer();
 
 #if true //timeout 안되도록 1시간정도로 설정
-                //speechRecognizer.Timeouts.EndSilenceTimeout = new TimeSpan(1, 0, 0);
-                //speechRecognizer.Timeouts.InitialSilenceTimeout = new TimeSpan(1, 0, 0);
-                //speechRecognizer.Timeouts.BabbleTimeout = new TimeSpan(1, 0, 0);
-                //speechRecognizer.ContinuousRecognitionSession.AutoStopSilenceTimeout = TimeSpan.MaxValue; //new TimeSpan(1, 0, 0);
+                //speechRecognizer.Timeouts.InitialSilenceTimeout = TimeSpan.FromSeconds(6.0);
+                //speechRecognizer.Timeouts.BabbleTimeout = TimeSpan.FromSeconds(4.0);
+                //speechRecognizer.Timeouts.EndSilenceTimeout = TimeSpan.FromSeconds(4.0);
+                speechRecognizer.ContinuousRecognitionSession.AutoStopSilenceTimeout = TimeSpan.MaxValue; //new TimeSpan(1, 0, 0);
 #endif
                 speechRecognizer.StateChanged += SpeechRecognizer_StateChanged;
 
@@ -264,7 +264,7 @@ namespace Wimi
             }
             else
             {
-                Debug.WriteLine("ContinuousRecognitionSession_ResultGenerated?????");
+                Debug.WriteLine("ContinuousRecognitionSession_ResultGenerated - {0}, 아무조건도 안걸림", args.Result.Confidence);
             }
         }
 
