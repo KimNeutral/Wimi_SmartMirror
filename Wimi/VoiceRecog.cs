@@ -210,6 +210,7 @@ namespace Wimi
                             case "PlayMusic":
                                 await PlayRandomMusic();
                                 break;
+#if false
                             case "LightModeOn":
                                 HueAtrBool = await HueControl.HueEffect(1);
                                 break;
@@ -246,6 +247,7 @@ namespace Wimi
                             case "WhiteColor":
                                 HueAtrBool = await HueControl.SetColor("white");
                                 break;
+#endif
 
                         }
                         /*if (tag == "Hello")
