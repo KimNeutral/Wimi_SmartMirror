@@ -58,7 +58,7 @@ namespace Wimi
                 {
                     Debug.WriteLine(ex.Message);
                 }
-                if(CntErr == 3)
+                if(CntErr == 5)
                 {
                     faceTimer.Stop();
                     CurrentUser = "";
@@ -97,7 +97,7 @@ namespace Wimi
                 {
                     await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                     {
-                        tbFaceName.Text = "";
+                        tbFaceName.Text = "인식되는 사람이 없음";
                     });
                     return false;
                 }
@@ -142,16 +142,6 @@ namespace Wimi
         private async void btnCapture_Click(object sender, RoutedEventArgs e)
         {
             await DetectCalledByWimi();
-            //using (Stream s = await captured.OpenStreamForReadAsync())
-            //{
-            //    Dictionary<Guid, Emotion> emotions = await face.GetEmotionByGuidAsync(s);
-            //    foreach (var emo in emotions)
-            //    {
-            //        tbEmotion.Text = emo.Value.ToString();
-            //    }
-            //}
-
-            //await PlayMusicByEmotionAsync(EmotionUtil.GetEmotionByString(tbEmotion.Text));
         }
     }
 }

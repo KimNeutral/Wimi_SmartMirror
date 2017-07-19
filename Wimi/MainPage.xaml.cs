@@ -67,6 +67,9 @@ namespace Wimi
 
             await Webcam.StopCameraPreview();
             Webcam.mediaCapture.Dispose();
+
+            CleanSpeechRecognizer();
+            RemoveConstraints();
         }
     }
 }
