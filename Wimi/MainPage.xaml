@@ -121,14 +121,15 @@
                             <DataTemplate>
                                 <Grid Margin="10">
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="120"/>
-                                        <ColumnDefinition Width="120"/>
-                                        <ColumnDefinition Width="120"/>
+                                        <ColumnDefinition Width="100"/>
+                                        <ColumnDefinition Width="100"/>
+                                        <ColumnDefinition Width="100"/>
                                         <!--<ColumnDefinition Width="*"/>-->
                                     </Grid.ColumnDefinitions>
-                                    <TextBlock FontWeight="Light" FontFamily="Segoe UI" FontSize="20" Grid.Column="0" Text="{Binding hour}" Margin="24,0,0,0"/>
-                                    <TextBlock FontWeight="Light" FontFamily="Segoe UI" FontSize="20" Grid.Column="1" Text="{Binding temperture}" Margin="24,0,0,0"/>
-                                    <TextBlock FontWeight="Light" FontFamily="Segoe UI" FontSize="20" Grid.Column="2" Text="{Binding stat}" Margin="24,0,0,0"/>
+                                    <TextBlock FontWeight="Light" FontFamily="Segoe UI" FontSize="45" Grid.Column="0" Text="{Binding hour}" Margin="24,0,0,0"/>
+                                    <TextBlock FontWeight="Light" FontFamily="Segoe UI Symbol" FontSize="45" Grid.Column="1" Text="{Binding statSymbol}" Margin="24,0,0,0"/>
+                                    <TextBlock FontWeight="Light" FontFamily="Segoe UI" FontSize="45" Grid.Column="2" Text="{Binding temperture}" Margin="24,0,0,0"/>
+                                    <TextBlock Text="℃" HorizontalAlignment="Right" Margin="0,5,0,0" FontWeight="Light" FontFamily="Segoe UI" FontSize="25" Grid.Column="2"/>
                                     <!--<TextBlock Grid.Column="3" Text="{Binding note}" Margin="24,0,0,0"/>-->
                                 </Grid>
                             </DataTemplate>

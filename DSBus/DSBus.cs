@@ -55,44 +55,58 @@ namespace DSBus
                 string nt = string.Empty;
 
                 var span = item.Descendants("span").ToList();
-
-                foreach (HtmlNode node in span)
+                if (item.InnerText.Equals("버스운행시간이 아닙니다."))
                 {
-                    string attributeValue = node.GetAttributeValue("class", "");
-                    if (attributeValue == "route_no")
+                    BusListInfo.Add(new BusInfo()
                     {
-                        num = node.InnerText;
-                    }
-                    else if (attributeValue == "arr_state")
-                    {
-                        st = node.InnerText;
-                    }
-                    else if (attributeValue == "cur_pos")
-                    {
-                        pos = node.InnerText;
-                    }
-                    else if (attributeValue == "cur_pos nsbus")
-                    {
-                        pos = node.InnerText;
-                    }
-                    else if (attributeValue == "route_note")
-                    {
-                        nt = node.InnerText;
-                    }
+                        number = "버스운행시간이 아닙니다."
+                    });
                 }
-
-                BusListInfo.Add(new BusInfo()
+                else
                 {
-                    number = num,
-                    state = st,
-                    position = pos,
-                    note = nt
-                });
+                    foreach (HtmlNode node in span)
+                    {
+                        string attributeValue = node.GetAttributeValue("class", "");
+                        if (attributeValue == "route_no")
+                        {
+                            num = node.InnerText;
+                        }
+                        else if (attributeValue == "arr_state")
+                        {
+                            st = node.InnerText;
+                        }
+                        else if (attributeValue == "cur_pos")
+                        {
+                            pos = node.InnerText;
+                        }
+                        else if (attributeValue == "cur_pos nsbus")
+                        {
+                            pos = node.InnerText;
+                        }
+                        else if (attributeValue == "route_note")
+                        {
+                            nt = node.InnerText;
+                        }
+                    }
+                    BusListInfo.Add(new BusInfo()
+                    {
+                        number = num,
+                        state = st,
+                        position = pos,
+                        note = nt
+                    });
+                }
             }
-            if (BusListInfo.Count == 0)
+            if (BusListInfo.Count == 0) {
+                BusInfo temp = new BusInfo();
+                temp.number = "버스 정보가 없습니다.";
+                BusListInfo.Add(temp);
                 return null;
+            }
             else
+            {
                 return BusListInfo;
+            }
         }
 
     }

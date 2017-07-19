@@ -112,7 +112,7 @@ namespace Wimi
 
         async Task GetForecastInfo()
         {
-            lForcastInfo = await weather.GetForecastInfoByCountAsync();
+            lForcastInfo = await weather.GetForecastInfoByCountAsync(2);
             lbForcastInfo.ItemsSource = lForcastInfo;
         }
 
