@@ -28,9 +28,10 @@ namespace Wimi
         private SpeechRecognitionListConstraint ShowWeatherConstraint;
         private SpeechRecognitionListConstraint TellWeatherConstraint;
         private SpeechRecognitionListConstraint TestConstraint;
-        private SpeechRecognitionListConstraint PlayMusicConstraint;
+        private SpeechRecognitionListConstraint PlayRandomMusicConstraint;
         private SpeechRecognitionListConstraint StopMusicConstraint;
         private SpeechRecognitionListConstraint PauseMusicConstraint;
+        private SpeechRecognitionListConstraint PlayMusicConstraint;
         //조-명
         /**/
         private SpeechRecognitionListConstraint TurnOnLightConstraint;
@@ -197,14 +198,17 @@ namespace Wimi
                             case "TellWeather":
                                 TellmeWeatherAsync();
                                 break;
-                            case "PlayMusic":
-                                await PlayMusic();
+                            case "PlayRandomMusic":
+                                await PlayRandomMusic();
                                 break;
                             case "PauseMusic":
                                 PauseMusic();
                                 break;
                             case "StopMusic":
                                 StopMusic();
+                                break;
+                            case "PlayMusic":
+                                PlayMusic();
                                 break;
                             case "LightModeOn":
                                 HueAtrBool = await HueControl.HueEffect(1);
@@ -360,12 +364,14 @@ namespace Wimi
             { "Tell me forecast", "Tell me Weather", "Tell me weather forecast","today Weather"}, "TellWeather");
             TestConstraint = new SpeechRecognitionListConstraint(new List<string>()
             { "VoiceTest"}, "Test");
-            PlayMusicConstraint = new SpeechRecognitionListConstraint(new List<string>()
-            { "Play Music"}, "PlayMusic");
+            PlayRandomMusicConstraint = new SpeechRecognitionListConstraint(new List<string>()
+            { "Play Random Music"}, "PlayRandomMusic");
             StopMusicConstraint = new SpeechRecognitionListConstraint(new List<string>()
             { "Stop Music"}, "StopMusic");
             PauseMusicConstraint = new SpeechRecognitionListConstraint(new List<string>()
             { "Pause Music"}, "PauseMusic");
+            PlayMusicConstraint = new SpeechRecognitionListConstraint(new List<string>()
+            {"Play Music"}, "PlayMusic");
             //조명명령어 추가 파이팅 ㅎ
             /**/
             TurnOnLightConstraint = new SpeechRecognitionListConstraint(new List<string>()
@@ -398,9 +404,10 @@ namespace Wimi
             speechRecognizer.Constraints.Add(ShowWeatherConstraint);
             speechRecognizer.Constraints.Add(TellWeatherConstraint);
             speechRecognizer.Constraints.Add(TestConstraint);
-            speechRecognizer.Constraints.Add(PlayMusicConstraint);
+            speechRecognizer.Constraints.Add(PlayRandomMusicConstraint);
             speechRecognizer.Constraints.Add(StopMusicConstraint);
             speechRecognizer.Constraints.Add(PauseMusicConstraint);
+            speechRecognizer.Constraints.Add(PlayMusicConstraint);
             speechRecognizer.Constraints.Add(TurnOnLightConstraint);
             speechRecognizer.Constraints.Add(TurnOffLightConstraint);
             speechRecognizer.Constraints.Add(ChangeLightModeOn);
@@ -423,9 +430,10 @@ namespace Wimi
             speechRecognizer.Constraints.Remove(ShowWeatherConstraint);
             speechRecognizer.Constraints.Remove(TellWeatherConstraint);
             speechRecognizer.Constraints.Remove(TestConstraint);
-            speechRecognizer.Constraints.Remove(PlayMusicConstraint);
+            speechRecognizer.Constraints.Remove(PlayRandomMusicConstraint);
             speechRecognizer.Constraints.Remove(StopMusicConstraint);
             speechRecognizer.Constraints.Remove(PauseMusicConstraint);
+            speechRecognizer.Constraints.Remove(PlayMusicConstraint);
             speechRecognizer.Constraints.Remove(TurnOnLightConstraint);
             speechRecognizer.Constraints.Remove(TurnOffLightConstraint);
             speechRecognizer.Constraints.Remove(ChangeLightModeOn);

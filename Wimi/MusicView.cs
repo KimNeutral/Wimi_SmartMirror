@@ -58,13 +58,13 @@ namespace Wimi
             }
         }
 
-        public async Task PlayMusic()
+        public async Task PlayRandomMusic()
         {
             //string musicName = RandomMusicName();
             Random r = new Random();
             int index = r.Next(0, lstMusic.Count - 1);
             string musicName = lstMusic[index].ToString() + contentExtension;
-            Debug.WriteLine(musicName + "를 재생합니다");
+            Debug.WriteLine(musicName + "을 랜덤 재생합니다");
             using (IRandomAccessStream s = await music.GetMusicStream(musicName))
             {
                 string type = await music.GetMusicMIME(musicName);
@@ -84,6 +84,12 @@ namespace Wimi
             Debug.WriteLine("음악 중지");
             mediaElement.Stop();
         }
+        public void PlayMusic()
+        {
+            Debug.WriteLine("음악 resume");
+            mediaElement.Play();
+        }
+
 
         /*
         public string RandomMusicName()
