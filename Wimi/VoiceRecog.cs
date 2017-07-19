@@ -143,7 +143,7 @@ namespace Wimi
                     {
                         if (tag == "Hello")
                         {
-                            SetVoice("왜 또 불러?");
+                            SetVoice("왜 불러?");
                         }
                         else if (tag == "Sleep")
                         {
@@ -235,7 +235,7 @@ namespace Wimi
             {
                 Debug.WriteLine("SpeechRecognizer_StateChanged, state = {0}", args.State);
             });
-            if (args.State.ToString() == "PauseLimitExceeded")
+            if (args.State.Equals("PauseLimitExceeded"))
             {
                 RemoveConstraints();
                 CleanSpeechRecognizer();
