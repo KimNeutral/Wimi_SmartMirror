@@ -20,9 +20,7 @@ namespace Wimi
         private DispatcherTimer timer;
 
         private bool isListening;
-        private bool iscalled = false;
-        private bool isMusicPlayed = false;
-        private int cntTime = 0;
+
         //제약조건
         private SpeechRecognitionListConstraint helloConstraint;
         private SpeechRecognitionListConstraint noticeConstraint;
@@ -69,7 +67,7 @@ namespace Wimi
             rootPage = this;
             dispatcher = CoreWindow.GetForCurrentThread().Dispatcher;
             timer.Interval = new TimeSpan(0, 0, 1);
-            timer.Tick += Timer_Tick;
+
             bool permissionGained = await AudioCapturePermissions.RequestMicrophonePermission();
             if (permissionGained)
             {
@@ -121,15 +119,6 @@ namespace Wimi
 
         }
 
-        private void Timer_Tick(object sender, object e)
-        {
-            cntTime++;
-            if(cntTime == 10)
-            {
-                iscalled = false;
-                cntTime = 0;
-            }
-        }
 
 
         private async void ContinuousRecognitionSession_ResultGenerated(SpeechContinuousRecognitionSession sender, SpeechContinuousRecognitionResultGeneratedEventArgs args)
@@ -142,98 +131,52 @@ namespace Wimi
                 tag = args.Result.Constraint.Tag;
             }
             //Debug.WriteLine(iscalled);
-            if (iscalled == false)
-            {
-                if (args.Result.Confidence == SpeechRecognitionConfidence.Medium ||
-                    args.Result.Confidence == SpeechRecognitionConfidence.High ||
-                    args.Result.Confidence == SpeechRecognitionConfidence.Low)
-                {
-                    await dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-                    {
-                        resultTextBlock.Text = string.Format("Heard: '{0}', (Tag: '{1}', Confidence: {2})", args.Result.Text, tag, args.Result.Confidence.ToString());
-                        if (!string.IsNullOrEmpty(tag))
-                        {
-                            if (tag == "Hello")
-                            {
-                                //SetVoice("왜 불러?");
-                                iscalled = true;
-                                if (!timer.IsEnabled)
-                                {
-                                    timer.Start();
-                                }
-                            }
-                        }
 
-                    });
-                }
+            if (args.Result.Confidence == SpeechRecognitionConfidence.Medium ||
+                args.Result.Confidence == SpeechRecognitionConfidence.High ||
+                args.Result.Confidence == SpeechRecognitionConfidence.Low)
+            {
+                await dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+                {
+                    resultTextBlock.Text = string.Format("Heard: '{0}', (Tag: '{1}', Confidence: {2})", args.Result.Text, tag, args.Result.Confidence.ToString());
+                    if (!string.IsNullOrEmpty(tag))
+                    {
+                        if (tag == "Hello")
+                        {
+                            SetVoice("왜 또 불러?");
+                        }
+                        else if (tag == "Sleep")
+                        {
+                            SetVoice("가서 자세요");
+                        }
+                        else if (tag == "ShowWeather")
+                        {
+                            //SetVoice("오늘의 날씨입니다.");
+                        }
+                        else if (tag == "TellWeather")
+                        {
+                            TellmeWeatherAsync();
+                        }
+                        else if (tag == "PlayMusic")
+                        {
+                            Debug.WriteLine("voicePMysic");
+                            await PlayMusic();
+
+                        }
+                        else if (tag == "PauseMusic")
+                        {
+                            Debug.WriteLine("voicePauseMusic");
+                            PauseMusic();
+                        }
+                        else if (tag == "StopMusic")
+                        {
+                            Debug.WriteLine("voiceSMusic");
+                                StopMusic();
+                        }
+                    }
+
+                });
             }
-            else if (iscalled == true)
-            {
-                await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.N‌​ormal, () => { timer.Stop(); });
-                
-                
-                cntTime = 0;
-                if (args.Result.Confidence == SpeechRecognitionConfidence.Medium ||
-                    args.Result.Confidence == SpeechRecognitionConfidence.High ||
-                    args.Result.Confidence == SpeechRecognitionConfidence.Low)
-                {
-                    await dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
-                    {
-                        resultTextBlock.Text = string.Format("Heard: '{0}', (Tag: '{1}', Confidence: {2})", args.Result.Text, tag, args.Result.Confidence.ToString());
-                        if (!string.IsNullOrEmpty(tag))
-                        {
-                            if (tag == "Hello")
-                            {
-                                SetVoice("왜 또 불러?");
-                                iscalled = true;
-                            }
-                            else if (tag == "Sleep")
-                            {
-                                SetVoice("가서 자세요");
-                                iscalled = false;
-                            }
-                            else if (tag == "ShowWeather")
-                            {
-                                SetVoice("오늘의 날씨입니다.");
-                                iscalled = false;
-                            }
-                            else if (tag == "TellWeather")
-                            {
-                                TellmeWeatherAsync();
-                                iscalled = false;
-                            }
-                            else if (tag == "PlayMusic")
-                            {
-                                Debug.WriteLine("voicePMysic");
-                                await PlayMusic();
-                                isMusicPlayed = true;
-                                iscalled = false;
-
-                            }
-                            else if (tag == "PauseMusic")
-                            {
-                                Debug.WriteLine("voicePauseMusic");
-                                if (isMusicPlayed)
-                                {
-                                    PauseMusic();
-                                    iscalled = false;
-                                    isMusicPlayed = false;
-                                }
-                            }
-                            else if (tag == "StopMusic")
-                            {
-                                Debug.WriteLine("voiceSMusic");
-                                if (isMusicPlayed)
-                                {
-                                    StopMusic();
-                                    iscalled = false;
-                                    isMusicPlayed = false;
-                                }
-                            }
-                        }
-
-                    });
-                }
                 //태그보니까 신뢰도 low라도 꽤 잘알아들어서 low도 위에 규칙에 포함함
                 /*else if (args.Result.Confidence == SpeechRecognitionConfidence.Low)
                 {
@@ -259,20 +202,20 @@ namespace Wimi
                     });
                 }/**/
                 //rejected된 인식은 그냥 폐기하는게 정신건강에 이로울듯
-                /**/else if (args.Result.Confidence == SpeechRecognitionConfidence.Rejected)
+            /**/else if (args.Result.Confidence == SpeechRecognitionConfidence.Rejected)
+            {
+                await dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                 {
-                    await dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-                    {
-                        //SetVoice("다시 말해주세요."); //Please say it again. //Tell me again. //What did you say? //Say what? //다른건 발음이 이상하게 나옴 ㅋㅋ
-                    resultTextBlock.Text = string.Format("음성인식이 실패하였습니다.");
-                    });
-                }/**/
-                else
-                {
-                    Debug.WriteLine("ContinuousRecognitionSession_ResultGenerated?????");
-                }
+                    //SetVoice("다시 말해주세요."); //Please say it again. //Tell me again. //What did you say? //Say what? //다른건 발음이 이상하게 나옴 ㅋㅋ
+                resultTextBlock.Text = string.Format("음성인식이 실패하였습니다.");
+                });
+            }/**/
+            else
+            {
+                Debug.WriteLine("ContinuousRecognitionSession_ResultGenerated?????");
             }
         }
+        
 
         private async void ContinuousRecognitionSession_Completed(SpeechContinuousRecognitionSession sender, SpeechContinuousRecognitionCompletedEventArgs args)
         {
@@ -292,6 +235,13 @@ namespace Wimi
             {
                 Debug.WriteLine("SpeechRecognizer_StateChanged, state = {0}", args.State);
             });
+            if (args.State.ToString() == "PauseLimitExceeded")
+            {
+                RemoveConstraints();
+                CleanSpeechRecognizer();
+                await InitializeRecognizer();
+                Recognize();
+            }
         }
 
 
@@ -341,6 +291,7 @@ namespace Wimi
             speechRecognizer.Constraints.Add(TestConstraint);
             speechRecognizer.Constraints.Add(PlayMusicConstraint);
             speechRecognizer.Constraints.Add(StopMusicConstraint);
+            speechRecognizer.Constraints.Add(PauseMusicConstraint);
 
         }
 
@@ -353,6 +304,7 @@ namespace Wimi
             speechRecognizer.Constraints.Remove(TestConstraint);
             speechRecognizer.Constraints.Remove(PlayMusicConstraint);
             speechRecognizer.Constraints.Remove(StopMusicConstraint);
+            speechRecognizer.Constraints.Remove(PauseMusicConstraint);
         }
     }
 }
