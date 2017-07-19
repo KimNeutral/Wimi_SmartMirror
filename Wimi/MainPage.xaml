@@ -14,30 +14,75 @@
         </Grid.ColumnDefinitions>
         <Grid Grid.Column="0">
             <StackPanel>
-            <CaptureElement x:Name="captureElement"
+                <!--시계 + 음성인식 가능여부-->
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                    <StackPanel Margin="24,0,0,0">
+                        <TextBlock x:Name="tbDateTime" Margin="0,0,0,0"
+                           FontSize="25" FontWeight="Light" FontFamily="Segoe UI"
+                           HorizontalAlignment="Left"></TextBlock>
+                        <TextBlock x:Name="tbTime" Margin="0,-5,35,0"
+                           HorizontalAlignment="Left"
+                           FontSize="120" FontWeight="Light" FontFamily="Segoe UI" Foreground="WhiteSmoke"></TextBlock>
+                    </StackPanel>
+                    <TextBlock x:Name="tbVoiceRecogReady" FontFamily="Segoe MDL2 Assets" Text="&#xEC54;" FontSize="60" VerticalAlignment="Center" Foreground="DeepPink" Margin="0,20,0,0"></TextBlock>
+                </StackPanel>
+                <!--일정-->
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="0,30,0,0">
+                    <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE1DC;"  Margin="10,0,12,0"
+                           FontSize="60" VerticalAlignment="Top" HorizontalAlignment="Center"
+                           Foreground="White"></TextBlock>
+                    <ListBox x:Name="lbScheduleInfo" HorizontalAlignment="Left" Background="Transparent" IsHitTestVisible="False">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Margin="0,-12,0,0" HorizontalAlignment="Right" Width="430">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="50"/>
+                                        <!--<ColumnDefinition Width="*"/>-->
+                                        <!--<ColumnDefinition Width="*"/>-->
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Grid.Row="0" Text="{Binding subject}" FontSize="32" FontWeight="Light" FontFamily="Segoe UI" Margin="0,0,0,0"/>
+                                    <TextBlock Grid.Row="1" Text="{Binding dt}" FontSize="22" FontWeight="Light" FontFamily="Segoe UI" Margin="0,0,0,0"/>
+                                    <!--<TextBlock Grid.Column="2" Text="{Binding detailes}" Margin="24,0,0,0"/>-->
+                                    <!--<TextBlock Grid.Column="3" Text="{Binding note}" Margin="24,0,0,0"/>-->
+                                </Grid>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </StackPanel>
+                <!--버스-->
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="0,12,0,12">
+                    <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xEB47;"  Margin="10,0,12,0"
+                           FontSize="60" VerticalAlignment="Top" HorizontalAlignment="Center"
+                           Foreground="White"></TextBlock>
+                    <ListBox x:Name="lbBusInfo" Margin="0,24,0,0" Background="Transparent" IsHitTestVisible="False">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Margin="5" HorizontalAlignment="Right" Width="430">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="50"/>
+                                        <ColumnDefinition Width="100"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <!--<ColumnDefinition Width="*"/>-->
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" FontWeight="Light" FontFamily="Segoe UI" Text="{Binding number}" Margin="0,0,0,0"/>
+                                    <TextBlock Grid.Column="1" FontWeight="Light" FontFamily="Segoe UI" Text="{Binding state}" Margin="0,0,0,0"/>
+                                    <TextBlock Grid.Column="2" FontWeight="Light" FontFamily="Segoe UI" Text="{Binding position}" Margin="0,0,0,0"/>
+                                    <!--<TextBlock Grid.Column="3" Text="{Binding note}" Margin="24,0,0,0"/>-->
+                                </Grid>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </StackPanel>
+                <!--카메라프리뷰-->
+                <CaptureElement x:Name="captureElement" Visibility="Collapsed"
                             Margin="20" Width="300"
                             VerticalAlignment="Top" 
                             HorizontalAlignment="Left"/>
-            <Button x:Name="btnCapture" Content="인식" Click="btnCapture_Click"/>
-                <ListBox x:Name="lbForcastInfo">
-                    <ListBox.ItemTemplate>
-                        <DataTemplate>
-                            <Grid Margin="5">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="100"/>
-                                    <ColumnDefinition Width="100"/>
-                                    <ColumnDefinition Width="*"/>
-                                    <!--<ColumnDefinition Width="*"/>-->
-                                </Grid.ColumnDefinitions>
-                                <TextBlock Grid.Column="0" Text="{Binding hour}" Margin="24,0,0,0"/>
-                                <TextBlock Grid.Column="1" Text="{Binding temperture}" Margin="24,0,0,0"/>
-                                <TextBlock Grid.Column="2" Text="{Binding stat}" Margin="24,0,0,0"/>
-                                <!--<TextBlock Grid.Column="3" Text="{Binding note}" Margin="24,0,0,0"/>-->
-                            </Grid>
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
-                </ListBox>
-                <ListBox x:Name="lbNewsInfo">
+                <!--임시얼굴인식버튼(Hello Or Wimi 명령으로 대체)-->
+                <Button x:Name="btnCapture" Content="인식" Click="btnCapture_Click"/>
+                <!--뉴스헤드라인-->
+                <ListBox x:Name="lbNewsInfo" Background="Transparent" IsHitTestVisible="False">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <Grid Margin="5">
@@ -45,7 +90,7 @@
                                     <ColumnDefinition Width="*"/>
                                     <!--<ColumnDefinition Width="*"/>-->
                                 </Grid.ColumnDefinitions>
-                                <TextBlock Grid.Column="0" Text="{Binding title}" Margin="24,0,0,0"/>
+                                <TextBlock Grid.Column="0" FontWeight="Light" FontFamily="Segoe UI" FontSize="20" Text="{Binding title}" Margin="24,0,0,0"/>
                                 <!--<TextBlock Grid.Column="3" Text="{Binding note}" Margin="24,0,0,0"/>-->
                             </Grid>
                         </DataTemplate>
@@ -56,84 +101,49 @@
         <!--오른쪽 영역-->
         <Grid Grid.Column="1" VerticalAlignment="Top">
             <StackPanel HorizontalAlignment="Right">
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                    <TextBlock x:Name="tbVoiceRecogReady" FontFamily="Segoe MDL2 Assets" Text="&#xEC54;" FontSize="60" VerticalAlignment="Center" Foreground="DeepPink" Margin="0,20,0,0"></TextBlock>
-                    <StackPanel Margin="24,0,0,0">
-                        <TextBlock x:Name="tbDateTime" Margin="0,0,40,0"
-                           FontSize="19"
-                           HorizontalAlignment="Right"></TextBlock>
-                        <TextBlock x:Name="tbTime" Margin="0,-5,35,0"
-                           HorizontalAlignment="Right"
-                           FontSize="86" FontWeight="Bold" FontFamily="Arial" Foreground="WhiteSmoke"></TextBlock>
-                    </StackPanel>
-                </StackPanel>
-
+                <!--날씨-->
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Loaded="tbWeather_Loaded">
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock x:Name="tbSky" 
-                               FontSize="40" />
-                        <TextBlock x:Name="tbTc" Margin="12,0,0,0" 
+                        <TextBlock x:Name="tbSky" FontFamily="Segoe UI Symbol" Text="&#xE288;"
+                               FontSize="120" />
+                        <TextBlock x:Name="tbTc" Margin="12,0,0,0" FontWeight="Light" FontFamily="Segoe UI"
                                FontSize="120"/>
-                        <TextBlock Text="℃" Margin="0,32,0,0" FontSize="42" FontWeight="Normal"/>
+                        <TextBlock Text="℃" Margin="0,32,0,0" FontWeight="Light" FontFamily="Segoe UI" FontSize="42"/>
                     </StackPanel>
 
                     <!--<TextBlock x:Name="tbWeather" FontSize="60" Loaded="tbWeather_Loaded"/>
                     <TextBlock Text="℃" FontSize="60"/>-->
                 </StackPanel>
-                <TextBlock x:Name="tbFaceName"/>
-                <TextBlock x:Name="tbEmotion"/>
+                <!--날씨예보-->
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                    <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE1DC;"  Margin="12,0,12,0"
-                           FontSize="60" VerticalAlignment="Top" HorizontalAlignment="Center"
-                           Foreground="White"></TextBlock>
-                    <ListBox x:Name="lbScheduleInfo" HorizontalAlignment="Right" Background="Transparent" IsHitTestVisible="False">
+                    <ListBox x:Name="lbForcastInfo" Background="Transparent" IsHitTestVisible="False">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
-                                <Grid Margin="0,-12,0,0" HorizontalAlignment="Left" Width="430">
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="Auto"/>
-                                        <RowDefinition Height="50"/>
-                                        <!--<ColumnDefinition Width="*"/>-->
-                                        <!--<ColumnDefinition Width="*"/>-->
-                                    </Grid.RowDefinitions>
-                                    <TextBlock Grid.Row="0" Text="{Binding subject}" FontSize="32" FontWeight="Bold" Margin="0,0,0,0"/>
-                                    <TextBlock Grid.Row="1" Text="{Binding dt}" FontSize="22" FontWeight="SemiBold" Margin="0,0,0,0"/>
-                                    <!--<TextBlock Grid.Column="2" Text="{Binding detailes}" Margin="24,0,0,0"/>-->
-                                    <!--<TextBlock Grid.Column="3" Text="{Binding note}" Margin="24,0,0,0"/>-->
-                                </Grid>
-                            </DataTemplate>
-                        </ListBox.ItemTemplate>
-                    </ListBox>
-                </StackPanel>
-
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,12,0,12">
-                    <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xEB47;"  Margin="12,0,12,0"
-                           FontSize="60" VerticalAlignment="Top" HorizontalAlignment="Center"
-                           Foreground="White"></TextBlock>
-                    <ListBox x:Name="lbBusInfo" Margin="0,24,0,0" Background="Transparent" IsHitTestVisible="False">
-                        <ListBox.ItemTemplate>
-                            <DataTemplate>
-                                <Grid Margin="5" HorizontalAlignment="Left" Width="430">
+                                <Grid Margin="10">
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="50"/>
-                                        <ColumnDefinition Width="100"/>
-                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="120"/>
+                                        <ColumnDefinition Width="120"/>
+                                        <ColumnDefinition Width="120"/>
                                         <!--<ColumnDefinition Width="*"/>-->
                                     </Grid.ColumnDefinitions>
-                                    <TextBlock Grid.Column="0" Text="{Binding number}" Margin="0,0,0,0"/>
-                                    <TextBlock Grid.Column="1" Text="{Binding state}" Margin="0,0,0,0"/>
-                                    <TextBlock Grid.Column="2" Text="{Binding position}" Margin="0,0,0,0"/>
+                                    <TextBlock FontWeight="Light" FontFamily="Segoe UI" FontSize="20" Grid.Column="0" Text="{Binding hour}" Margin="24,0,0,0"/>
+                                    <TextBlock FontWeight="Light" FontFamily="Segoe UI" FontSize="20" Grid.Column="1" Text="{Binding temperture}" Margin="24,0,0,0"/>
+                                    <TextBlock FontWeight="Light" FontFamily="Segoe UI" FontSize="20" Grid.Column="2" Text="{Binding stat}" Margin="24,0,0,0"/>
                                     <!--<TextBlock Grid.Column="3" Text="{Binding note}" Margin="24,0,0,0"/>-->
                                 </Grid>
                             </DataTemplate>
                         </ListBox.ItemTemplate>
                     </ListBox>
                 </StackPanel>
+                <!--얼굴인식누구-->
+                <TextBlock x:Name="tbFaceName"/>
+                <!--얼굴인식감정-->
+                <TextBlock x:Name="tbEmotion"/>
             </StackPanel>
         </Grid>
 
         <TextBlock x:Name="resultTextBlock" Margin="30" Grid.Column="1" 
-                   FontFamily="Segoe UI Light" FontSize="24" Foreground="LightCyan" FontWeight="Bold"
+                   FontWeight="Light" FontFamily="Segoe UI" FontSize="24" Foreground="LightCyan"
                    HorizontalAlignment="Right"
                    VerticalAlignment="Bottom"/>
 

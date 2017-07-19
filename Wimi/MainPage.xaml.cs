@@ -45,12 +45,14 @@ namespace Wimi
             initSynthesizer();
             InitializeRecognizer();
 
+            //HueInit();
+
             await Webcam.InitializeCameraAsync();
             captureElement.Source = Webcam.mediaCapture;
             await Webcam.StartCameraPreview();
 
-            await face.InitListAsync();
-            await InitFaceRec();
+            //await face.InitListAsync();
+            //await InitFaceRec();
 
             GetBusInfo();
 #if PC_MODE
