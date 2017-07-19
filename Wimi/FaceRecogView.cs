@@ -41,8 +41,8 @@ namespace Wimi
             {
                 try
                 {
-                    await DetectFace(captured);
-                    await DetectEmotion(captured);
+                    //await DetectFace(captured);
+                    //await DetectEmotion(captured);
                 }
                 catch (Exception ex)
                 {
@@ -77,7 +77,7 @@ namespace Wimi
         {
             using (Stream s = await captured.OpenStreamForReadAsync())
             {
-                Dictionary<Guid, Emotion> emotions = await face.GetEmotionByGuidAsync(null, s);
+                Dictionary<Guid, Emotion> emotions = await face.GetEmotionByGuidAsync(s);
                 foreach (var emo in emotions)
                 {
                     await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
@@ -91,17 +91,18 @@ namespace Wimi
         private async void btnCapture_Click(object sender, RoutedEventArgs e)
         {
             StorageFile captured = await Webcam.CapturePhoto();
+            await DetectFace(captured);
 
-            using (Stream s = await captured.OpenStreamForReadAsync())
-            {
-                Dictionary<Guid, Emotion> emotions = await face.GetEmotionByGuidAsync(null, s);
-                foreach (var emo in emotions)
-                {
-                    tbEmotion.Text = emo.Value.ToString();
-                }
-            }
+            //using (Stream s = await captured.OpenStreamForReadAsync())
+            //{
+            //    Dictionary<Guid, Emotion> emotions = await face.GetEmotionByGuidAsync(s);
+            //    foreach (var emo in emotions)
+            //    {
+            //        tbEmotion.Text = emo.Value.ToString();
+            //    }
+            //}
 
-            await PlayMusicByEmotionAsync(EmotionUtil.GetEmotionByString(tbEmotion.Text));
+            //await PlayMusicByEmotionAsync(EmotionUtil.GetEmotionByString(tbEmotion.Text));
         }
     }
 }
