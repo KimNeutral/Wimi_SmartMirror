@@ -9,14 +9,11 @@ using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
-using DSHue;
 
 namespace Wimi
 {
     public partial class MainPage : Page
     {
-        Hue HueControl = new Hue(); //Hue제어 하기 위해 생성
-        bool HueAtrBoll = false; //Hue제어 할때 await를
 
         private MainPage rootPage;
         private CoreDispatcher dispatcher; //UI쓰레드 화면 업데이트를 위해 필요.
@@ -210,40 +207,40 @@ namespace Wimi
                                 StopMusic();
                                 break;
                             case "LightModeOn":
-                                HueAtrBoll = await HueControl.HueEffect(1);
+                                HueAtrBool = await HueControl.HueEffect(1);
                                 break;
                             case "LightModeOff":
-                                HueAtrBoll = await HueControl.HueEffect(0);
+                                HueAtrBool = await HueControl.HueEffect(0);
                                 break;
                             case "TurnOn":
-                                HueAtrBoll = await HueControl.HueLightOn();
+                                HueAtrBool = await HueControl.HueLightOn();
                                 break;
                             case "TurnOff":
-                                HueAtrBoll = await HueControl.HueLightOff();
+                                HueAtrBool = await HueControl.HueLightOff();
                                 break;
                             case "RedColor":
-                                HueAtrBoll = await HueControl.SetColor("red");
+                                HueAtrBool = await HueControl.SetColor("red");
                                 break;
                             case "OrangeColor":
-                                HueAtrBoll = await HueControl.SetColor("orange");
+                                HueAtrBool = await HueControl.SetColor("orange");
                                 break;
                             case "YellowColor":
-                                HueAtrBoll = await HueControl.SetColor("yellow");
+                                HueAtrBool = await HueControl.SetColor("yellow");
                                 break;
                             case "GreenColor":
-                                HueAtrBoll = await HueControl.SetColor("green");
+                                HueAtrBool = await HueControl.SetColor("green");
                                 break;
                             case "BlueColor":
-                                HueAtrBoll = await HueControl.SetColor("blue");
+                                HueAtrBool = await HueControl.SetColor("blue");
                                 break;
                             case "PurpleColor":
-                                HueAtrBoll = await HueControl.SetColor("purple");
+                                HueAtrBool = await HueControl.SetColor("purple");
                                 break;
                             case "PinkColor":
-                                HueAtrBoll = await HueControl.SetColor("pink");
+                                HueAtrBool = await HueControl.SetColor("pink");
                                 break;
                             case "WhiteColor":
-                                HueAtrBoll = await HueControl.SetColor("white");
+                                HueAtrBool = await HueControl.SetColor("white");
                                 break;
 
                         }
