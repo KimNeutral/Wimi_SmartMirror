@@ -24,7 +24,7 @@ namespace DSHue
         /// <summary>
         /// Hue를 사용할수있게 세팅 과 불끄기
         /// </summary>
-        public async void Init()
+        public async Task<bool> Init()
         {
             if (client == null)
             {
@@ -36,6 +36,7 @@ namespace DSHue
                 command.TurnOff();
                 await client.SendCommandAsync(command);
             }
+            return true;
         }
 
         /// <summary>
@@ -58,25 +59,25 @@ namespace DSHue
                     command.TurnOn().SetColor(new RGBColor("FF0000"));
                     break;
                 case Emotion.contempt:
-                    command.TurnOn().SetColor(new RGBColor("FF00BF"));
+                    command.TurnOn().SetColor(new RGBColor("00FFF7"));
                     break;
                 case Emotion.disgust:
-                    command.TurnOn().SetColor(new RGBColor("013ADF"));
+                    command.TurnOn().SetColor(new RGBColor("0009FF"));
                     break;
                 case Emotion.fear:
-                    command.TurnOn().SetColor(new RGBColor("A901DB"));
+                    command.TurnOn().SetColor(new RGBColor("000000"));
                     break;
                 case Emotion.happiness:
-                    command.TurnOn().SetColor(new RGBColor("00FF00"));
+                    command.TurnOn().SetColor(new RGBColor("FFFC00"));
                     break;
                 case Emotion.neutral:
-                    command.TurnOn().SetColor(new RGBColor("01DF01"));
+                    command.TurnOn().SetColor(new RGBColor("FAFF8D"));
                     break;
                 case Emotion.sadness:
-                    command.TurnOn().SetColor(new RGBColor("B40431"));
+                    command.TurnOn().SetColor(new RGBColor("11FF00"));
                     break;
                 case Emotion.surprise:
-                    command.TurnOn().SetColor(new RGBColor("FF0080"));
+                    command.TurnOn().SetColor(new RGBColor("FF00F3"));
                     break;
             }
             await client.SendCommandAsync(command);
