@@ -15,17 +15,23 @@ namespace Wimi
 {
     public partial class MainPage : Page
     {
-        const string contentExtension = ".mp3";
+        const string contentExtension = ".mp4";
         Music music = new Music();
-        //string[] MusicNames = { "김필", "내 눈에만 보여", "너무너무너무", "뉴페이스",
-        //                        "라디", "반달", "버즈", "불타오르네", "삐딱하게", "사랑에 빠졌을 때",
-        //                        "소란했던 시절에", "소유", "쓰담쓰담", "아웃사이드", "오이오",
-        //                        "응급실", "쩔어", "톰보이", "호구", "아는사람 얘기" };
         ArrayList lstMusic = new ArrayList();
-        //bool[] random = new bool[20];
 
         private void initMusicList()
         {
+#if true
+            lstMusic.Add("New Face");
+            lstMusic.Add("SIGNAL");
+            lstMusic.Add("Rookie");
+            lstMusic.Add("야생화");
+            lstMusic.Add("남이 될 수 있을까");
+            lstMusic.Add("LA SONG");
+            lstMusic.Add("Beautiful");
+            lstMusic.Add("비도 오고 그래서");
+            lstMusic.Add("미치게 만들어");
+#else
             lstMusic.Add("김필");
             lstMusic.Add("내 눈에만 보여");
             lstMusic.Add("너무너무너무");
@@ -45,6 +51,7 @@ namespace Wimi
             lstMusic.Add("쩔어");
             lstMusic.Add("호구");
             lstMusic.Add("아는사람 얘기");
+#endif
         }
 
         public async Task PlayMusicByEmotionAsync(Emotion emotion)
@@ -89,34 +96,5 @@ namespace Wimi
             //Debug.WriteLine("음악 resume");
             mediaElement.Play();
         }
-
-
-        /*
-        public string RandomMusicName()
-        {
-            Random ran = new Random();
-            bool flag = false;
-            foreach (bool v in random)
-            {
-                if (!v)
-                {
-                    flag = true;
-                }
-            }
-            if (!flag)
-            {
-                random = new bool[20];
-            }
-
-            int num = 1;
-            do
-            {
-                num = ran.Next();
-                num = (num % 20);
-            } while (random[num] == true);
-
-            return MusicNames[num] + ".mp3";
-        }
-        */
     }
 }
