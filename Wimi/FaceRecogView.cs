@@ -9,6 +9,7 @@ using System.IO;
 using DSEmotion;
 using System.Threading.Tasks;
 using Windows.UI.Core;
+using System.Diagnostics;
 
 namespace Wimi
 {
@@ -38,8 +39,15 @@ namespace Wimi
 
             if(captured != null)
             {
-                await DetectFace(captured);
-                await DetectEmotion(captured);
+                try
+                {
+                    await DetectFace(captured);
+                    await DetectEmotion(captured);
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine(ex.Message);
+                }
             }
         }
 

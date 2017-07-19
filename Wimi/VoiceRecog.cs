@@ -19,14 +19,17 @@ namespace Wimi
 
         private bool isListening;
         private bool iscalled = false;
-
+        private bool isMusicPlayed = false;
         private int cntTime = 0;
         //제약조건
         private SpeechRecognitionListConstraint helloConstraint;
         private SpeechRecognitionListConstraint noticeConstraint;
         private SpeechRecognitionListConstraint ShowWeatherConstraint;
         private SpeechRecognitionListConstraint TellWeatherConstraint;
-
+        private SpeechRecognitionListConstraint TestConstraint;
+        private SpeechRecognitionListConstraint PlayMusicConstraint;
+        private SpeechRecognitionListConstraint StopMusicConstraint;
+        private SpeechRecognitionListConstraint PauseMusicConstraint;
 
         public async void Recognize()
         {
@@ -146,7 +149,7 @@ namespace Wimi
                         resultTextBlock.Text = string.Format("Heard: '{0}', (Tag: '{1}', Confidence: {2})", args.Result.Text, tag, args.Result.Confidence.ToString());
                         if (!string.IsNullOrEmpty(tag))
                         {
-                            if (tag == "hello")
+                            if (tag == "Hello")
                             {
                                 //SetVoice("왜 불러?");
                                 iscalled = true;
@@ -164,36 +167,64 @@ namespace Wimi
             {
                 await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.N‌​ormal, () => { timer.Stop(); });
                 
-                iscalled = false;
+                
                 cntTime = 0;
                 if (args.Result.Confidence == SpeechRecognitionConfidence.Medium ||
                     args.Result.Confidence == SpeechRecognitionConfidence.High ||
                     args.Result.Confidence == SpeechRecognitionConfidence.Low)
                 {
-                    await dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                    await dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
                     {
                         resultTextBlock.Text = string.Format("Heard: '{0}', (Tag: '{1}', Confidence: {2})", args.Result.Text, tag, args.Result.Confidence.ToString());
                         if (!string.IsNullOrEmpty(tag))
                         {
-                            if (tag == "hello")
+                            if (tag == "Hello")
                             {
                                 SetVoice("왜 또 불러?");
                                 iscalled = true;
                             }
-                            else if (tag == "sleep")
+                            else if (tag == "Sleep")
                             {
                                 SetVoice("가서 자세요");
                                 iscalled = false;
                             }
-                            /*else if(tag == "ShowWeather")
+                            else if (tag == "ShowWeather")
                             {
                                 SetVoice("오늘의 날씨입니다.");
                                 iscalled = false;
-                            }/**/
-                            else if(tag == "TellWeather")
+                            }
+                            else if (tag == "TellWeather")
                             {
                                 TellmeWeatherAsync();
                                 iscalled = false;
+                            }
+                            else if (tag == "PlayMusic")
+                            {
+                                Debug.WriteLine("voicePMysic");
+                                await PlayMusic();
+                                isMusicPlayed = true;
+                                iscalled = false;
+
+                            }
+                            else if (tag == "PauseMusic")
+                            {
+                                Debug.WriteLine("voicePauseMusic");
+                                if (isMusicPlayed)
+                                {
+                                    PauseMusic();
+                                    iscalled = false;
+                                    isMusicPlayed = false;
+                                }
+                            }
+                            else if (tag == "StopMusic")
+                            {
+                                Debug.WriteLine("voiceSMusic");
+                                if (isMusicPlayed)
+                                {
+                                    StopMusic();
+                                    iscalled = false;
+                                    isMusicPlayed = false;
+                                }
                             }
                         }
 
@@ -283,20 +314,30 @@ namespace Wimi
         {
             //{"들을 내용1", "내용2"},"태그이름");
             helloConstraint = new SpeechRecognitionListConstraint(new List<string>()
-            { "wimi", "Hello" }, "hello");
+            { "wimi", "Hello" }, "Hello");
             noticeConstraint = new SpeechRecognitionListConstraint(new List<string>()
-            { "I am tired" ,"i'm too tired"}, "sleep");
+            { "I am tired" ,"i'm too tired"}, "Sleep");
             ShowWeatherConstraint = new SpeechRecognitionListConstraint(new List<string>()
-            { "show me forecast", "show me Weather", "show me weather forecast","nalssi boyeojwo"}, "ShowWeather");
+            { "show me forecast", "show me Weather", "show me weather forecast" }, "ShowWeather");
             TellWeatherConstraint = new SpeechRecognitionListConstraint(new List<string>()
-            { "Tell me forecast", "Tell me Weather", "Tell me weather forecast","nalssi allyeojwo","today Weather"}, "TellWeather");
-
-
+            { "Tell me forecast", "Tell me Weather", "Tell me weather forecast","today Weather"}, "TellWeather");
+            TestConstraint = new SpeechRecognitionListConstraint(new List<string>()
+            { "VoiceTest"}, "Test");
+            PlayMusicConstraint = new SpeechRecognitionListConstraint(new List<string>()
+            { "Play Music"}, "PlayMusic");
+            StopMusicConstraint = new SpeechRecognitionListConstraint(new List<string>()
+            { "Stop Music"}, "StopMusic");
+            PauseMusicConstraint = new SpeechRecognitionListConstraint(new List<string>()
+            { "Pause Music"}, "PauseMusic");
 
             speechRecognizer.Constraints.Add(helloConstraint);
             speechRecognizer.Constraints.Add(noticeConstraint);
             speechRecognizer.Constraints.Add(ShowWeatherConstraint);
             speechRecognizer.Constraints.Add(TellWeatherConstraint);
+            speechRecognizer.Constraints.Add(TestConstraint);
+            speechRecognizer.Constraints.Add(PlayMusicConstraint);
+            speechRecognizer.Constraints.Add(StopMusicConstraint);
+
         }
 
         public void RemoveConstraints()
@@ -305,6 +346,9 @@ namespace Wimi
             speechRecognizer.Constraints.Remove(noticeConstraint);
             speechRecognizer.Constraints.Remove(ShowWeatherConstraint);
             speechRecognizer.Constraints.Remove(TellWeatherConstraint);
+            speechRecognizer.Constraints.Remove(TestConstraint);
+            speechRecognizer.Constraints.Remove(PlayMusicConstraint);
+            speechRecognizer.Constraints.Remove(StopMusicConstraint);
         }
     }
 }
