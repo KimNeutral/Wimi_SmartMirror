@@ -13,7 +13,7 @@ namespace Wimi
 
         async Task<string> GetCurTempertureAsync()
         {
-            SKWeather.Minutely min = await weather.GetCurrentWeatherAsync();
+            SKWeatherHourly.Hourly min = await weather.GetCurrentWeatherHourlyAsync();
             string temp = min.temperature.tc;
             temp = temp.Substring(0, temp.Length - 1);
             return temp;

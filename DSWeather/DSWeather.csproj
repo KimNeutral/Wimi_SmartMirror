@@ -107,9 +107,11 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Forecast.cs" />
+    <Compile Include="SKWeatherHourly.cs" />
     <Compile Include="Weather.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SKWeather.cs" />
+    <Compile Include="WeatherHourly.cs" />
     <EmbeddedResource Include="Properties\DSWeather.rd.xml" />
   </ItemGroup>
   <ItemGroup>
