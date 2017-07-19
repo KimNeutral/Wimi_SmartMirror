@@ -97,7 +97,7 @@ namespace Wimi
                 {
                     await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                     {
-                        tbFaceName.Text = "인식한 사람이 없음";
+                        tbFaceName.Text = "인식되는 사람이 없음";
                     });
                     return false;
                 }
