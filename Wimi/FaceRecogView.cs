@@ -47,7 +47,14 @@ namespace Wimi
                 {
                     if(await DetectFace(captured))
                     {
-                        CntErr = 0;
+                        if (CurrentUser != tbFaceName.Text)
+                        {
+                            CntErr++;
+                        }
+                        else
+                        {
+                            CntErr = 0;
+                        }
                     } else
                     {
                         CntErr++;

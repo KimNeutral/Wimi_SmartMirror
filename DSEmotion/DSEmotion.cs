@@ -56,7 +56,7 @@ namespace DSEmotion
                 case Emotion.happiness:
                     return "행복해보여요.";
                 case Emotion.neutral:
-                    return "평온해보이네요.";
+                    return "";
                 case Emotion.sadness:
                     return "슬픈일 있으신가요?";
                 case Emotion.surprise:

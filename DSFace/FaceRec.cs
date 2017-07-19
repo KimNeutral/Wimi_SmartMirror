@@ -291,8 +291,9 @@ namespace DSFace
                     if(identifyResult.Candidates[0].Confidence > 0.6)
                     {
                         var candidateId = identifyResult.Candidates[0].PersonId;
-                        var person = DPerson.GetDPersonByGuidFromList(Persons, candidateId);
-                        if(person != null)
+                        
+                        var person = await GetPersonAsync(candidateId);
+                        if (person != null)
                         {
                             name.Add(person.Name);
                         }
