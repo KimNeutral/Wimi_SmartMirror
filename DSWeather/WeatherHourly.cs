@@ -16,7 +16,9 @@ namespace DSWeather
 
         public async Task<Hourly> GetCurrentWeatherHourlyAsync()
         {
-            HttpResponseMessage response = await httpClient.GetAsync(resourceUri, cts.Token);
+            string hourlyResource = "http://apis.skplanetx.com/weather/current/hourly?lon=&village=구지면&county=달성군&lat=&city=대구&version=1";
+            Uri hourlyUri = new Uri(hourlyResource);
+            HttpResponseMessage response = await httpClient.GetAsync(hourlyUri, cts.Token);
 
             try
             {

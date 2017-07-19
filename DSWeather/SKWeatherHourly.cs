@@ -39,7 +39,7 @@ namespace DSWeather
             public Sky sky { get; set; }
             public Temperature temperature { get; set; }
             public string humidity { get; set; }
-            public Grid gird { get; set; }
+            public Grid grid { get; set; }
         }
 
     }
