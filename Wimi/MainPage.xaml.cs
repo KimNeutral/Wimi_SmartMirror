@@ -3,6 +3,7 @@ using System;
 using System.Diagnostics;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Navigation;
 
 //test
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
@@ -47,8 +48,8 @@ namespace Wimi
             captureElement.Source = Webcam.mediaCapture;
             await Webcam.StartCameraPreview();
 
-            //await face.InitListAsync();
-            //await InitFaceRec();
+            await face.InitListAsync();
+            await InitFaceRec();
 
             GetBusInfo();
 #if PC_MODE
@@ -59,6 +60,12 @@ namespace Wimi
 
         }
 
+        protected async override void OnNavigatedFrom(NavigationEventArgs e)
+        {
+            base.OnNavigatedFrom(e);
 
+            await Webcam.StopCameraPreview();
+            Webcam.mediaCapture.Dispose();
+        }
     }
 }
