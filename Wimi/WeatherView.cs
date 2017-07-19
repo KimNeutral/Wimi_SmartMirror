@@ -25,10 +25,31 @@ namespace Wimi
             tbTc.Text = temperature;
         }
 
-        async void GetForecastInfo()
+        async Task GetForecastInfo()
         {
             lForcastInfo = await weather.GetForecastInfoByCountAsync();
             lbForcastInfo.ItemsSource = lForcastInfo;
+        }
+
+        async Task<int> CheckIfRainyAsync()
+        {
+            if(lForcastInfo.Count <= 0)
+            {
+                await GetForecastInfo();
+            }
+            int hour = 0;
+
+            foreach(var forcast in lForcastInfo)
+            {
+                string stat = forcast.stat;
+                if (stat.Equals("비"))
+                {
+                    hour = forcast.hour;
+                    break;
+                }
+            }
+
+            return hour;
         }
     }
 }

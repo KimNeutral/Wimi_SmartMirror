@@ -120,7 +120,7 @@ namespace DSFace
             }
         }
 
-        public async Task<Dictionary<Guid, DSEmotion.Emotion>> GetEmotionByGuidAsync(Face[] faces = null, Stream stream = null)
+        public async Task<Dictionary<Guid, DSEmotion.Emotion>> GetEmotionByGuidAsync(Stream stream = null, Face[] faces = null)
         {
             try
             {
@@ -238,13 +238,17 @@ namespace DSFace
             }
         }
 
-        public async Task<IdentifyResult[]> IdentifyAsync(Stream stream)
+        public async Task<IdentifyResult[]> IdentifyAsync(Stream stream = null, Face[] faces = null)
         {
-            if (!isInit)
+            if (!isInit || (stream == null && faces == null))
             {
                 return new IdentifyResult[0];
             }
-            var faces = await _faceServiceClient.DetectAsync(stream);
+
+            if (faces == null)
+            {
+                faces = await _faceServiceClient.DetectAsync(stream);
+            }
             var faceIds = faces.Select(face => face.FaceId).ToArray();
 
             try
@@ -259,19 +263,28 @@ namespace DSFace
             }
         }
 
-        public async Task<string[]> GetIdentifiedNameAsync(Stream stream)
+        public async Task<string[]> GetIdentifiedNameAsync(Stream stream = null, Face[] faces = null)
         {
-            if (!isInit)
+            if (!isInit || (stream == null && faces == null))
             {
                 return new string[0];
             }
-            IdentifyResult[] a = await IdentifyAsync(stream);
+            IdentifyResult[] results = null;
+            if (faces == null)
+            {
+                results = await IdentifyAsync(stream);
+            } else if(stream == null)
+            {
+                results = await IdentifyAsync(null, faces);
+            }
+            
             List<string> name = new List<string>();
-            foreach (IdentifyResult identifyResult in a)
+            foreach (IdentifyResult identifyResult in results)
             {
                 if (identifyResult.Candidates.Length == 0)
                 {
                     Debug.WriteLine("No one identified");
+                    name.Add("외부인");
                 }
                 else
                 {
