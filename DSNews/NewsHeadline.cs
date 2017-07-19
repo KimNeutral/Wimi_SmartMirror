@@ -17,7 +17,6 @@ namespace DSNews
         {
            
             List<News> result = new List<News>(); 
-            int n = 0;
             XmlDocument xmld = new XmlDocument();
             try
             {

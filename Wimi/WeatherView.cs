@@ -24,6 +24,12 @@ namespace Wimi
             return temp;
         }
 
+        private void ShowForecast()
+        {
+            ClearLeftPanel();
+            lbForcastInfo.Visibility = Visibility.Visible;
+        }
+
         private async void tbWeather_Loaded(object sender, RoutedEventArgs e)
         {
             string temperature = await GetCurTempertureAsync();
@@ -112,7 +118,7 @@ namespace Wimi
 
         async Task GetForecastInfo()
         {
-            lForcastInfo = await weather.GetForecastInfoByCountAsync(2);
+            lForcastInfo = await weather.GetForecastInfoByCountAsync(3);
             lbForcastInfo.ItemsSource = lForcastInfo;
         }
 

@@ -18,5 +18,11 @@ namespace Wimi
             lNewsList = await news.GetHeadlineAsync();
             lbNewsInfo.ItemsSource = lNewsList;
         }
+
+        private void ShowNews()
+        {
+            ClearLeftPanel();
+            lbNewsInfo.Visibility = Windows.UI.Xaml.Visibility.Visible;
+        }
     }
 }

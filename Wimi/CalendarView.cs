@@ -24,11 +24,17 @@ namespace Wimi
                 //    appointment.StartTime.DateTime.Month,
                 //    appointment.StartTime.DateTime.Day,
                 //    appointment.StartTime.DateTime.ti());
-                string str = appointment.StartTime.DateTime.ToString("yyyy년 M월 d일 h:mm");
-                info.dt = str;
-                info.location = appointment.Location;
-                info.details = appointment.Details;
-                lScheduleInfo.Add(info);
+                string now = DateTime.Now.ToString("yyyyMMdd");
+                string calstr = appointment.StartTime.DateTime.ToString("yyyyMMdd");
+                if (now.Equals(calstr))
+                {
+                    string str = appointment.StartTime.DateTime.ToString("htt");
+                    info.dt = str;
+                    info.location = appointment.Location;
+                    info.details = appointment.Details;
+                    lScheduleInfo.Add(info);
+                }
+
             }
 
             lbScheduleInfo.ItemsSource = lScheduleInfo;

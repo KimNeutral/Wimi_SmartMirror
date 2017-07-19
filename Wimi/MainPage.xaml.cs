@@ -27,6 +27,13 @@ namespace Wimi
             ClockTimer.Start();
         }
 
+        private void ClearLeftPanel()
+        {
+            lbBusInfo.Visibility = Visibility.Collapsed;
+            lbForcastInfo.Visibility = Visibility.Collapsed;
+            lbNewsInfo.Visibility = Visibility.Collapsed;
+        }
+
         private void ClockTimer_Tick(object sender, object e)
         {
             SetTime(); // tbClock.Text = DateTime.Now.ToString("HH:mm");
@@ -35,8 +42,8 @@ namespace Wimi
         public void SetTime()
         {
             DateTime dt = DateTime.Now;
-            tbDateTime.Text = dt.ToString("D");
-            tbTime.Text = string.Format("{0:D2}:{1:D2}", dt.Hour, dt.Minute);
+            tbDateTime.Text = dt.ToString("ddd, MMM d") + "th";
+            tbTime.Text = dt.ToString("h:mmtt");
         }
 
         private async void Grid_Loaded(object sender, RoutedEventArgs e)

@@ -37,7 +37,15 @@ namespace DSWeather
             {
                 ForecastInfo info = new ForecastInfo();
                 info.hour = int.Parse(hourList[i].InnerText);
-                info.hourStr = info.hour + "시";
+                if(info.hour > 12)
+                {
+                    info.hourStr = info.hour - 12 + "PM";
+                }
+                else
+                {
+                    info.hourStr = info.hour + "AM";
+                }
+                
                 info.temperture = double.Parse(tempList[i].InnerText);
                 info.stat = weatherList[i].InnerText;
                 info.statSymbol = GetSymbol(info.stat);
@@ -52,7 +60,7 @@ namespace DSWeather
             string sky = "";
             switch (stat)
             {
-                case "SKY_O01":
+                case "맑음":
                     sky = "\uE284";
                     //맑음
                     break;
@@ -60,19 +68,19 @@ namespace DSWeather
                     sky = "\uE286";
                     //구름 조금
                     break;
-                case "SKY_O03":
+                case "구름 많음":
                     sky = "\uE285";
                     //구름 많음
                     break;
-                case "SKY_O04":
+                case "비":
                     sky = "\uE288";
                     //비
                     break;
-                case "SKY_O05":
+                case "눈":
                     sky = "\uE28A";
                     //눈
                     break;
-                case "SKY_A11":
+                case "낙뢰":
                     sky = "\uE289";
                     //낙뢰
                     break;

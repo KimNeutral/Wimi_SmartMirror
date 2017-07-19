@@ -38,5 +38,11 @@ namespace Wimi
                 lbBusInfo.ItemsSource = lBusInfo;
             }
         }
+
+        private void ShowBus()
+        {
+            ClearLeftPanel();
+            lbBusInfo.Visibility = Windows.UI.Xaml.Visibility.Visible;
+        }
     }
 }
