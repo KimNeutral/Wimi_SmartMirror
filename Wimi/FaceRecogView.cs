@@ -86,10 +86,9 @@ namespace Wimi
                             }
                             else
                             {
-                                comment = "안녕하세요 손님이시군요.";
+                                comment = "안녕하세요, 손님이시군요.";
                             }
                         }
-                        faceTimer.Start();
                     });
                     return true;
                 }
@@ -118,8 +117,10 @@ namespace Wimi
                         {
                             string cmt = EmotionUtil.GetCommentByEmotion(emo.Value);
                             comment += cmt;
-                        } 
+                            faceTimer.Start();
+                        }
                     });
+                    break;
                 }
             }
         }
@@ -136,6 +137,7 @@ namespace Wimi
                 comment = "인식하지 못했어요. 다시 한번 해주세요.";
             }
             SetVoice(comment);
+            
             return suc;
         }
 
