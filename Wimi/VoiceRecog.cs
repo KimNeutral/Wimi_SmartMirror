@@ -143,7 +143,7 @@ namespace Wimi
                     {
                         if (tag == "Hello")
                         {
-                            SetVoice("왜 또 불러?");
+                            SetVoice("왜 불러?");
                         }
                         else if (tag == "Sleep")
                         {
