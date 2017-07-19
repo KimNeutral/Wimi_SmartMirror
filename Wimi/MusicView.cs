@@ -9,6 +9,7 @@ using DSEmotion;
 using System.IO;
 using Windows.Storage.Streams;
 using System.Collections;
+using System.Diagnostics;
 
 namespace Wimi
 {
@@ -63,6 +64,7 @@ namespace Wimi
             Random r = new Random();
             int index = r.Next(0, lstMusic.Count - 1);
             string musicName = lstMusic[index].ToString() + contentExtension;
+            Debug.WriteLine(musicName + "를 재생합니다");
             using (IRandomAccessStream s = await music.GetMusicStream(musicName))
             {
                 string type = await music.GetMusicMIME(musicName);
@@ -73,11 +75,13 @@ namespace Wimi
 
         public void PauseMusic()
         {
+            Debug.WriteLine("음악 일시중지");
             mediaElement.Pause();
         }
 
         public void StopMusic()
         {
+            Debug.WriteLine("음악 중지");
             mediaElement.Stop();
         }
 
