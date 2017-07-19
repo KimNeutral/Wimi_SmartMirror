@@ -177,8 +177,8 @@ namespace Wimi
             //Debug.WriteLine(iscalled);
 
             if (args.Result.Confidence == SpeechRecognitionConfidence.Medium ||
-                args.Result.Confidence == SpeechRecognitionConfidence.High/* ||
-                args.Result.Confidence == SpeechRecognitionConfidence.Low/**/)
+                args.Result.Confidence == SpeechRecognitionConfidence.High ||
+                args.Result.Confidence == SpeechRecognitionConfidence.Low)
             {
                 await dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
                 {
