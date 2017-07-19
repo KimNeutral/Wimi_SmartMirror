@@ -77,6 +77,7 @@ namespace Wimi
                     speechRecognizer.ContinuousRecognitionSession.Completed -= ContinuousRecognitionSession_Completed;
                     speechRecognizer.ContinuousRecognitionSession.ResultGenerated -= ContinuousRecognitionSession_ResultGenerated;
                     speechRecognizer.StateChanged -= SpeechRecognizer_StateChanged;
+                    speechRecognizer.RecognitionQualityDegrading -= SpeechRecognizer_RecognitionQualityDegrading;
 
                     speechRecognizer.Dispose();
                     speechRecognizer = null;
@@ -88,7 +89,7 @@ namespace Wimi
                 //speechRecognizer.Timeouts.EndSilenceTimeout = new TimeSpan(1, 0, 0);
                 //speechRecognizer.Timeouts.InitialSilenceTimeout = new TimeSpan(1, 0, 0);
                 //speechRecognizer.Timeouts.BabbleTimeout = new TimeSpan(1, 0, 0);
-                speechRecognizer.ContinuousRecognitionSession.AutoStopSilenceTimeout = TimeSpan.MaxValue; //new TimeSpan(1, 0, 0);
+                //speechRecognizer.ContinuousRecognitionSession.AutoStopSilenceTimeout = TimeSpan.MaxValue; //new TimeSpan(1, 0, 0);
 #endif
                 speechRecognizer.StateChanged += SpeechRecognizer_StateChanged;
 
@@ -103,6 +104,8 @@ namespace Wimi
 
                 speechRecognizer.ContinuousRecognitionSession.Completed += ContinuousRecognitionSession_Completed;
                 speechRecognizer.ContinuousRecognitionSession.ResultGenerated += ContinuousRecognitionSession_ResultGenerated;
+                speechRecognizer.RecognitionQualityDegrading += SpeechRecognizer_RecognitionQualityDegrading;
+
 
                 Recognize();
 
@@ -115,11 +118,35 @@ namespace Wimi
             {
                 resultTextBlock.Text = "Permission to access capture resources was not given by the user, reset the application setting in Settings->Privacy->Microphone.";
             }
-
-
         }
 
+        private async void SpeechRecognizer_RecognitionQualityDegrading(SpeechRecognizer sender, SpeechRecognitionQualityDegradingEventArgs args)
+        {
+            // Create an instance of a speech synthesis engine (voice).
+            var speechSynthesizer = new Windows.Media.SpeechSynthesis.SpeechSynthesizer();
+            Debug.WriteLine("SpeechRecognizer_RecognitionQualityDegrading, Result = {0}", args.Problem.ToString());
+            // If input speech is too quiet, prompt the user to speak louder.
+            if (args.Problem == Windows.Media.SpeechRecognition.SpeechRecognitionAudioProblem.TooQuiet)
+            {
+                // Generate the audio stream from plain text.
+                Windows.Media.SpeechSynthesis.SpeechSynthesisStream stream;
+                try
+                {
+                    stream = await speechSynthesizer.SynthesizeTextToStreamAsync("Try speaking louder");
+                    stream.Seek(0);
+                }
+                catch (Exception)
+                {
+                    stream = null;
+                }
 
+                // Send the stream to the MediaElement declared in XAML.
+                await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.High, () =>
+                {
+                    this.media.SetSource(stream, stream.ContentType);
+                });
+            }
+        }
 
         private async void ContinuousRecognitionSession_ResultGenerated(SpeechContinuousRecognitionSession sender, SpeechContinuousRecognitionResultGeneratedEventArgs args)
         {
@@ -159,57 +186,29 @@ namespace Wimi
                         }
                         else if (tag == "PlayMusic")
                         {
-                            Debug.WriteLine("voicePMysic");
                             await PlayMusic();
 
                         }
                         else if (tag == "PauseMusic")
                         {
-                            Debug.WriteLine("voicePauseMusic");
                             PauseMusic();
                         }
                         else if (tag == "StopMusic")
                         {
-                            Debug.WriteLine("voiceSMusic");
-                                StopMusic();
+                            StopMusic();
                         }
                     }
 
                 });
             }
-                //태그보니까 신뢰도 low라도 꽤 잘알아들어서 low도 위에 규칙에 포함함
-                /*else if (args.Result.Confidence == SpeechRecognitionConfidence.Low)
-                {
-                    await dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-                    {
-                        //TODO: 인식이 잘 안되었어도(low) 동작은 하게 해봄
-                        resultTextBlock.Text = string.Format("인식률이 낮습니다. (Heard: '{0}', Tag: {1}, Confidence: {2})", args.Result.Text, tag, args.Result.Confidence.ToString());
-                        if (!string.IsNullOrEmpty(tag))
-                        {
-                            if (tag == "hello")
-                            {
-                                SetVoice("왜 불러?");
-                            }
-                            else
-                            {
-                            }
-                        }
-                        else
-                        {
-                            SetVoice("다시 말해주세요.");
-                            resultTextBlock.Text = string.Format("음성인식이 실패하였습니다.");
-                        }
-                    });
-                }/**/
-                //rejected된 인식은 그냥 폐기하는게 정신건강에 이로울듯
-            /**/else if (args.Result.Confidence == SpeechRecognitionConfidence.Rejected)
+            else if (args.Result.Confidence == SpeechRecognitionConfidence.Rejected)
             {
                 await dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                 {
                     //SetVoice("다시 말해주세요."); //Please say it again. //Tell me again. //What did you say? //Say what? //다른건 발음이 이상하게 나옴 ㅋㅋ
                 resultTextBlock.Text = string.Format("음성인식이 실패하였습니다.");
                 });
-            }/**/
+            }
             else
             {
                 Debug.WriteLine("ContinuousRecognitionSession_ResultGenerated?????");
@@ -227,6 +226,17 @@ namespace Wimi
                     isListening = false;
                 });
             }
+            if (args.Status == SpeechRecognitionResultStatus.TimeoutExceeded)
+            {
+                await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                {
+                    Debug.WriteLine("*********PauseLimitExceeded*********");
+                    RemoveConstraints();
+                    CleanSpeechRecognizer();
+                    InitializeRecognizer();
+                    Recognize();
+                });
+            }
         }
 
         private async void SpeechRecognizer_StateChanged(SpeechRecognizer sender, SpeechRecognizerStateChangedEventArgs args)
@@ -237,6 +247,7 @@ namespace Wimi
             });
             if (args.State.Equals("PauseLimitExceeded"))
             {
+                Debug.WriteLine("*********PauseLimitExceeded*********");
                 RemoveConstraints();
                 CleanSpeechRecognizer();
                 await InitializeRecognizer();
