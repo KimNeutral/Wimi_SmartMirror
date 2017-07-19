@@ -37,6 +37,7 @@ namespace DSWeather
             {
                 ForecastInfo info = new ForecastInfo();
                 info.hour = int.Parse(hourList[i].InnerText);
+                info.hourStr = info.hour + "시";
                 info.temperture = double.Parse(tempList[i].InnerText);
                 info.stat = weatherList[i].InnerText;
                 info.statSymbol = GetSymbol(info.stat);
@@ -83,6 +84,7 @@ namespace DSWeather
     public class ForecastInfo
     {
         public int hour { get; set; }
+        public string hourStr { get; set; }
         public double temperture { get; set; }
         public string stat { get; set; }
         public string statSymbol { get; set; }

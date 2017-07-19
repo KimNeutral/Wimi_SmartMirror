@@ -12,7 +12,28 @@ namespace Wimi
         async void GetBusInfo()
         {
             lBusInfo = await bus.LoadBusInfo();
-            if(lBusInfo != null)
+            lBusInfo.Clear();
+            lBusInfo.Add(new BusInfo()
+            {
+                number = "급행5",
+                state = "전",
+                position = "대곡방면"
+            });
+
+            lBusInfo.Add(new BusInfo()
+            {
+                number = "600",
+                state = "전전",
+                position = "대곡방면"
+            });
+
+            lBusInfo.Add(new BusInfo()
+            {
+                number = "급행4",
+                state = "3분전",
+                position = "대곡방면"
+            });
+            if (lBusInfo != null)
             {
                 lbBusInfo.ItemsSource = lBusInfo;
             }
