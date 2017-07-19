@@ -247,7 +247,7 @@ namespace DSFace
 
             if (faces == null)
             {
-                faces = await _faceServiceClient.DetectAsync(stream);
+                faces = await UploadAndDetectFaceAsync(stream);
             }
             var faceIds = faces.Select(face => face.FaceId).ToArray();
 
