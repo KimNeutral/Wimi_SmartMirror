@@ -42,7 +42,7 @@ namespace Wimi
         private SpeechRecognitionListConstraint ChangeLightModeOff;
 
         private SpeechRecognitionListConstraint RedColorLightConstraint;
-        private SpeechRecognitionListConstraint OrangeColorLightConstraint;
+        private SpeechRecognitionListConstraint BrownColorLightConstraint;
         private SpeechRecognitionListConstraint YellowColorLightConstraint;
         private SpeechRecognitionListConstraint GreenColorLightConstraint;
         private SpeechRecognitionListConstraint BlueColorLightConstraint;
@@ -237,8 +237,8 @@ namespace Wimi
                             case "RedColor":
                                 HueAtrBool = await HueControl.SetColor("red");
                                 break;
-                            case "SodaColor":
-                                HueAtrBool = await HueControl.SetColor("orange");
+                            case "BrownColor":
+                                HueAtrBool = await HueControl.SetColor("brown");
                                 break;
                             case "YellowColor":
                                 HueAtrBool = await HueControl.SetColor("yellow");
@@ -370,9 +370,9 @@ namespace Wimi
             { "Change Light Mode Off","Loop colors stop"}, "LightModeOff");
             RedColorLightConstraint = new SpeechRecognitionListConstraint(new List<string>()
             { "Change color Red","turn on Red"}, "RedColor");
+            BrownColorLightConstraint = new SpeechRecognitionListConstraint(new List<string>()
+            { "Change color Brown","turn on Brown"}, "BrownColor");
             YellowColorLightConstraint = new SpeechRecognitionListConstraint(new List<string>()
-            { "Change color Soda","turn on Soda"}, "SodaColor");
-            OrangeColorLightConstraint = new SpeechRecognitionListConstraint(new List<string>()
             { "Change color Yellow","turn on Yellow"}, "YellowColor");
             GreenColorLightConstraint = new SpeechRecognitionListConstraint(new List<string>()
             { "Change color Green","turn on Green"}, "GreenColor");
@@ -381,9 +381,9 @@ namespace Wimi
             PinkColorLightConstraint = new SpeechRecognitionListConstraint(new List<string>()
             { "Change color Pink","turn on Pink"}, "PinkColor");
             PurpleColorLightConstraint = new SpeechRecognitionListConstraint(new List<string>()
-            { "Change color purple","turn on purple"}, "PurpleColor");
+            { "Change color Purple","turn on Purple"}, "PurpleColor");
             WhiteColorLightConstraint = new SpeechRecognitionListConstraint(new List<string>()
-            { "Change color white","turn on white"}, "WhiteColor");/**/
+            { "Change color White","turn on White"}, "WhiteColor");/**/
 
             speechRecognizer.Constraints.Add(helloConstraint);
             speechRecognizer.Constraints.Add(noticeConstraint);
@@ -402,7 +402,7 @@ namespace Wimi
             speechRecognizer.Constraints.Add(ChangeLightModeOff);
             speechRecognizer.Constraints.Add(RedColorLightConstraint);
             speechRecognizer.Constraints.Add(YellowColorLightConstraint);
-            speechRecognizer.Constraints.Add(OrangeColorLightConstraint);
+            speechRecognizer.Constraints.Add(BrownColorLightConstraint);
             speechRecognizer.Constraints.Add(GreenColorLightConstraint);
             speechRecognizer.Constraints.Add(BlueColorLightConstraint);
             speechRecognizer.Constraints.Add(PinkColorLightConstraint);
@@ -430,7 +430,7 @@ namespace Wimi
             speechRecognizer.Constraints.Remove(ChangeLightModeOff);
             speechRecognizer.Constraints.Remove(RedColorLightConstraint);
             speechRecognizer.Constraints.Remove(YellowColorLightConstraint);
-            speechRecognizer.Constraints.Remove(OrangeColorLightConstraint);
+            speechRecognizer.Constraints.Remove(BrownColorLightConstraint);
             speechRecognizer.Constraints.Remove(GreenColorLightConstraint);
             speechRecognizer.Constraints.Remove(BlueColorLightConstraint);
             speechRecognizer.Constraints.Remove(PinkColorLightConstraint);

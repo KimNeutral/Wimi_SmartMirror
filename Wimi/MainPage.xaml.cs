@@ -62,7 +62,7 @@ namespace Wimi
             initSynthesizer();
             InitializeRecognizer();
 
-            //HueInit();
+            HueInit();
 
             await Webcam.InitializeCameraAsync();
             captureElement.Source = Webcam.mediaCapture;
