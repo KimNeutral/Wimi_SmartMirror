@@ -167,7 +167,7 @@ namespace DSHue
         {
             var colorTable = new Dictionary<string, string>()
             {
-                { "red", "DF0101" }, { "soda", "2EFEF7" }, { "yellow", "FFFF00" }, { "green", "0B610B" },
+                { "red", "DF0101" }, { "brown", "61210B" }, { "yellow", "D7DF01" }, { "green", "0B610B" },
                 { "blue", "0404B4" }, { "purple", "5F04B4" }, { "pink", "FF0080" }, { "white", "F2F2F2" }
             };
 
