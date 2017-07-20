@@ -23,7 +23,7 @@ namespace Wimi
         bool IsIdentified = false;
         string comment = "";
 
-        string CurrentUser = "";
+        public string CurrentUser;
         int CntErr = 0;
 
         private async Task InitFaceRec()
@@ -69,6 +69,7 @@ namespace Wimi
                 {
                     faceTimer.Stop();
                     CurrentUser = "";
+                    tbFaceName.Text = "";
                     IsIdentified = false;
                     HideSchedule();
                     ClearLeftPanel();
@@ -85,18 +86,18 @@ namespace Wimi
                 {
                     await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                     {
-                        tbFaceName.Text = faces[0];
+                        string name = faces[0];
                         if (!IsIdentified)
                         {
-                            if (tbFaceName.Text != "외부인")
+                            if (name != "외부인")
                             {
-                                comment = "안녕하세요 " + faces[0] + "님, ";
-                                CurrentUser = faces[0];
-                                
+                                comment = "안녕하세요 " + name + "님, ";
+                                CurrentUser = name;
                             }
                             else
                             {
                                 comment = "안녕하세요, 손님이시군요.";
+                                CurrentUser = "손님";
                             }
                         }
                     });
@@ -106,7 +107,7 @@ namespace Wimi
                 {
                     await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                     {
-                        tbFaceName.Text = "인식되는 사람이 없음";
+                        //tbFaceName.Text = "인식되는 사람이 없음";
                     });
                     return false;
                 }
@@ -152,7 +153,7 @@ namespace Wimi
                 ShowSchedule();
                 
                 string ment = "Hello\n";
-                if (CurrentUser.Equals("외부인"))
+                if (CurrentUser.Equals("손님"))
                 {
                     ment += "Guest";
                 }
@@ -160,7 +161,7 @@ namespace Wimi
                 {
                     ment += CurrentUser + "!";
                 }
-
+                tbFaceName.Text = CurrentUser;
                 ShowTbHello(ment);
             }
             SetVoice(comment);
