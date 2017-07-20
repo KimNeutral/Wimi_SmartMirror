@@ -24,7 +24,7 @@
 
         <!--오른쪽 영역-->
         <Grid VerticalAlignment="Top">
-            <StackPanel x:Name="spUser" Orientation="Horizontal" HorizontalAlignment="Right">
+            <StackPanel x:Name="spUser" Orientation="Horizontal" HorizontalAlignment="Right" Visibility="Collapsed">
                 <TextBlock Text="&#xE13D;" FontFamily="Segoe MDL2 Assets" FontSize="60" Margin="0,0,15,0"></TextBlock>
                 <StackPanel Orientation="Vertical" VerticalAlignment="Bottom">
                     <!--얼굴인식누구-->

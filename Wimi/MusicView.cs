@@ -92,16 +92,24 @@ namespace Wimi
         {
             Debug.WriteLine("음악 중지");
             mediaElement.Stop();
-            //mediaElement.IsFullWindow = false;
+            mediaElement.IsFullWindow = false;
             mediaElement.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
         }
         public void PlayMusic()
         {
             //Debug.WriteLine("음악 resume");
-            mediaElement.IsFullWindow = true;
-            mediaElement.Play();
             //mediaElement.IsFullWindow = true;
+            mediaElement.Play();
             mediaElement.Visibility = Windows.UI.Xaml.Visibility.Visible;
+        }
+
+        public void SetFullScreen()
+        {
+            if(mediaElement.Visibility == Windows.UI.Xaml.Visibility.Visible)
+            {
+                bool isFull = mediaElement.IsFullWindow;
+                mediaElement.IsFullWindow = !isFull;
+            }
         }
     }
 }

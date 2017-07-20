@@ -70,6 +70,7 @@ namespace Wimi
                     faceTimer.Stop();
                     CurrentUser = "";
                     tbFaceName.Text = "";
+                    spUser.Visibility = Visibility.Collapsed;
                     IsIdentified = false;
                     HideSchedule();
                     ClearLeftPanel();
@@ -162,6 +163,7 @@ namespace Wimi
                     ment += CurrentUser + "!";
                 }
                 tbFaceName.Text = CurrentUser;
+                spUser.Visibility = Visibility.Visible;
                 ShowTbHello(ment);
             }
             SetVoice(comment);
