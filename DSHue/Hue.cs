@@ -48,6 +48,10 @@ namespace DSHue
 
         public async Task<bool> HueLightWithEmotion(DSEmotion.Emotion emotion)
         {
+            if(client == null)
+            {
+                return false;
+            }
             var command = new LightCommand();
             command.On = true;
             switch (emotion)
@@ -89,6 +93,10 @@ namespace DSHue
         /// </summary>
         public async Task<bool> HueLightOn()
         {
+            if (client == null)
+            {
+                return false;
+            }
             var command = new LightCommand();
             command.On = true;
             await client.SendCommandAsync(command);
@@ -100,6 +108,10 @@ namespace DSHue
         /// </summary>
         public async Task<bool> HueLightOff()
         {
+            if (client == null)
+            {
+                return false;
+            }
             var command = new LightCommand();
             command.On = false;
             await client.SendCommandAsync(command);
@@ -115,6 +127,10 @@ namespace DSHue
         /// <param name="property"></param>
         public async Task<bool> HueEffect(int property = -1)
         {
+            if (client == null)
+            {
+                return false;
+            }
             var command = new LightCommand();
             command.On = true;
             switch (property)
@@ -145,6 +161,10 @@ namespace DSHue
         /// <param name="cnt"></param>
         public async Task<bool> HueAlert(int cnt)
         {
+            if (client == null)
+            {
+                return false;
+            }
             var command = new LightCommand();
             command.On = true;
             switch (cnt)
@@ -165,6 +185,10 @@ namespace DSHue
 
         public async Task<bool> SetColor(string color) ///컴잇 및 이 주석 삭제
         {
+            if (client == null)
+            {
+                return false;
+            }
             var colorTable = new Dictionary<string, string>()
             {
                 { "red", "DF0101" }, { "brown", "61210B" }, { "yellow", "D7DF01" }, { "green", "0B610B" },

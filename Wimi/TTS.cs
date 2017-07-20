@@ -30,9 +30,12 @@ namespace Wimi
             String WeatherResult="";
             SKWeatherHourly.Hourly nowWeather = new SKWeatherHourly.Hourly();
             nowWeather = await weather.GetCurrentWeatherHourlyAsync();
-            
+
+            string tc = nowWeather.temperature.tc.Split(new char[] { '.' })[0];
+            string hu = nowWeather.humidity.Split(new char[] { '.' })[0];
+
             WeatherResult += nowWeather.grid.village +"의 오늘 날씨는 현재 "
-                +nowWeather.temperature.tc + "도, 습도 " + nowWeather.humidity + "퍼센트, ";
+                + tc + "도, 습도 " + hu + "퍼센트, ";
             //Debug.WriteLine(nowWeather.humidity);
             
             switch (nowWeather.sky.code)

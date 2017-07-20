@@ -216,9 +216,9 @@ namespace Wimi
                             case "FullScreen":
                                 SetFullScreen();
                                 break;
-                            //case "ShowNews":
-                            //    ShowNews();
-                            //    break;
+                            case "ShowNews":
+                                ShowNews();
+                                break;
                             case "ShowBus":
                                 ShowBus();
                                 break;
@@ -353,7 +353,7 @@ namespace Wimi
             PlayMusicConstraint = new SpeechRecognitionListConstraint(new List<string>()
             {"Play Music"}, "PlayMusic");
             ShowNewsConstraint = new SpeechRecognitionListConstraint(new List<string>()
-            {"Show Me News"}, "ShowNews");
+            {"Show Todays News"}, "ShowNews");
             ShowBusConstraint = new SpeechRecognitionListConstraint(new List<string>()
             {"Where is Bus"}, "ShowBus");
             FullScreenConstraint = new SpeechRecognitionListConstraint(new List<string>()
@@ -394,7 +394,7 @@ namespace Wimi
             speechRecognizer.Constraints.Add(PauseMusicConstraint);
             speechRecognizer.Constraints.Add(PlayMusicConstraint);
             speechRecognizer.Constraints.Add(FullScreenConstraint);
-            //speechRecognizer.Constraints.Add(ShowNewsConstraint);
+            speechRecognizer.Constraints.Add(ShowNewsConstraint);
             speechRecognizer.Constraints.Add(ShowBusConstraint);
             speechRecognizer.Constraints.Add(TurnOnLightConstraint);
             speechRecognizer.Constraints.Add(TurnOffLightConstraint);

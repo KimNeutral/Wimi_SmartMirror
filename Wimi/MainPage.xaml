@@ -81,7 +81,7 @@
             </ListBox>
         </StackPanel>
         <!--뉴스헤드라인-->
-        <ListBox x:Name="lbNewsInfo" Background="Transparent" IsHitTestVisible="False" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Collapsed">
+        <ListBox x:Name="lbNewsInfo" Background="Transparent" IsHitTestVisible="False" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Collapsed" Margin="-30,0,0,0">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <Grid Margin="5">
