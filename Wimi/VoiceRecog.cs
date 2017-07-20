@@ -33,6 +33,7 @@ namespace Wimi
         private SpeechRecognitionListConstraint PlayMusicConstraint;
         private SpeechRecognitionListConstraint ShowNewsConstraint;
         private SpeechRecognitionListConstraint ShowBusConstraint;
+        private SpeechRecognitionListConstraint FullScreenConstraint;
         //조-명
         /**/
         private SpeechRecognitionListConstraint TurnOnLightConstraint;
@@ -183,7 +184,8 @@ namespace Wimi
             {
                 await dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
                 {
-                    resultTextBlock.Text = string.Format("Heard: '{0}', (Tag: '{1}', Confidence: {2})", args.Result.Text, tag, args.Result.Confidence.ToString());
+                    //Confidence
+                    resultTextBlock.Text = string.Format("{0}, 인식률: {2}", args.Result.Text, tag, args.Result.Confidence.ToString());
                     if (!string.IsNullOrEmpty(tag))
                     {
                         switch (tag)
@@ -211,9 +213,12 @@ namespace Wimi
                             case "PlayMusic":
                                 await PlayRandomMusic();
                                 break;
-                            case "ShowNews":
-                                ShowNews();
+                            case "FullScreen":
+                                SetFullScreen();
                                 break;
+                            //case "ShowNews":
+                            //    ShowNews();
+                            //    break;
                             case "ShowBus":
                                 ShowBus();
                                 break;
@@ -351,6 +356,8 @@ namespace Wimi
             {"Show Me News"}, "ShowNews");
             ShowBusConstraint = new SpeechRecognitionListConstraint(new List<string>()
             {"Where is Bus"}, "ShowBus");
+            FullScreenConstraint = new SpeechRecognitionListConstraint(new List<string>()
+            {"Set FullScreen"}, "FullScreen");
             //조명명령어 추가 파이팅 ㅎ
             /**/
             TurnOnLightConstraint = new SpeechRecognitionListConstraint(new List<string>()
@@ -386,7 +393,8 @@ namespace Wimi
             speechRecognizer.Constraints.Add(StopMusicConstraint);
             speechRecognizer.Constraints.Add(PauseMusicConstraint);
             speechRecognizer.Constraints.Add(PlayMusicConstraint);
-            speechRecognizer.Constraints.Add(ShowNewsConstraint);
+            speechRecognizer.Constraints.Add(FullScreenConstraint);
+            //speechRecognizer.Constraints.Add(ShowNewsConstraint);
             speechRecognizer.Constraints.Add(ShowBusConstraint);
             speechRecognizer.Constraints.Add(TurnOnLightConstraint);
             speechRecognizer.Constraints.Add(TurnOffLightConstraint);
@@ -413,6 +421,7 @@ namespace Wimi
             speechRecognizer.Constraints.Remove(StopMusicConstraint);
             speechRecognizer.Constraints.Remove(PauseMusicConstraint);
             speechRecognizer.Constraints.Remove(PlayMusicConstraint);
+            speechRecognizer.Constraints.Remove(FullScreenConstraint);
             speechRecognizer.Constraints.Remove(ShowNewsConstraint);
             speechRecognizer.Constraints.Remove(ShowNewsConstraint);
             speechRecognizer.Constraints.Remove(TurnOnLightConstraint);

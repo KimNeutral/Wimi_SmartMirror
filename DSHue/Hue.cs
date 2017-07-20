@@ -173,10 +173,17 @@ namespace DSHue
 
             var command = new LightCommand();
             command.On = true;
-            command.TurnOn().SetColor(new RGBColor(colorTable[color]));
-            await client.SendCommandAsync(command);
-
-            return true;
+            bool isExists = colorTable.ContainsKey(color);
+            if (isExists)
+            {
+                command.TurnOn().SetColor(new RGBColor(colorTable[color]));
+                await client.SendCommandAsync(command);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         /// <summary>

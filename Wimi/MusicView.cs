@@ -74,11 +74,11 @@ namespace Wimi
             Debug.WriteLine(musicName + "을 랜덤 재생합니다");
             using (IRandomAccessStream s = await music.GetMusicStream(musicName))
             {
+                mediaElement.Visibility = Windows.UI.Xaml.Visibility.Visible;
                 string type = await music.GetMusicMIME(musicName);
                 mediaElement.SetSource(s, type);
                 mediaElement.Play();
                 //mediaElement.IsFullWindow = true;
-                mediaElement.Visibility = Windows.UI.Xaml.Visibility.Visible;
             }
         }
 
@@ -92,16 +92,24 @@ namespace Wimi
         {
             Debug.WriteLine("음악 중지");
             mediaElement.Stop();
-            //mediaElement.IsFullWindow = false;
+            mediaElement.IsFullWindow = false;
             mediaElement.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
         }
         public void PlayMusic()
         {
             //Debug.WriteLine("음악 resume");
-            mediaElement.IsFullWindow = true;
-            mediaElement.Play();
             //mediaElement.IsFullWindow = true;
+            mediaElement.Play();
             mediaElement.Visibility = Windows.UI.Xaml.Visibility.Visible;
+        }
+
+        public void SetFullScreen()
+        {
+            if(mediaElement.Visibility == Windows.UI.Xaml.Visibility.Visible)
+            {
+                bool isFull = mediaElement.IsFullWindow;
+                mediaElement.IsFullWindow = !isFull;
+            }
         }
     }
 }

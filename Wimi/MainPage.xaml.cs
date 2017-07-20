@@ -4,6 +4,8 @@ using System.Diagnostics;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
+using Windows.UI;
+using Windows.UI.Xaml.Media;
 
 //test
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
@@ -29,9 +31,17 @@ namespace Wimi
 
         private void ClearLeftPanel()
         {
-            lbBusInfo.Visibility = Visibility.Collapsed;
+            spBus.Visibility = Visibility.Collapsed;
             lbForcastInfo.Visibility = Visibility.Collapsed;
             lbNewsInfo.Visibility = Visibility.Collapsed;
+            tbHello.Visibility = Visibility.Collapsed;
+        }
+
+        private void ShowTbHello(string ment)
+        {
+            ClearLeftPanel();
+            tbHello.Text = ment;
+            tbHello.Visibility = Visibility.Visible;
         }
 
         private void ClockTimer_Tick(object sender, object e)
@@ -69,6 +79,7 @@ namespace Wimi
 
             await GetNewsInfo();
 
+            tbMicSymbol.Foreground = new SolidColorBrush(Colors.DeepPink);
         }
 
         protected async override void OnNavigatedFrom(NavigationEventArgs e)
