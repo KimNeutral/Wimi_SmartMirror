@@ -12,6 +12,7 @@ namespace Wimi
         async void GetBusInfo()
         {
             lBusInfo = await bus.LoadBusInfo();
+#if false // for test
             lBusInfo.Clear();
             lBusInfo.Add(new BusInfo()
             {
@@ -33,6 +34,7 @@ namespace Wimi
                 state = "3분전",
                 position = "대곡방면"
             });
+#endif
             if (lBusInfo != null)
             {
                 lbBusInfo.ItemsSource = lBusInfo;
