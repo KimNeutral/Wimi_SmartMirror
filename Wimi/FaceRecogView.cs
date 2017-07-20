@@ -71,6 +71,7 @@ namespace Wimi
                     CurrentUser = "";
                     IsIdentified = false;
                     HideSchedule();
+                    ClearLeftPanel();
                 }
             }
         }
@@ -125,7 +126,7 @@ namespace Wimi
                         if (!IsIdentified)
                         {
                             string cmt = EmotionUtil.GetCommentByEmotion(emo.Value);
-                            HueAtrBool = await HueControl.HueLightWithEmotion(emo.Value);
+                            //HueAtrBool = await HueControl.HueLightWithEmotion(emo.Value);
                             comment += cmt;
                             faceTimer.Start();
                         }
@@ -149,6 +150,18 @@ namespace Wimi
             else
             {
                 ShowSchedule();
+                
+                string ment = "Hello\n";
+                if (CurrentUser.Equals("외부인"))
+                {
+                    ment += "Guest";
+                }
+                else
+                {
+                    ment += CurrentUser + "!";
+                }
+
+                ShowTbHello(ment);
             }
             SetVoice(comment);
             

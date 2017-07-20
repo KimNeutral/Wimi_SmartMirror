@@ -74,11 +74,11 @@ namespace Wimi
             Debug.WriteLine(musicName + "을 랜덤 재생합니다");
             using (IRandomAccessStream s = await music.GetMusicStream(musicName))
             {
+                mediaElement.Visibility = Windows.UI.Xaml.Visibility.Visible;
                 string type = await music.GetMusicMIME(musicName);
                 mediaElement.SetSource(s, type);
                 mediaElement.Play();
                 //mediaElement.IsFullWindow = true;
-                mediaElement.Visibility = Windows.UI.Xaml.Visibility.Visible;
             }
         }
 

@@ -42,7 +42,7 @@ namespace Wimi
         private void ShowBus()
         {
             ClearLeftPanel();
-            lbBusInfo.Visibility = Windows.UI.Xaml.Visibility.Visible;
+            spBus.Visibility = Windows.UI.Xaml.Visibility.Visible;
         }
     }
 }

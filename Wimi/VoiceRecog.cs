@@ -211,9 +211,9 @@ namespace Wimi
                             case "PlayMusic":
                                 await PlayRandomMusic();
                                 break;
-                            case "ShowNews":
-                                ShowNews();
-                                break;
+                            //case "ShowNews":
+                            //    ShowNews();
+                            //    break;
                             case "ShowBus":
                                 ShowBus();
                                 break;
@@ -386,7 +386,7 @@ namespace Wimi
             speechRecognizer.Constraints.Add(StopMusicConstraint);
             speechRecognizer.Constraints.Add(PauseMusicConstraint);
             speechRecognizer.Constraints.Add(PlayMusicConstraint);
-            speechRecognizer.Constraints.Add(ShowNewsConstraint);
+            //speechRecognizer.Constraints.Add(ShowNewsConstraint);
             speechRecognizer.Constraints.Add(ShowBusConstraint);
             speechRecognizer.Constraints.Add(TurnOnLightConstraint);
             speechRecognizer.Constraints.Add(TurnOffLightConstraint);

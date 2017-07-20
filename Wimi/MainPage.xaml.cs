@@ -29,9 +29,17 @@ namespace Wimi
 
         private void ClearLeftPanel()
         {
-            lbBusInfo.Visibility = Visibility.Collapsed;
+            spBus.Visibility = Visibility.Collapsed;
             lbForcastInfo.Visibility = Visibility.Collapsed;
             lbNewsInfo.Visibility = Visibility.Collapsed;
+            tbHello.Visibility = Visibility.Collapsed;
+        }
+
+        private void ShowTbHello(string ment)
+        {
+            ClearLeftPanel();
+            tbHello.Text = ment;
+            tbHello.Visibility = Visibility.Visible;
         }
 
         private void ClockTimer_Tick(object sender, object e)
