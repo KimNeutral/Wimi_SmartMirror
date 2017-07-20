@@ -36,10 +36,10 @@ namespace DSWeather
 
         public async Task<Minutely> GetCurrentWeatherAsync()
         {
-            HttpResponseMessage response = await httpClient.GetAsync(resourceUri, cts.Token);
-
             try
             {
+                HttpResponseMessage response = await httpClient.GetAsync(resourceUri, cts.Token);
+
                 response.EnsureSuccessStatusCode();
 
                 string httpResponseBody = await response.Content.ReadAsStringAsync();
