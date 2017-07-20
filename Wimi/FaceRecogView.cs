@@ -119,13 +119,13 @@ namespace Wimi
                 Dictionary<Guid, Emotion> emotions = await face.GetEmotionByGuidAsync(s);
                 foreach (var emo in emotions)
                 {
-                    await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                    await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
                     {
                         tbEmotion.Text = emo.Value.ToString();
                         if (!IsIdentified)
                         {
                             string cmt = EmotionUtil.GetCommentByEmotion(emo.Value);
-                            //HueAtrBool = await HueControl.HueLightWithEmotion(emo.Value);
+                            HueAtrBool = await HueControl.HueLightWithEmotion(emo.Value);
                             comment += cmt;
                             faceTimer.Start();
                         }

@@ -217,7 +217,6 @@ namespace Wimi
                             case "ShowBus":
                                 ShowBus();
                                 break;
-#if false
                             case "LightModeOn":
                                 HueAtrBool = await HueControl.HueEffect(1);
                                 break;
@@ -233,7 +232,7 @@ namespace Wimi
                             case "RedColor":
                                 HueAtrBool = await HueControl.SetColor("red");
                                 break;
-                            case "OrangeColor":
+                            case "SodaColor":
                                 HueAtrBool = await HueControl.SetColor("orange");
                                 break;
                             case "YellowColor":
@@ -254,8 +253,6 @@ namespace Wimi
                             case "WhiteColor":
                                 HueAtrBool = await HueControl.SetColor("white");
                                 break;
-#endif
-
                         }
                     }
 
@@ -359,27 +356,27 @@ namespace Wimi
             TurnOnLightConstraint = new SpeechRecognitionListConstraint(new List<string>()
             { "turn On the Light"}, "TurnOn");
             TurnOffLightConstraint = new SpeechRecognitionListConstraint(new List<string>()
-            { "turn On the Light"}, "TurnOff");
+            { "turn Off the Light"}, "TurnOff");
             ChangeLightModeOn = new SpeechRecognitionListConstraint(new List<string>()
             { "Change Light Mode On","Loop colors start"}, "LightModeOn");
             ChangeLightModeOff = new SpeechRecognitionListConstraint(new List<string>()
             { "Change Light Mode Off","Loop colors stop"}, "LightModeOff");
             RedColorLightConstraint = new SpeechRecognitionListConstraint(new List<string>()
-            { "Change color Red","turn on Red Light","Red Light"}, "RedColor");
+            { "Change color Red","turn on Red"}, "RedColor");
             YellowColorLightConstraint = new SpeechRecognitionListConstraint(new List<string>()
-            { "Change color Orange","turn on Orange Light","Orange Light"}, "OrangeColor");
+            { "Change color Soda","turn on Soda"}, "SodaColor");
             OrangeColorLightConstraint = new SpeechRecognitionListConstraint(new List<string>()
-            { "Change color Yellow","turn on Yellow Light","Yellow Light"}, "YellowColor");
+            { "Change color Yellow","turn on Yellow"}, "YellowColor");
             GreenColorLightConstraint = new SpeechRecognitionListConstraint(new List<string>()
-            { "Change color Green","turn on Green Light","Green Light"}, "GreenColor");
+            { "Change color Green","turn on Green"}, "GreenColor");
             BlueColorLightConstraint = new SpeechRecognitionListConstraint(new List<string>()
-            { "Change color Blue","turn on Blue Light","Blue Light"}, "BlueColor");
+            { "Change color Blue","turn on Blue"}, "BlueColor");
             PinkColorLightConstraint = new SpeechRecognitionListConstraint(new List<string>()
-            { "Change color Pink","turn on Pink Light","Pink Light"}, "PinkColor");
+            { "Change color Pink","turn on Pink"}, "PinkColor");
             PurpleColorLightConstraint = new SpeechRecognitionListConstraint(new List<string>()
-            { "Change color purple","turn on purple Light","purple Light"}, "PurpleColor");
+            { "Change color purple","turn on purple"}, "PurpleColor");
             WhiteColorLightConstraint = new SpeechRecognitionListConstraint(new List<string>()
-            { "Change color white","turn on white Light","white Light"}, "WhiteColor");/**/
+            { "Change color white","turn on white"}, "WhiteColor");/**/
 
             speechRecognizer.Constraints.Add(helloConstraint);
             speechRecognizer.Constraints.Add(noticeConstraint);
