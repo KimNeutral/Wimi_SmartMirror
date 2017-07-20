@@ -183,7 +183,8 @@ namespace Wimi
             {
                 await dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
                 {
-                    resultTextBlock.Text = string.Format("{0}, Confidence: {2}", args.Result.Text, tag, args.Result.Confidence.ToString());
+                    //Confidence
+                    resultTextBlock.Text = string.Format("{0}, 인식률: {2}", args.Result.Text, tag, args.Result.Confidence.ToString());
                     if (!string.IsNullOrEmpty(tag))
                     {
                         switch (tag)

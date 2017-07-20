@@ -4,6 +4,8 @@ using System.Diagnostics;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
+using Windows.UI;
+using Windows.UI.Xaml.Media;
 
 //test
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
@@ -77,6 +79,7 @@ namespace Wimi
 
             await GetNewsInfo();
 
+            tbMicSymbol.Foreground = new SolidColorBrush(Colors.DeepPink);
         }
 
         protected async override void OnNavigatedFrom(NavigationEventArgs e)

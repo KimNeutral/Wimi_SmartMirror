@@ -39,8 +39,8 @@
         </Grid>
 
         <StackPanel>
-            <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xEC71;"  Margin="0,0,0,0"
-                           FontSize="60" VerticalAlignment="Top" HorizontalAlignment="Center"
+            <TextBlock x:Name="tbMicSymbol" FontFamily="Segoe MDL2 Assets" Text="&#xEC71;"  Margin="0,0,0,0"
+                           FontSize="42" VerticalAlignment="Top" HorizontalAlignment="Center"
                            Foreground="White"></TextBlock>
             <TextBlock x:Name="resultTextBlock" Margin="30"
                    FontWeight="Light" FontSize="24" Foreground="LightCyan"
