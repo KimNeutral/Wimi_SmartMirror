@@ -21,16 +21,19 @@
 
             </StackPanel>
         </Grid>
+        
         <!--오른쪽 영역-->
         <Grid VerticalAlignment="Top">
-            <StackPanel HorizontalAlignment="Right">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
 
-
-                <!--얼굴인식누구-->
-                <TextBlock x:Name="tbFaceName"/>
-                <!--얼굴인식감정-->
-                <TextBlock x:Name="tbEmotion"/>
+                <StackPanel Orientation="Vertical">
+                    <!--얼굴인식누구-->
+                    <TextBlock x:Name="tbFaceName"/>
+                    <!--얼굴인식감정-->
+                    <TextBlock x:Name="tbEmotion"/>
+                </StackPanel>
             </StackPanel>
+
         </Grid>
 
         <TextBlock x:Name="resultTextBlock" Margin="30" Grid.Column="1" 
@@ -107,6 +110,7 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
+        <!--왼쪽 상단 끝-->
         
         <!--오른쪽 상단--> 
         <!--일정-->
@@ -132,6 +136,7 @@
                 </ListBox.ItemTemplate>
             </ListBox>
         </StackPanel>
+        <!--오른쪽 상단 끝-->
 
         <!--왼쪽 하단-->
         <!--시계 + 음성인식 가능여부-->
@@ -146,6 +151,7 @@
             </StackPanel>
             <TextBlock x:Name="tbVoiceRecogReady" FontFamily="Segoe MDL2 Assets" Text="&#xEC54;" FontSize="60" VerticalAlignment="Center" Foreground="DeepPink" Margin="0,20,0,0" Visibility="Collapsed"></TextBlock>
         </StackPanel>
+        <!--왼쪽 하단 끝-->
 
         <!--오른쪽 하단-->
         <!--날씨-->
@@ -161,5 +167,6 @@
             <!--<TextBlock x:Name="tbWeather" FontSize="60" Loaded="tbWeather_Loaded"/>
                     <TextBlock Text="℃" FontSize="60"/>-->
         </StackPanel>
+        <!--오른쪽 하단 끝-->
     </Grid>
 </Page>
