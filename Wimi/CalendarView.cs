@@ -39,6 +39,16 @@ namespace Wimi
 
             lbScheduleInfo.ItemsSource = lScheduleInfo;
         }
+
+        private void ShowSchedule()
+        {
+            spSchedule.Visibility = Windows.UI.Xaml.Visibility.Visible;
+        }
+
+        private void HideSchedule()
+        {
+            spSchedule.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+        }
     }
 
     public class ScheduleInfo

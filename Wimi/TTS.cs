@@ -32,7 +32,7 @@ namespace Wimi
             nowWeather = await weather.GetCurrentWeatherHourlyAsync();
             
             WeatherResult += nowWeather.grid.village +"의 오늘 날씨는 현재 "
-                +nowWeather.temperature.tc + "도 습도 " + nowWeather.humidity + "퍼센트. ";
+                +nowWeather.temperature.tc + "도, 습도 " + nowWeather.humidity + "퍼센트, ";
             //Debug.WriteLine(nowWeather.humidity);
             
             switch (nowWeather.sky.code)

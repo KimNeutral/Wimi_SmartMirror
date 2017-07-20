@@ -70,6 +70,7 @@ namespace Wimi
                     faceTimer.Stop();
                     CurrentUser = "";
                     IsIdentified = false;
+                    HideSchedule();
                 }
             }
         }
@@ -90,6 +91,7 @@ namespace Wimi
                             {
                                 comment = "안녕하세요 " + faces[0] + "님, ";
                                 CurrentUser = faces[0];
+                                
                             }
                             else
                             {
@@ -143,6 +145,10 @@ namespace Wimi
             if (!suc)
             {
                 comment = "인식하지 못했어요. 다시 한번 해주세요.";
+            }
+            else
+            {
+                ShowSchedule();
             }
             SetVoice(comment);
             

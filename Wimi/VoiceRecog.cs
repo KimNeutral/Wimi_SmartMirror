@@ -25,13 +25,14 @@ namespace Wimi
         //제약조건
         private SpeechRecognitionListConstraint helloConstraint;
         private SpeechRecognitionListConstraint noticeConstraint;
-        private SpeechRecognitionListConstraint ShowWeatherConstraint;
         private SpeechRecognitionListConstraint TellWeatherConstraint;
         private SpeechRecognitionListConstraint TestConstraint;
         private SpeechRecognitionListConstraint PlayRandomMusicConstraint;
         private SpeechRecognitionListConstraint StopMusicConstraint;
         private SpeechRecognitionListConstraint PauseMusicConstraint;
         private SpeechRecognitionListConstraint PlayMusicConstraint;
+        private SpeechRecognitionListConstraint ShowNewsConstraint;
+        private SpeechRecognitionListConstraint ShowBusConstraint;
         //조-명
         /**/
         private SpeechRecognitionListConstraint TurnOnLightConstraint;
@@ -188,14 +189,14 @@ namespace Wimi
                         switch (tag)
                         {
                             case "Hello":
-                                SetVoice("왜 불러?");
+                                //SetVoice("왜 불러?");
+                                await DetectCalledByWimi();
                                 break;
                             case "Sleep":
                                 SetVoice("가서 자세요");
                                 break;
-                            case "ShowWeather":
-                                break;
                             case "TellWeather":
+                                ShowForecast();
                                 TellmeWeatherAsync();
                                 break;
                             case "PlayRandomMusic":
@@ -209,6 +210,12 @@ namespace Wimi
                                 break;
                             case "PlayMusic":
                                 await PlayRandomMusic();
+                                break;
+                            case "ShowNews":
+                                ShowNews();
+                                break;
+                            case "ShowBus":
+                                ShowBus();
                                 break;
 #if false
                             case "LightModeOn":
@@ -331,8 +338,6 @@ namespace Wimi
             { "wimi", "Hello" }, "Hello");
             noticeConstraint = new SpeechRecognitionListConstraint(new List<string>()
             { "I am tired" ,"i'm too tired"}, "Sleep");
-            ShowWeatherConstraint = new SpeechRecognitionListConstraint(new List<string>()
-            { "show me forecast", "show me Weather", "show me weather forecast" }, "ShowWeather");
             TellWeatherConstraint = new SpeechRecognitionListConstraint(new List<string>()
             { "Tell me forecast", "Tell me Weather", "Tell me weather forecast","today Weather"}, "TellWeather");
             TestConstraint = new SpeechRecognitionListConstraint(new List<string>()
@@ -345,6 +350,10 @@ namespace Wimi
             { "Pause Music"}, "PauseMusic");
             PlayMusicConstraint = new SpeechRecognitionListConstraint(new List<string>()
             {"Play Music"}, "PlayMusic");
+            ShowNewsConstraint = new SpeechRecognitionListConstraint(new List<string>()
+            {"Show Me News"}, "ShowNews");
+            ShowBusConstraint = new SpeechRecognitionListConstraint(new List<string>()
+            {"Where is Bus"}, "ShowBus");
             //조명명령어 추가 파이팅 ㅎ
             /**/
             TurnOnLightConstraint = new SpeechRecognitionListConstraint(new List<string>()
@@ -374,13 +383,14 @@ namespace Wimi
 
             speechRecognizer.Constraints.Add(helloConstraint);
             speechRecognizer.Constraints.Add(noticeConstraint);
-            speechRecognizer.Constraints.Add(ShowWeatherConstraint);
             speechRecognizer.Constraints.Add(TellWeatherConstraint);
             speechRecognizer.Constraints.Add(TestConstraint);
             speechRecognizer.Constraints.Add(PlayRandomMusicConstraint);
             speechRecognizer.Constraints.Add(StopMusicConstraint);
             speechRecognizer.Constraints.Add(PauseMusicConstraint);
             speechRecognizer.Constraints.Add(PlayMusicConstraint);
+            speechRecognizer.Constraints.Add(ShowNewsConstraint);
+            speechRecognizer.Constraints.Add(ShowBusConstraint);
             speechRecognizer.Constraints.Add(TurnOnLightConstraint);
             speechRecognizer.Constraints.Add(TurnOffLightConstraint);
             speechRecognizer.Constraints.Add(ChangeLightModeOn);
@@ -393,20 +403,21 @@ namespace Wimi
             speechRecognizer.Constraints.Add(PinkColorLightConstraint);
             speechRecognizer.Constraints.Add(PurpleColorLightConstraint);
             speechRecognizer.Constraints.Add(WhiteColorLightConstraint);
-
+            
         }
 
         public void RemoveConstraints()
         {
             speechRecognizer.Constraints.Remove(helloConstraint);
             speechRecognizer.Constraints.Remove(noticeConstraint);
-            speechRecognizer.Constraints.Remove(ShowWeatherConstraint);
             speechRecognizer.Constraints.Remove(TellWeatherConstraint);
             speechRecognizer.Constraints.Remove(TestConstraint);
             speechRecognizer.Constraints.Remove(PlayRandomMusicConstraint);
             speechRecognizer.Constraints.Remove(StopMusicConstraint);
             speechRecognizer.Constraints.Remove(PauseMusicConstraint);
             speechRecognizer.Constraints.Remove(PlayMusicConstraint);
+            speechRecognizer.Constraints.Remove(ShowNewsConstraint);
+            speechRecognizer.Constraints.Remove(ShowNewsConstraint);
             speechRecognizer.Constraints.Remove(TurnOnLightConstraint);
             speechRecognizer.Constraints.Remove(TurnOffLightConstraint);
             speechRecognizer.Constraints.Remove(ChangeLightModeOn);

@@ -31,7 +31,7 @@ namespace DSWeather
             resourceUri = new Uri(resource);
             cts = new CancellationTokenSource();
             cts.CancelAfter(TimeSpan.FromSeconds(30));
-            httpClient.DefaultRequestHeaders.Add("appKey", "ee189341-fa53-3435-917f-94865c00088f");
+            httpClient.DefaultRequestHeaders.Add("appKey", "1afe336d-2063-3773-ba04-8431599ee11c");
         }
 
         public async Task<Minutely> GetCurrentWeatherAsync()
