@@ -39,7 +39,8 @@
                    VerticalAlignment="Top"/>
 
         <MediaElement x:Name="mediaElement" Height="300" VerticalAlignment="Bottom" HorizontalAlignment="Center"
-                      AutoPlay="True" AreTransportControlsEnabled="True"/>
+                      AutoPlay="True" AreTransportControlsEnabled="True"
+                      Visibility="Collapsed"/>
 
         <!--왼쪽 상단-->
         <!--대화창-->
