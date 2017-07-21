@@ -60,7 +60,7 @@ namespace Wimi
         {
             initMusicList();
             initSynthesizer();
-            InitializeRecognizer();
+            await InitializeRecognizer();
 
             HueInit();
 
@@ -69,7 +69,7 @@ namespace Wimi
             await Webcam.StartCameraPreview();
 
             await face.InitListAsync();
-            await InitFaceRec();
+            InitFaceRec();
 
             GetBusInfo();
 #if PC_MODE

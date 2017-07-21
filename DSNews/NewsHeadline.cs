@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -11,7 +12,7 @@ namespace DSNews
 {
     public  class NewsHeadline
     {
-        String Politics_Url = "http://www.iheadlinenews.co.kr/rss/clickTop.xml";
+        //String Politics_Url = "http://www.iheadlinenews.co.kr/rss/clickTop.xml"; //cur not used
 
         public async Task<List<News>> GetHeadlineAsync(int count = 5)
         {
@@ -29,11 +30,13 @@ namespace DSNews
             }
             catch (NullReferenceException e)
             {
+                Debug.WriteLine(e.Message);
                 return new List<News>();
 
             }
             catch (WebException e)
             {
+                Debug.WriteLine(e.Message);
                 return new List<News>();
             }
             //title값들, 헤드라인의 제목들만 받음.

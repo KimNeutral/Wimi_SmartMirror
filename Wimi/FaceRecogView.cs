@@ -26,7 +26,7 @@ namespace Wimi
         public string CurrentUser;
         int CntErr = 0;
 
-        private async Task InitFaceRec()
+        private void InitFaceRec()
         {
             faceTimer.Interval = new TimeSpan(0, 0, 1);
             faceTimer.Tick += FaceTimer_Tick;
@@ -122,7 +122,7 @@ namespace Wimi
                 Dictionary<Guid, Emotion> emotions = await face.GetEmotionByGuidAsync(s);
                 foreach (var emo in emotions)
                 {
-                    await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+                    await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                     {
                         tbEmotion.Text = emo.Value.ToString();
                         if (!IsIdentified)

@@ -75,12 +75,12 @@ namespace DSFace
             }
             catch (FileNotFoundException e)
             {
-                Debug.WriteLine("File Not Exists!");
+                Debug.WriteLine("File Not Exists! - {0}", e.Message);
                 return false;
             }
             catch (Exception e)
             {
-                Debug.WriteLine("Could not load list");
+                Debug.WriteLine("Could not load list - {0}", e.Message);
                 return false;
             }
         }
@@ -98,7 +98,7 @@ namespace DSFace
             }
             catch (Exception e)
             {
-                Debug.WriteLine("Could not save list");
+                Debug.WriteLine("Could not save list - {0}", e.Message);
                 return false;
             }
         }
@@ -115,7 +115,7 @@ namespace DSFace
             }
             catch (FaceAPIException e)
             {
-                Debug.WriteLine("Could not find any faces.");
+                Debug.WriteLine("Could not find any faces. - {0}", e.Message);
                 return new Face[0];
             }
         }
@@ -201,7 +201,10 @@ namespace DSFace
                 await _faceServiceClient.GetPersonGroupAsync(NameId);
                 await _faceServiceClient.DeletePersonGroupAsync(NameId);
             }
-            catch (Exception e) { }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.Message);
+            }
 
             string name = "WhiteList";
             await _faceServiceClient.CreatePersonGroupAsync(NameId, name);
@@ -234,7 +237,7 @@ namespace DSFace
             }
             catch(Exception e)
             {
-                Debug.WriteLine("Fail to Add Person Face.");
+                Debug.WriteLine("Fail to Add Person Face. - {0}", e.Message);
             }
         }
 
