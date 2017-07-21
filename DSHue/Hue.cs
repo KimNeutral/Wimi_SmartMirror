@@ -29,6 +29,9 @@ namespace DSHue
             if (client == null)
             {
                 ip = await GetIP();
+                if (string.IsNullOrEmpty(ip))
+                    return false;
+
                 client = new LocalHueClient(ip);
                 key = await GetKey(client);
                 client.Initialize(key);
@@ -236,11 +239,13 @@ namespace DSHue
                 IEnumerable<LocatedBridge> bridgeIPs = await locator.LocateBridgesAsync(TimeSpan.FromSeconds(5));
                 ///검색된 브릿지들중 첫번째 선택
                 LocatedBridge bridge = bridgeIPs.FirstOrDefault();
-                ip = bridge.IpAddress;
                 if (bridge == null)
                 {
-                    return ip;
+                    return string.Empty;
                 }
+
+                ip = bridge.IpAddress;
+
                 ///IP생성
                 ///ip저장
                 using (StreamWriter writeFile = new StreamWriter(new IsolatedStorageFileStream(fileName, FileMode.Create, FileAccess.Write, filePath)))
