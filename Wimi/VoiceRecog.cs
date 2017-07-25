@@ -307,6 +307,8 @@ namespace Wimi
                 {
                     case SpeechRecognizerState.Idle:
                         {
+                            isListening = false;
+                            Recognize();
                             break;
                         }
                     case SpeechRecognizerState.Capturing:
