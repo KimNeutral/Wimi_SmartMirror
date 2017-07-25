@@ -95,7 +95,7 @@ namespace Wimi
                     speechRecognizer.ContinuousRecognitionSession.Completed -= ContinuousRecognitionSession_Completed;
                     speechRecognizer.ContinuousRecognitionSession.ResultGenerated -= ContinuousRecognitionSession_ResultGenerated;
                     speechRecognizer.StateChanged -= SpeechRecognizer_StateChanged;
-                    speechRecognizer.RecognitionQualityDegrading -= SpeechRecognizer_RecognitionQualityDegrading;
+                    //speechRecognizer.RecognitionQualityDegrading -= SpeechRecognizer_RecognitionQualityDegrading;
 
                     speechRecognizer.Dispose();
                     speechRecognizer = null;
@@ -122,7 +122,7 @@ namespace Wimi
 
                 speechRecognizer.ContinuousRecognitionSession.Completed += ContinuousRecognitionSession_Completed;
                 speechRecognizer.ContinuousRecognitionSession.ResultGenerated += ContinuousRecognitionSession_ResultGenerated;
-                speechRecognizer.RecognitionQualityDegrading += SpeechRecognizer_RecognitionQualityDegrading;
+                //speechRecognizer.RecognitionQualityDegrading += SpeechRecognizer_RecognitionQualityDegrading;
 
                 Recognize();
 
@@ -198,9 +198,9 @@ namespace Wimi
                                 ShowForecast();
                                 TellmeWeatherAsync();
                                 break;
-                            case "PlayRandomMusic":
-                                await PlayRandomMusic();
-                                break;
+                            //case "PlayRandomMusic":
+                            //    await PlayRandomMusic();
+                            //    break;
                             case "PauseMusic":
                                 PauseMusic();
                                 break;
@@ -279,7 +279,6 @@ namespace Wimi
                 Debug.WriteLine("ContinuousRecognitionSession_ResultGenerated - {0}, 아무조건도 안걸림", args.Result.Confidence);
             }
         }
-
 
         private async void ContinuousRecognitionSession_Completed(SpeechContinuousRecognitionSession sender, SpeechContinuousRecognitionCompletedEventArgs args)
         {
@@ -372,7 +371,7 @@ namespace Wimi
         {
             //{"들을 내용1", "내용2"},"태그이름");
             helloConstraint = new SpeechRecognitionListConstraint(new List<string>()
-            { "wimi", "Hello" }, "Hello");
+            { "wimi" }, "Hello");
             homeConstraint = new SpeechRecognitionListConstraint(new List<string>()
             { "Go Home"}, "Home");
             TellWeatherConstraint = new SpeechRecognitionListConstraint(new List<string>()

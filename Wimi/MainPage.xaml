@@ -45,8 +45,8 @@
                            Foreground="White"></TextBlock>
         </StackPanel>
 
-        <MediaElement x:Name="mediaElement" Height="500" VerticalAlignment="Bottom" HorizontalAlignment="Center"
-                      AutoPlay="True" AreTransportControlsEnabled="True"/>
+        <MediaElement x:Name="mediaElement" Height="500" VerticalAlignment="Bottom" HorizontalAlignment="Center" Visibility="Visible"
+                      AutoPlay="True" AreTransportControlsEnabled="True" Source="Assets/Puppy_Love.mp3" Volume="0.1" Stretch="Uniform"/>
 
         <!--왼쪽 상단-->
         <!--대화창-->
@@ -161,6 +161,7 @@
                         HorizontalAlignment="Left"
                         FontSize="80" FontWeight="Light" Foreground="WhiteSmoke"></TextBlock>
             </StackPanel>
+            <TextBlock x:Name="tbVoiceRecogReady" FontFamily="Segoe MDL2 Assets" Text="&#xEC54;" FontSize="60" VerticalAlignment="Center" Foreground="DeepPink" Margin="0,20,0,0" Visibility="Collapsed"></TextBlock>
         </StackPanel>
         <!--왼쪽 하단 끝-->
 

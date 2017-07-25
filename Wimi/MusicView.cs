@@ -22,6 +22,12 @@ namespace Wimi
         private void initMusicList()
         {
 #if true
+            lstMusic.Add("남이 될 수 있을까");
+            lstMusic.Add("Uptown Funk");
+            lstMusic.Add("나로 말할 것 같으면");
+            lstMusic.Add("I LUV IT");
+#else
+
             lstMusic.Add("New Face");
             lstMusic.Add("SIGNAL");
             lstMusic.Add("Rookie");
@@ -31,27 +37,9 @@ namespace Wimi
             lstMusic.Add("Beautiful");
             lstMusic.Add("비도 오고 그래서");
             lstMusic.Add("미치게 만들어");
-#else
-            lstMusic.Add("김필");
-            lstMusic.Add("내 눈에만 보여");
-            lstMusic.Add("너무너무너무");
-            lstMusic.Add("뉴페이스");
-            lstMusic.Add("라디");
-            lstMusic.Add("반달");
-            lstMusic.Add("버즈");
-            lstMusic.Add("불타오르네");
-            lstMusic.Add("삐딱하게");
-            lstMusic.Add("사랑에 빠졌을 때");
-            lstMusic.Add("소란했던 시절에");
-            lstMusic.Add("소유");
-            lstMusic.Add("쓰담쓰담");
-            lstMusic.Add("아웃사이드");
-            lstMusic.Add("오이오");
-            lstMusic.Add("응급실");
-            lstMusic.Add("쩔어");
-            lstMusic.Add("호구");
-            lstMusic.Add("아는사람 얘기");
 #endif
+            mediaElement.Volume = 1;
+            mediaElement.Stop();
         }
 
         public async Task PlayMusicByEmotionAsync(Emotion emotion)
@@ -77,6 +65,7 @@ namespace Wimi
                 mediaElement.Visibility = Windows.UI.Xaml.Visibility.Visible;
                 string type = await music.GetMusicMIME(musicName);
                 mediaElement.SetSource(s, type);
+                mediaElement.AutoPlay = true;
                 mediaElement.Play();
                 //mediaElement.IsFullWindow = true;
             }

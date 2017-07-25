@@ -23,9 +23,12 @@ namespace DSMusic
 
         public async Task<IRandomAccessStream> GetMusicStream(string name)
         {
-            StorageFile storageFile;
+            //StorageFile storageFile;
 
-            storageFile = await KnownFolders.MusicLibrary.GetFileAsync(name);
+            StorageFolder musicLib = KnownFolders.MusicLibrary;
+            StorageFile storageFile = await musicLib.GetFileAsync(name);
+
+            //storageFile = await KnownFolders.MusicLibrary.GetFileAsync(name);
             var stream = await storageFile.OpenAsync(FileAccessMode.Read);
 
             return stream;
