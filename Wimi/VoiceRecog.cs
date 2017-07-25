@@ -24,7 +24,7 @@ namespace Wimi
 
         //제약조건
         private SpeechRecognitionListConstraint helloConstraint;
-        private SpeechRecognitionListConstraint noticeConstraint;
+        private SpeechRecognitionListConstraint homeConstraint;
         private SpeechRecognitionListConstraint TellWeatherConstraint;
         private SpeechRecognitionListConstraint TestConstraint;
         private SpeechRecognitionListConstraint PlayRandomMusicConstraint;
@@ -34,8 +34,7 @@ namespace Wimi
         private SpeechRecognitionListConstraint ShowNewsConstraint;
         private SpeechRecognitionListConstraint ShowBusConstraint;
         private SpeechRecognitionListConstraint FullScreenConstraint;
-        //조-명
-        /**/
+        //조명
         private SpeechRecognitionListConstraint TurnOnLightConstraint;
         private SpeechRecognitionListConstraint TurnOffLightConstraint;
         private SpeechRecognitionListConstraint ChangeLightModeOn;
@@ -48,7 +47,7 @@ namespace Wimi
         private SpeechRecognitionListConstraint BlueColorLightConstraint;
         private SpeechRecognitionListConstraint PinkColorLightConstraint;
         private SpeechRecognitionListConstraint PurpleColorLightConstraint;
-        private SpeechRecognitionListConstraint WhiteColorLightConstraint;/**/
+        private SpeechRecognitionListConstraint WhiteColorLightConstraint;
 
         public async void Recognize()
         {
@@ -104,11 +103,11 @@ namespace Wimi
 
                 speechRecognizer = new SpeechRecognizer();
 
-#if true //timeout 안되도록 1시간정도로 설정
+#if false //이 설정들은 어떻게 동작하는지 실제 체크해봐야 함
                 //speechRecognizer.Timeouts.InitialSilenceTimeout = TimeSpan.FromSeconds(6.0);
                 //speechRecognizer.Timeouts.BabbleTimeout = TimeSpan.FromSeconds(4.0);
                 //speechRecognizer.Timeouts.EndSilenceTimeout = TimeSpan.FromSeconds(4.0);
-                speechRecognizer.ContinuousRecognitionSession.AutoStopSilenceTimeout = TimeSpan.MaxValue; //new TimeSpan(1, 0, 0);
+                //speechRecognizer.ContinuousRecognitionSession.AutoStopSilenceTimeout = TimeSpan.MaxValue; //new TimeSpan(1, 0, 0);
 #endif
                 speechRecognizer.StateChanged += SpeechRecognizer_StateChanged;
 
@@ -125,13 +124,10 @@ namespace Wimi
                 speechRecognizer.ContinuousRecognitionSession.ResultGenerated += ContinuousRecognitionSession_ResultGenerated;
                 speechRecognizer.RecognitionQualityDegrading += SpeechRecognizer_RecognitionQualityDegrading;
 
-
                 Recognize();
 
-                //SetVoice("음성인식이 시작되었습니다.");
                 resultTextBlock.Text = string.Format("음성인식이 시작되었습니다.");
-                //tbVoiceRecogReady.Foreground = new SolidColorBrush(Colors.LightGreen);
-                tbVoiceRecogReady.Text = "\xE1D6"; //E1D6 //EC71
+                tbRecog.Text = "Listening...";
             }
             else
             {
@@ -187,17 +183,16 @@ namespace Wimi
                 await dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
                 {
                     //Confidence
-                    resultTextBlock.Text = string.Format("{0}, 인식률: {2}", args.Result.Text, tag, args.Result.Confidence.ToString());
+                    resultTextBlock.Text = string.Format("{0}, 태그: {1}, 인식률: {2}", args.Result.Text, tag, args.Result.Confidence.ToString());
                     if (!string.IsNullOrEmpty(tag))
                     {
                         switch (tag)
                         {
                             case "Hello":
-                                //SetVoice("왜 불러?");
                                 await DetectCalledByWimi();
                                 break;
-                            case "Sleep":
-                                SetVoice("가서 자세요");
+                            case "Home":
+                                ClearLeftPanel();
                                 break;
                             case "TellWeather":
                                 ShowForecast();
@@ -260,6 +255,11 @@ namespace Wimi
                             case "WhiteColor":
                                 HueAtrBool = await HueControl.SetColor("white");
                                 break;
+                            default:
+                                {
+                                    resultTextBlock.Text = "등록된 명령어가 아닙니다";
+                                    break;
+                                }
                         }
                     }
 
@@ -275,6 +275,7 @@ namespace Wimi
             }
             else
             {
+                resultTextBlock.Text = string.Format("No Confidence.");
                 Debug.WriteLine("ContinuousRecognitionSession_ResultGenerated - {0}, 아무조건도 안걸림", args.Result.Confidence);
             }
         }
@@ -287,16 +288,12 @@ namespace Wimi
             {
                 await dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                 {
+                    resultTextBlock.Text = string.Format("ContinuousRecognitionSession_Completed, status = {0}", args.Status.ToString());
+                    if (args.Status.Equals(SpeechRecognitionResultStatus.PauseLimitExceeded))
+                    {
+                        Recognize();
+                    }
                     isListening = false;
-                });
-            }
-            if (args.Status == SpeechRecognitionResultStatus.PauseLimitExceeded)
-            {
-                await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-                {
-                    Debug.WriteLine("*********PauseLimitExceeded*********");
-
-                    Recognize();
                 });
             }
         }
@@ -305,16 +302,52 @@ namespace Wimi
         {
             await dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
             {
-                Debug.WriteLine("SpeechRecognizer_StateChanged, state = {0}", args.State);
-            });
-            if (args.State.Equals(SpeechRecognitionResultStatus.PauseLimitExceeded))
-            {
-                Debug.WriteLine("*********PauseLimitExceeded*********");
+                tbVoiceRecogState.Text = args.State.ToString();
 
-                Recognize();
-            }
+                switch(args.State)
+                {
+                    case SpeechRecognizerState.Idle:
+                        {
+                            break;
+                        }
+                    case SpeechRecognizerState.Capturing:
+                        {
+                            tbMicSymbol.Foreground = new SolidColorBrush(Colors.DeepPink);
+                            break;
+                        }
+                    case SpeechRecognizerState.Processing:
+                        {
+                            break;
+                        }
+                    case SpeechRecognizerState.SoundStarted:
+                        {
+                            resultTextBlock.Text = string.Empty;
+                            break;
+                        }
+                    case SpeechRecognizerState.SoundEnded:
+                    case SpeechRecognizerState.SpeechDetected:
+                        {
+                            break;
+                        }
+                    case SpeechRecognizerState.Paused:
+                        {
+                            break;
+                        }
+                    default:
+                        {
+                            break;
+                        }
+                }
+                    
+                Debug.WriteLine("SpeechRecognizer state = {0}", args.State);
+            });
         }
 
+
+        private void RestartSpeechRecognizer()
+        {
+            CleanSpeechRecognizer();
+        }
 
         private async void CleanSpeechRecognizer()
         {
@@ -340,8 +373,8 @@ namespace Wimi
             //{"들을 내용1", "내용2"},"태그이름");
             helloConstraint = new SpeechRecognitionListConstraint(new List<string>()
             { "wimi", "Hello" }, "Hello");
-            noticeConstraint = new SpeechRecognitionListConstraint(new List<string>()
-            { "I am tired" ,"i'm too tired"}, "Sleep");
+            homeConstraint = new SpeechRecognitionListConstraint(new List<string>()
+            { "Go Home"}, "Home");
             TellWeatherConstraint = new SpeechRecognitionListConstraint(new List<string>()
             { "Tell me forecast", "Tell me Weather", "Tell me weather forecast","today Weather"}, "TellWeather");
             TestConstraint = new SpeechRecognitionListConstraint(new List<string>()
@@ -388,7 +421,7 @@ namespace Wimi
             { "Change color White","turn on White"}, "WhiteColor");/**/
 
             speechRecognizer.Constraints.Add(helloConstraint);
-            speechRecognizer.Constraints.Add(noticeConstraint);
+            speechRecognizer.Constraints.Add(homeConstraint);
             speechRecognizer.Constraints.Add(TellWeatherConstraint);
             speechRecognizer.Constraints.Add(TestConstraint);
             speechRecognizer.Constraints.Add(PlayRandomMusicConstraint);
@@ -416,7 +449,7 @@ namespace Wimi
         public void RemoveConstraints()
         {
             speechRecognizer.Constraints.Remove(helloConstraint);
-            speechRecognizer.Constraints.Remove(noticeConstraint);
+            speechRecognizer.Constraints.Remove(homeConstraint);
             speechRecognizer.Constraints.Remove(TellWeatherConstraint);
             speechRecognizer.Constraints.Remove(TestConstraint);
             speechRecognizer.Constraints.Remove(PlayRandomMusicConstraint);

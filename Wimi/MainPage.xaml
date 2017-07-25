@@ -43,10 +43,6 @@
             <TextBlock x:Name="tbMicSymbol" FontFamily="Segoe MDL2 Assets" Text="&#xEC71;"  Margin="0,0,0,0"
                            FontSize="42" VerticalAlignment="Top" HorizontalAlignment="Center"
                            Foreground="White"></TextBlock>
-            <TextBlock x:Name="resultTextBlock" Margin="30"
-                   FontWeight="Light" FontSize="24" Foreground="LightCyan"
-                   HorizontalAlignment="Center"
-                   VerticalAlignment="Top"/>
         </StackPanel>
 
         <MediaElement x:Name="mediaElement" Height="500" VerticalAlignment="Bottom" HorizontalAlignment="Center"
@@ -57,6 +53,16 @@
         <TextBlock x:Name="tbHello" FontWeight="Light" Margin="10,0,12,0"
                            FontSize="120" VerticalAlignment="Top" HorizontalAlignment="Left"
                            Foreground="White" Visibility="Collapsed"></TextBlock>
+
+        <StackPanel Margin="10,0,10,0" VerticalAlignment="Top" HorizontalAlignment="Left">
+            <TextBlock x:Name="tbRecog" FontWeight="ExtraLight" 
+                   FontSize="100" 
+                   Foreground="WhiteSmoke" Visibility="Visible"></TextBlock>
+            <TextBlock x:Name="resultTextBlock"
+                   FontWeight="Light" FontSize="24" Foreground="LightCyan"/>
+            <TextBlock x:Name="tbVoiceRecogState" FontWeight="SemiLight"></TextBlock>
+        </StackPanel>
+
         <!--버스-->
         <StackPanel x:Name="spBus" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,12,0,12" Visibility="Collapsed">
             <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xEB47;"  Margin="10,0,12,0"
@@ -155,7 +161,6 @@
                         HorizontalAlignment="Left"
                         FontSize="80" FontWeight="Light" Foreground="WhiteSmoke"></TextBlock>
             </StackPanel>
-            <TextBlock x:Name="tbVoiceRecogReady" FontFamily="Segoe MDL2 Assets" Text="&#xEC54;" FontSize="60" VerticalAlignment="Center" Foreground="DeepPink" Margin="0,20,0,0" Visibility="Collapsed"></TextBlock>
         </StackPanel>
         <!--왼쪽 하단 끝-->
 

@@ -78,8 +78,6 @@ namespace Wimi
             await GetForecastInfo();
 
             await GetNewsInfo();
-
-            tbMicSymbol.Foreground = new SolidColorBrush(Colors.DeepPink);
         }
 
         protected async override void OnNavigatedFrom(NavigationEventArgs e)
