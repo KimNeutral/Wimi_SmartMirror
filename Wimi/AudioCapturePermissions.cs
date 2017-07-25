@@ -20,6 +20,7 @@ namespace Wimi
         // If no recording device is attached, attempting to get access to audio capture devices will throw 
         // a System.Exception object, with this HResult set.
         private static int NoCaptureDevicesHResult = -1072845856;
+        private static MediaCapture capture = null;
 
         /// <summary>
         /// On desktop/tablet systems, users are prompted to give permission to use capture devices on a 
@@ -32,7 +33,7 @@ namespace Wimi
         /// check if the user has changed the setting while the app was suspended or not in focus.
         /// </summary>
         /// <returns>true if the microphone can be accessed without any permissions problems.</returns>
-        public async static Task<bool> RequestMicrophonePermission()
+        public async static Task<MediaCapture> RequestMicrophonePermission()
         {
             try
             {
@@ -41,7 +42,7 @@ namespace Wimi
                 MediaCaptureInitializationSettings settings = new MediaCaptureInitializationSettings();
                 settings.StreamingCaptureMode = StreamingCaptureMode.Audio;
                 settings.MediaCategory = MediaCategory.Speech;
-                MediaCapture capture = new MediaCapture();
+                capture = new MediaCapture();
 
                 await capture.InitializeAsync(settings);
             }
@@ -51,14 +52,14 @@ namespace Wimi
                 // namespace unless the media player pack is installed. Handle this gracefully.
                 var messageDialog = new Windows.UI.Popups.MessageDialog("Media player components are unavailable.");
                 await messageDialog.ShowAsync();
-                return false;
+                return null;
             }
             catch (UnauthorizedAccessException)
             {
                 // The user has turned off access to the microphone. If this occurs, we should show an error, or disable
                 // functionality within the app to ensure that further exceptions aren't generated when 
                 // recognition is attempted.
-                return false;
+                return null;
             }
             catch (Exception exception)
             {
@@ -68,14 +69,14 @@ namespace Wimi
                 {
                     var messageDialog = new Windows.UI.Popups.MessageDialog("No Audio Capture devices are present on this system.");
                     await messageDialog.ShowAsync();
-                    return false;
+                    return null;
                 }
                 else
                 {
                     throw;
                 }
             }
-            return true;
+            return capture;
         }
     }
 }

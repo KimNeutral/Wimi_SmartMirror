@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Core;
+using Windows.Media.Capture;
 using Windows.Media.SpeechRecognition;
 using Windows.UI;
 using Windows.UI.Core;
@@ -18,7 +19,8 @@ namespace Wimi
         private MainPage rootPage;
         private CoreDispatcher dispatcher; //UI쓰레드 화면 업데이트를 위해 필요.
         private SpeechRecognizer speechRecognizer;
-        private DispatcherTimer timer;
+        private DispatcherTimer RecogCheckTimer; //디버깅용
+        MediaCapture capture;
 
         private bool isListening;
 
@@ -57,7 +59,7 @@ namespace Wimi
                 {
                     try
                     {
-                        await speechRecognizer.ContinuousRecognitionSession.StartAsync();
+                        await speechRecognizer.ContinuousRecognitionSession.StartAsync(SpeechContinuousRecognitionMode.Default);
                         isListening = true;
                     }
                     catch (Exception ex)
@@ -81,21 +83,30 @@ namespace Wimi
         private async Task InitializeRecognizer()
         {
             isListening = false;
-            timer = new DispatcherTimer();
+            RecogCheckTimer = new DispatcherTimer();
             rootPage = this;
             dispatcher = CoreWindow.GetForCurrentThread().Dispatcher;
-            timer.Interval = new TimeSpan(0, 0, 1);
 
+            RecogCheckTimer.Interval = new TimeSpan(0, 0, 10);
+            RecogCheckTimer.Tick += RecogCheckTimer_Tick;
+            RecogCheckTimer.Start();
+#if false
             bool permissionGained = await AudioCapturePermissions.RequestMicrophonePermission();
             if (permissionGained)
+#else
+            capture = await AudioCapturePermissions.RequestMicrophonePermission();
+            if(capture != null)
+#endif
             {
+                capture.Failed += Capture_Failed;
+                capture.RecordLimitationExceeded += Capture_RecordLimitationExceeded;
                 if (speechRecognizer != null)
                 {
                     // cleanup prior to re-initializing this scenario.
                     speechRecognizer.ContinuousRecognitionSession.Completed -= ContinuousRecognitionSession_Completed;
                     speechRecognizer.ContinuousRecognitionSession.ResultGenerated -= ContinuousRecognitionSession_ResultGenerated;
                     speechRecognizer.StateChanged -= SpeechRecognizer_StateChanged;
-                    //speechRecognizer.RecognitionQualityDegrading -= SpeechRecognizer_RecognitionQualityDegrading;
+                    speechRecognizer.RecognitionQualityDegrading -= SpeechRecognizer_RecognitionQualityDegrading;
 
                     speechRecognizer.Dispose();
                     speechRecognizer = null;
@@ -103,10 +114,11 @@ namespace Wimi
 
                 speechRecognizer = new SpeechRecognizer();
 
-#if false //이 설정들은 어떻게 동작하는지 실제 체크해봐야 함
+#if true //이 설정들은 어떻게 동작하는지 실제 체크해봐야 함
+                //https://blogs.windows.com/buildingapps/2016/05/16/using-speech-in-your-uwp-apps-its-good-to-talk/#1oeBioSBAzPIK3bJ.97
                 //speechRecognizer.Timeouts.InitialSilenceTimeout = TimeSpan.FromSeconds(6.0);
                 //speechRecognizer.Timeouts.BabbleTimeout = TimeSpan.FromSeconds(4.0);
-                //speechRecognizer.Timeouts.EndSilenceTimeout = TimeSpan.FromSeconds(4.0);
+                //speechRecognizer.Timeouts.EndSilenceTimeout = TimeSpan.FromSeconds(5.0);
                 //speechRecognizer.ContinuousRecognitionSession.AutoStopSilenceTimeout = TimeSpan.MaxValue; //new TimeSpan(1, 0, 0);
 #endif
                 speechRecognizer.StateChanged += SpeechRecognizer_StateChanged;
@@ -122,7 +134,7 @@ namespace Wimi
 
                 speechRecognizer.ContinuousRecognitionSession.Completed += ContinuousRecognitionSession_Completed;
                 speechRecognizer.ContinuousRecognitionSession.ResultGenerated += ContinuousRecognitionSession_ResultGenerated;
-                //speechRecognizer.RecognitionQualityDegrading += SpeechRecognizer_RecognitionQualityDegrading;
+                speechRecognizer.RecognitionQualityDegrading += SpeechRecognizer_RecognitionQualityDegrading;
 
                 Recognize();
 
@@ -137,38 +149,23 @@ namespace Wimi
             return;
         }
 
-        private async void SpeechRecognizer_RecognitionQualityDegrading(SpeechRecognizer sender, SpeechRecognitionQualityDegradingEventArgs args)
+        private void Capture_RecordLimitationExceeded(MediaCapture sender)
         {
-            // Create an instance of a speech synthesis engine (voice).
-            var speechSynthesizer = new Windows.Media.SpeechSynthesis.SpeechSynthesizer();
-            Debug.WriteLine("SpeechRecognizer_RecognitionQualityDegrading, Result = {0}", args.Problem.ToString());
-            // If input speech is too quiet, prompt the user to speak louder.
-            if (args.Problem == Windows.Media.SpeechRecognition.SpeechRecognitionAudioProblem.TooQuiet)
-            {
-                // Generate the audio stream from plain text.
-                Windows.Media.SpeechSynthesis.SpeechSynthesisStream stream;
-                try
-                {
-                    stream = await speechSynthesizer.SynthesizeTextToStreamAsync("Try speaking louder");
-                    stream.Seek(0);
-                }
-                catch (Exception)
-                {
-                    stream = null;
-                }
+            Debug.WriteLine("마이크 캡쳐 RecordLimitationExceeded");
+        }
 
-                // Send the stream to the MediaElement declared in XAML.
-                await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.High, () =>
-                {
-                    this.media.SetSource(stream, stream.ContentType);
-                });
-            }
+        private void Capture_Failed(MediaCapture sender, MediaCaptureFailedEventArgs errorEventArgs)
+        {
+            Debug.WriteLine("마이크 캡쳐 Failed");
+        }
+
+        private void RecogCheckTimer_Tick(object sender, object e)
+        {
+            //Debug.WriteLine("상태체크: " + speechRecognizer.State.ToString());
         }
 
         private async void ContinuousRecognitionSession_ResultGenerated(SpeechContinuousRecognitionSession sender, SpeechContinuousRecognitionResultGeneratedEventArgs args)
         {
-            Debug.WriteLine("ContinuousRecognitionSession_ResultGenerated, Result = {0}", args.Result.Confidence);
-
             string tag = "unknown";
             if (args.Result.Constraint != null)
             {
@@ -180,10 +177,12 @@ namespace Wimi
                 args.Result.Confidence == SpeechRecognitionConfidence.High ||
                 args.Result.Confidence == SpeechRecognitionConfidence.Low)
             {
+                Debug.WriteLine(string.Format("Heard: '{0}', (Tag: '{1}', Confidence: {2})", args.Result.Text, tag, args.Result.Confidence.ToString()));
+
                 await dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
                 {
                     //Confidence
-                    resultTextBlock.Text = string.Format("{0}, 태그: {1}, 인식률: {2}", args.Result.Text, tag, args.Result.Confidence.ToString());
+                    resultTextBlock.Text = string.Format("Heard: {0}, Tag: {1}, Confidence: {2}", args.Result.Text, tag, args.Result.Confidence.ToString());
                     if (!string.IsNullOrEmpty(tag))
                     {
                         switch (tag)
@@ -271,6 +270,7 @@ namespace Wimi
                 {
                     //SetVoice("다시 말해주세요."); //Please say it again. //Tell me again. //What did you say? //Say what? //다른건 발음이 이상하게 나옴 ㅋㅋ
                     resultTextBlock.Text = string.Format("음성인식이 실패하였습니다.");
+                    Debug.WriteLine("ContinuousRecognitionSession_ResultGenerated - Rejected");
                 });
             }
             else
@@ -299,11 +299,11 @@ namespace Wimi
 
         private async void SpeechRecognizer_StateChanged(SpeechRecognizer sender, SpeechRecognizerStateChangedEventArgs args)
         {
-            await dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+            await dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
             {
                 tbVoiceRecogState.Text = args.State.ToString();
 
-                switch(args.State)
+                switch (args.State)
                 {
                     case SpeechRecognizerState.Idle:
                         {
@@ -326,6 +326,9 @@ namespace Wimi
                             break;
                         }
                     case SpeechRecognizerState.SoundEnded:
+                        {
+                            break;
+                        }
                     case SpeechRecognizerState.SpeechDetected:
                         {
                             break;
@@ -339,19 +342,44 @@ namespace Wimi
                             break;
                         }
                 }
-                    
+
                 Debug.WriteLine("SpeechRecognizer state = {0}", args.State);
             });
         }
 
-
-        private void RestartSpeechRecognizer()
+        private async void SpeechRecognizer_RecognitionQualityDegrading(SpeechRecognizer sender, SpeechRecognitionQualityDegradingEventArgs args)
         {
-            CleanSpeechRecognizer();
+            // Create an instance of a speech synthesis engine (voice).
+            var speechSynthesizer = new Windows.Media.SpeechSynthesis.SpeechSynthesizer();
+            Debug.WriteLine("SpeechRecognizer_RecognitionQualityDegrading, Result = {0}", args.Problem.ToString());
+            resultTextBlock.Text = "RecognitionQualityDegrading: " + args.Problem.ToString();
+            // If input speech is too quiet, prompt the user to speak louder.
+            if (args.Problem == Windows.Media.SpeechRecognition.SpeechRecognitionAudioProblem.TooQuiet)
+            {
+                // Generate the audio stream from plain text.
+                Windows.Media.SpeechSynthesis.SpeechSynthesisStream stream;
+                try
+                {
+                    stream = await speechSynthesizer.SynthesizeTextToStreamAsync("Try speaking louder");
+                    stream.Seek(0);
+                }
+                catch (Exception)
+                {
+                    stream = null;
+                }
+
+                // Send the stream to the MediaElement declared in XAML.
+                await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.High, () =>
+                {
+                    this.media.SetSource(stream, stream.ContentType);
+                });
+            }
         }
 
         private async void CleanSpeechRecognizer()
         {
+            RecogCheckTimer.Stop();
+
             if (speechRecognizer != null)
             {
                 if (isListening)
@@ -395,7 +423,7 @@ namespace Wimi
             FullScreenConstraint = new SpeechRecognitionListConstraint(new List<string>()
             {"Set FullScreen"}, "FullScreen");
             //조명명령어 추가 파이팅 ㅎ
-            /**/
+            /*
             TurnOnLightConstraint = new SpeechRecognitionListConstraint(new List<string>()
             { "turn On the Light"}, "TurnOn");
             TurnOffLightConstraint = new SpeechRecognitionListConstraint(new List<string>()
@@ -419,7 +447,7 @@ namespace Wimi
             PurpleColorLightConstraint = new SpeechRecognitionListConstraint(new List<string>()
             { "Change color Purple","turn on Purple"}, "PurpleColor");
             WhiteColorLightConstraint = new SpeechRecognitionListConstraint(new List<string>()
-            { "Change color White","turn on White"}, "WhiteColor");/**/
+            { "Change color White","turn on White"}, "WhiteColor");*/
 
             speechRecognizer.Constraints.Add(helloConstraint);
             speechRecognizer.Constraints.Add(homeConstraint);
@@ -432,18 +460,18 @@ namespace Wimi
             speechRecognizer.Constraints.Add(FullScreenConstraint);
             speechRecognizer.Constraints.Add(ShowNewsConstraint);
             speechRecognizer.Constraints.Add(ShowBusConstraint);
-            speechRecognizer.Constraints.Add(TurnOnLightConstraint);
-            speechRecognizer.Constraints.Add(TurnOffLightConstraint);
-            speechRecognizer.Constraints.Add(ChangeLightModeOn);
-            speechRecognizer.Constraints.Add(ChangeLightModeOff);
-            speechRecognizer.Constraints.Add(RedColorLightConstraint);
-            speechRecognizer.Constraints.Add(YellowColorLightConstraint);
-            speechRecognizer.Constraints.Add(BrownColorLightConstraint);
-            speechRecognizer.Constraints.Add(GreenColorLightConstraint);
-            speechRecognizer.Constraints.Add(BlueColorLightConstraint);
-            speechRecognizer.Constraints.Add(PinkColorLightConstraint);
-            speechRecognizer.Constraints.Add(PurpleColorLightConstraint);
-            speechRecognizer.Constraints.Add(WhiteColorLightConstraint);
+            //speechRecognizer.Constraints.Add(TurnOnLightConstraint);
+            //speechRecognizer.Constraints.Add(TurnOffLightConstraint);
+            //speechRecognizer.Constraints.Add(ChangeLightModeOn);
+            //speechRecognizer.Constraints.Add(ChangeLightModeOff);
+            //speechRecognizer.Constraints.Add(RedColorLightConstraint);
+            //speechRecognizer.Constraints.Add(YellowColorLightConstraint);
+            //speechRecognizer.Constraints.Add(BrownColorLightConstraint);
+            //speechRecognizer.Constraints.Add(GreenColorLightConstraint);
+            //speechRecognizer.Constraints.Add(BlueColorLightConstraint);
+            //speechRecognizer.Constraints.Add(PinkColorLightConstraint);
+            //speechRecognizer.Constraints.Add(PurpleColorLightConstraint);
+            //speechRecognizer.Constraints.Add(WhiteColorLightConstraint);
             
         }
 
@@ -460,18 +488,18 @@ namespace Wimi
             speechRecognizer.Constraints.Remove(FullScreenConstraint);
             speechRecognizer.Constraints.Remove(ShowNewsConstraint);
             speechRecognizer.Constraints.Remove(ShowNewsConstraint);
-            speechRecognizer.Constraints.Remove(TurnOnLightConstraint);
-            speechRecognizer.Constraints.Remove(TurnOffLightConstraint);
-            speechRecognizer.Constraints.Remove(ChangeLightModeOn);
-            speechRecognizer.Constraints.Remove(ChangeLightModeOff);
-            speechRecognizer.Constraints.Remove(RedColorLightConstraint);
-            speechRecognizer.Constraints.Remove(YellowColorLightConstraint);
-            speechRecognizer.Constraints.Remove(BrownColorLightConstraint);
-            speechRecognizer.Constraints.Remove(GreenColorLightConstraint);
-            speechRecognizer.Constraints.Remove(BlueColorLightConstraint);
-            speechRecognizer.Constraints.Remove(PinkColorLightConstraint);
-            speechRecognizer.Constraints.Remove(PurpleColorLightConstraint);
-            speechRecognizer.Constraints.Remove(WhiteColorLightConstraint);
+            //speechRecognizer.Constraints.Remove(TurnOnLightConstraint);
+            //speechRecognizer.Constraints.Remove(TurnOffLightConstraint);
+            //speechRecognizer.Constraints.Remove(ChangeLightModeOn);
+            //speechRecognizer.Constraints.Remove(ChangeLightModeOff);
+            //speechRecognizer.Constraints.Remove(RedColorLightConstraint);
+            //speechRecognizer.Constraints.Remove(YellowColorLightConstraint);
+            //speechRecognizer.Constraints.Remove(BrownColorLightConstraint);
+            //speechRecognizer.Constraints.Remove(GreenColorLightConstraint);
+            //speechRecognizer.Constraints.Remove(BlueColorLightConstraint);
+            //speechRecognizer.Constraints.Remove(PinkColorLightConstraint);
+            //speechRecognizer.Constraints.Remove(PurpleColorLightConstraint);
+            //speechRecognizer.Constraints.Remove(WhiteColorLightConstraint);
         }
     }
 }
