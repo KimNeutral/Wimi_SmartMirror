@@ -5,6 +5,7 @@
     xmlns:local="using:Wimi"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Margin="80" Loaded="Grid_Loaded">
@@ -53,7 +54,7 @@
 
         <!--왼쪽 상단-->
         <!--대화창-->
-        <TextBlock x:Name="tbHello" FontFamily="Segoe UI" FontWeight="Light" Margin="10,0,12,0"
+        <TextBlock x:Name="tbHello" FontWeight="Light" Margin="10,0,12,0"
                            FontSize="120" VerticalAlignment="Top" HorizontalAlignment="Left"
                            Foreground="White" Visibility="Collapsed"></TextBlock>
         <!--버스-->
@@ -71,9 +72,9 @@
                                 <ColumnDefinition Width="*"/>
                                 <!--<ColumnDefinition Width="*"/>-->
                             </Grid.ColumnDefinitions>
-                            <TextBlock Grid.Column="0" FontWeight="Light" FontSize="30" FontFamily="Segoe UI" Text="{Binding number}" Margin="0,0,0,0"/>
-                            <TextBlock Grid.Column="1" FontWeight="Light" FontSize="30" FontFamily="Segoe UI" Text="{Binding state}" Margin="0,0,0,0"/>
-                            <TextBlock Grid.Column="2" FontWeight="Light" FontSize="30" FontFamily="Segoe UI" Text="{Binding position}" Margin="0,0,0,0"/>
+                            <TextBlock Grid.Column="0" FontWeight="Light" FontSize="30" Text="{Binding number}" Margin="0,0,0,0"/>
+                            <TextBlock Grid.Column="1" FontWeight="Light" FontSize="30" Text="{Binding state}" Margin="0,0,0,0"/>
+                            <TextBlock Grid.Column="2" FontWeight="Light" FontSize="30" Text="{Binding position}" Margin="0,0,0,0"/>
                             <!--<TextBlock Grid.Column="3" Text="{Binding note}" Margin="24,0,0,0"/>-->
                         </Grid>
                     </DataTemplate>
@@ -89,7 +90,7 @@
                             <ColumnDefinition Width="*"/>
                             <!--<ColumnDefinition Width="*"/>-->
                         </Grid.ColumnDefinitions>
-                        <TextBlock TextAlignment="Right" Grid.Column="0" FontWeight="Light" FontFamily="Segoe UI" FontSize="20" Text="{Binding title}" Margin="24,0,0,0"/>
+                        <TextBlock TextAlignment="Right" Grid.Column="0" FontWeight="Light" FontSize="20" Text="{Binding title}" Margin="24,0,0,0"/>
                         <!--<TextBlock Grid.Column="3" Text="{Binding note}" Margin="24,0,0,0"/>-->
                     </Grid>
                 </DataTemplate>
@@ -106,10 +107,10 @@
                             <ColumnDefinition Width="140"/>
                             <!--<ColumnDefinition Width="*"/>-->
                         </Grid.ColumnDefinitions>
-                        <TextBlock TextAlignment="Right" FontWeight="Light" FontFamily="Segoe UI" FontSize="70" Grid.Column="0" Text="{Binding hourStr}" Margin="0,0,40,0"/>
+                        <TextBlock TextAlignment="Right" FontWeight="Light"  FontSize="70" Grid.Column="0" Text="{Binding hourStr}" Margin="0,0,40,0"/>
                         <TextBlock FontWeight="Light" FontFamily="Segoe UI Symbol" FontSize="70" Grid.Column="1" Text="{Binding statSymbol}" Margin="24,0,0,0"/>
-                        <TextBlock FontWeight="Light" FontFamily="Segoe UI" FontSize="70" Grid.Column="2" Text="{Binding temperture}" Margin="24,0,0,0"/>
-                        <TextBlock Text="℃" HorizontalAlignment="Right" Margin="0,10,5,0" FontWeight="Light" FontFamily="Segoe UI" FontSize="40" Grid.Column="2"/>
+                        <TextBlock FontWeight="Light" FontSize="70" Grid.Column="2" Text="{Binding temperture}" Margin="24,0,0,0"/>
+                        <TextBlock Text="℃" HorizontalAlignment="Right" Margin="0,10,5,0" FontWeight="Light" FontSize="40" Grid.Column="2"/>
                         <!--<TextBlock Grid.Column="3" Text="{Binding note}" Margin="24,0,0,0"/>-->
                     </Grid>
                 </DataTemplate>
@@ -133,8 +134,8 @@
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
-                            <TextBlock FontWeight="Normal" FontFamily="Segoe UI" FontSize="35" Grid.Column="0" Text="{Binding dt}" Margin="0,0,0,0"/>
-                            <TextBlock HorizontalAlignment="Right" FontWeight="Light" FontFamily="Segoe UI" FontSize="35" Grid.Column="1" Text="{Binding subject}"/>
+                            <TextBlock FontWeight="Normal" FontSize="35" Grid.Column="0" Text="{Binding dt}" Margin="0,0,0,0"/>
+                            <TextBlock HorizontalAlignment="Right" FontWeight="Light" FontSize="35" Grid.Column="1" Text="{Binding subject}"/>
                             <TextBlock Grid.Column="3" Text="{Binding note}" Margin="24,0,0,0"/>
                         </Grid>
                     </DataTemplate>
@@ -148,11 +149,11 @@
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Bottom">
             <StackPanel Margin="20,0,0,12">
                 <TextBlock x:Name="tbDateTime" Margin="0,0,0,0"
-                           FontSize="40" FontWeight="Light" FontFamily="Segoe UI"
-                           HorizontalAlignment="Left"></TextBlock>
+                        FontSize="40" FontWeight="Light"
+                        HorizontalAlignment="Left"></TextBlock>
                 <TextBlock x:Name="tbTime" Margin="0,-20,35,0"
-                           HorizontalAlignment="Left"
-                           FontSize="80" FontWeight="Light" FontFamily="Segoe UI" Foreground="WhiteSmoke"></TextBlock>
+                        HorizontalAlignment="Left"
+                        FontSize="80" FontWeight="Light" Foreground="WhiteSmoke"></TextBlock>
             </StackPanel>
             <TextBlock x:Name="tbVoiceRecogReady" FontFamily="Segoe MDL2 Assets" Text="&#xEC54;" FontSize="60" VerticalAlignment="Center" Foreground="DeepPink" Margin="0,20,0,0" Visibility="Collapsed"></TextBlock>
         </StackPanel>
@@ -162,9 +163,9 @@
         <!--날씨-->
         <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Right" Loaded="tbWeather_Loaded">
             <StackPanel Orientation="Horizontal" Margin="0,-10,0,0">
-                <TextBlock x:Name="tbTc" Margin="12,0,0,12" FontWeight="Light" FontFamily="Segoe UI"
+                <TextBlock x:Name="tbTc" Margin="12,0,0,12" FontWeight="Light"
                                FontSize="80" VerticalAlignment="Bottom" Text="25"/>
-                <TextBlock Text="℃" Margin="0,0,0,40" FontWeight="Light" FontFamily="Segoe UI" FontSize="42" VerticalAlignment="Center"/>
+                <TextBlock Text="℃" Margin="0,0,0,40" FontWeight="Light" FontSize="42" VerticalAlignment="Center"/>
                 <TextBlock x:Name="tbSky" FontFamily="Segoe UI Symbol" Text="&#xE288;"
                                FontSize="80" />
             </StackPanel>

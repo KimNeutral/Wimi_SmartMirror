@@ -9,7 +9,7 @@ using Windows.UI.Xaml.Media;
 
 //test
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
-
+// ref. http://uwpcommunitytoolkit.readthedocs.io/en/master/
 namespace Wimi
 {
     /// <summary>

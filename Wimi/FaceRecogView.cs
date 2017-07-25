@@ -142,6 +142,12 @@ namespace Wimi
         {
             IsIdentified = false;
             faceTimer.Stop();
+
+            if(!Webcam.IsInitialized()) //chris - if the webcam isn't connected,
+            {
+                return false;
+            }
+
             StorageFile captured = await Webcam.CapturePhoto();
             bool suc = await DetectFace(captured);
             await DetectEmotion(captured);

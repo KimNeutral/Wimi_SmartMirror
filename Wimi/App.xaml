@@ -7,7 +7,10 @@
 
     <Application.Resources>
         <Style x:Name="TextBlockStyle" TargetType="TextBlock">
-            <Setter Property="FontFamily" Value="Segoe UI Light"></Setter>
+            <Setter Property="FontFamily" Value="Segoe UI"></Setter>
+            <!--Segoe UI-->
+            <!--Segoe UI Light-->
+            <!--Noto Sans CJK KR-->
             <!--<Setter Property="FontFamily" Value="/Font/NanumBarunGothic.ttf#NanumBarunGothic"></Setter>-->
         </Style>
     </Application.Resources>
