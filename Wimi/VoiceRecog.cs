@@ -336,6 +336,7 @@ namespace Wimi
                             }
                         case SpeechRecognizerState.SoundStarted:
                             {
+                                tbMicSymbol.Foreground = new SolidColorBrush(Colors.DeepPink);
                                 resultTextBlock.Text = string.Empty;
                                 break;
                             }
@@ -419,6 +420,14 @@ namespace Wimi
                 speechRecognizer.Dispose();
                 speechRecognizer = null;
             }
+        }
+
+        private void tbMicSymbol_DoubleTapped(object sender, Windows.UI.Xaml.Input.DoubleTappedRoutedEventArgs e)
+        {
+            //chris: 강제로 다시 시작되도록
+            Debug.WriteLine("Forced SpeechRecognizer Start");
+            isListening = false;
+            Recognize();
         }
 
         public void AddConstraints()

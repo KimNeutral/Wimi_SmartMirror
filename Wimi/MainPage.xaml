@@ -72,7 +72,7 @@
         <StackPanel>
             <TextBlock x:Name="tbMicSymbol" FontFamily="Segoe MDL2 Assets" Text="&#xEC71;"  Margin="0,0,0,0"
                            FontSize="42" VerticalAlignment="Top" HorizontalAlignment="Center"
-                           Foreground="White"></TextBlock>
+                           Foreground="White" DoubleTapped="tbMicSymbol_DoubleTapped" ></TextBlock>
         </StackPanel>
 
         <MediaElement x:Name="mediaElement" Height="500" VerticalAlignment="Bottom" HorizontalAlignment="Center" Visibility="Visible"
