@@ -60,12 +60,13 @@ namespace Wimi
                 {
                     try
                     {
-                        await speechRecognizer.ContinuousRecognitionSession.StartAsync(SpeechContinuousRecognitionMode.Default);
+                        await speechRecognizer.ContinuousRecognitionSession.StartAsync(); //SpeechContinuousRecognitionMode.PauseOnRecognition
                         isListening = true;
+                        Debug.WriteLine("ContinuousRecognitionSession StartAsync");
                     }
                     catch (Exception ex)
                     {
-                        string str = ex.Message;
+                        Debug.WriteLine("ContinuousRecognitionSession StartAsync " + ex.Message);
                     }
                 }
             }
@@ -76,6 +77,7 @@ namespace Wimi
                 if (speechRecognizer.State != SpeechRecognizerState.Idle)
                 {
                     await speechRecognizer.ContinuousRecognitionSession.CancelAsync();
+                    Debug.WriteLine("ContinuousRecognitionSession CancelAsync " + speechRecognizer.State.ToString());
                 }
             }
 
@@ -180,7 +182,7 @@ namespace Wimi
                     args.Result.Confidence == SpeechRecognitionConfidence.High ||
                     args.Result.Confidence == SpeechRecognitionConfidence.Low)
                 {
-                    Debug.WriteLine(string.Format("*********** 인식: '{0}', (태그: '{1}', 정확도: {2}) ***********", args.Result.Text, tag, args.Result.Confidence.ToString()));
+                    Debug.WriteLine(string.Format("********************************************** 인식: '{0}', (태그: '{1}', 정확도: {2})", args.Result.Text, tag, args.Result.Confidence.ToString()));
 
                     await dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
                     {
@@ -296,9 +298,10 @@ namespace Wimi
                     resultTextBlock.Text = string.Format("ContinuousRecognitionSession_Completed, status = {0}", args.Status.ToString());
                     if (args.Status.Equals(SpeechRecognitionResultStatus.PauseLimitExceeded))
                     {
-                        Recognize();
+                        //do nothing...
                     }
                     isListening = false;
+                    Recognize();
                 });
             }
             else if(args.Status == SpeechRecognitionResultStatus.Success)
@@ -338,6 +341,7 @@ namespace Wimi
                             }
                         case SpeechRecognizerState.SoundEnded:
                             {
+                                tbMicSymbol.Foreground = new SolidColorBrush(Colors.Gray);
                                 Recognize(); //chris: 음성인식이 끝난후 다시 시작되도록, 임시방편
                                 break;
                             }
@@ -375,7 +379,6 @@ namespace Wimi
             // If input speech is too quiet, prompt the user to speak louder.
             if (args.Problem != Windows.Media.SpeechRecognition.SpeechRecognitionAudioProblem.None) //TooQuiet
             {
-                resultTextBlock.Text = "RecognitionQualityDegrading: " + args.Problem.ToString();
                 // Generate the audio stream from plain text.
                 Windows.Media.SpeechSynthesis.SpeechSynthesisStream stream;
                 try
@@ -391,6 +394,7 @@ namespace Wimi
                 // Send the stream to the MediaElement declared in XAML.
                 await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.High, () =>
                 {
+                    resultTextBlock.Text = "RecognitionQualityDegrading: " + args.Problem.ToString();
                     this.media.SetSource(stream, stream.ContentType);
                 });
             }
