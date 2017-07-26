@@ -8,6 +8,36 @@
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     mc:Ignorable="d">
 
+    <Page.Resources>
+        <Storyboard x:Name="GradientAnimation" RepeatBehavior="Forever" SpeedRatio="0.2">
+            <ColorAnimationUsingKeyFrames 
+                Storyboard.TargetName="GridVoice"
+                Storyboard.TargetProperty="(UIElement.Background).(LinearGradientBrush.GradientStops)[0].(GradientStop.Color)"
+                EnableDependentAnimation="True"
+                BeginTime="-0:0:0.5">
+                <LinearColorKeyFrame KeyTime="0:0:01" Value="#FF0000"/>
+                <LinearColorKeyFrame KeyTime="0:0:02" Value="#FFFF00"/>
+                <LinearColorKeyFrame KeyTime="0:0:03" Value="#000000"/>
+                <LinearColorKeyFrame KeyTime="0:0:04" Value="#00FFFF"/>
+                <LinearColorKeyFrame KeyTime="0:0:05" Value="#0000FF"/>
+                <LinearColorKeyFrame KeyTime="0:0:06" Value="#FF00FF"/>
+                <LinearColorKeyFrame KeyTime="0:0:07" Value="#FF0000"/>
+            </ColorAnimationUsingKeyFrames >
+            <ColorAnimationUsingKeyFrames
+                Storyboard.TargetName="GridVoice"
+                Storyboard.TargetProperty="(UIElement.Background).(LinearGradientBrush.GradientStops)[1].(GradientStop.Color)"
+                EnableDependentAnimation="True">
+                <LinearColorKeyFrame KeyTime="0:0:01" Value="#FF0000"/>
+                <LinearColorKeyFrame KeyTime="0:0:02" Value="#FFFF00"/>
+                <LinearColorKeyFrame KeyTime="0:0:03" Value="#000000"/>
+                <LinearColorKeyFrame KeyTime="0:0:04" Value="#00FFFF"/>
+                <LinearColorKeyFrame KeyTime="0:0:05" Value="#0000FF"/>
+                <LinearColorKeyFrame KeyTime="0:0:06" Value="#FF00FF"/>
+                <LinearColorKeyFrame KeyTime="0:0:07" Value="#FF0000"/>
+            </ColorAnimationUsingKeyFrames>
+        </Storyboard>
+    </Page.Resources>
+    
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Margin="80" Loaded="Grid_Loaded">
         <Grid>
             <StackPanel>
@@ -180,5 +210,8 @@
                     <TextBlock Text="℃" FontSize="60"/>-->
         </StackPanel>
         <!--오른쪽 하단 끝-->
+        <Grid x:Name="GridVoice">
+            
+        </Grid>
     </Grid>
 </Page>
