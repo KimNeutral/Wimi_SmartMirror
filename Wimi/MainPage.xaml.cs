@@ -1,8 +1,13 @@
 ﻿using System;
+using System.Threading.Tasks;
 using DSMusic;
+using Windows.UI;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using Windows.UI.Xaml.Shapes;
 
 //test
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
@@ -21,7 +26,7 @@ namespace Wimi
         {
             this.InitializeComponent();
 
-            //BackgroundBrush.ImageSource = null; //chris: 이미지 액자로 활용시 BackgroundBrush에 이미지를 설정하면 된다.
+            BackgroundBrush.ImageSource = null; //chris: 이미지 액자로 활용시 BackgroundBrush에 이미지를 설정하면 된다.
             //GradientAnimation.Begin(); //chris: 음성인식되는중 배경을 쓸지도 몰라서 코드는 남겨둠.
 
             ClockTimer.Tick += ClockTimer_Tick;
@@ -95,6 +100,15 @@ namespace Wimi
 
         private void gridRoot_SizeChanged(object sender, SizeChangedEventArgs e)
         {
+        }
+
+        private void ClickToPlaySource_ImageOpened(object sender, RoutedEventArgs e)
+        {
+            // Once ImageOpened is raised, we can query whether an image is animated.
+            if (VoiceRecogEffect.IsAnimatedBitmap)
+            {
+                PlaybackButtons.Visibility = Visibility.Visible;
+            }
         }
     }
 }

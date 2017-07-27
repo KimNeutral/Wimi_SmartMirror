@@ -76,12 +76,6 @@
             </StackPanel>
         </Grid>
 
-        <StackPanel>
-            <TextBlock x:Name="tbMicSymbol" FontFamily="Segoe MDL2 Assets" Text="&#xEC71;"  Margin="0,0,0,0"
-                           FontSize="42" VerticalAlignment="Top" HorizontalAlignment="Center"
-                           Foreground="White" DoubleTapped="tbMicSymbol_DoubleTapped" ></TextBlock>
-        </StackPanel>
-
         <MediaElement x:Name="mediaElement" Height="500" VerticalAlignment="Bottom" HorizontalAlignment="Center" Visibility="Visible"
                       AutoPlay="True" AreTransportControlsEnabled="True" Source="Assets/Puppy_Love.mp3" Volume="0.1" Stretch="Uniform"/>
 
@@ -225,6 +219,33 @@
                 </LinearGradientBrush>
             </Grid.Background>
         </Grid>
+        
         <!--<Image Source="Assets/bigBlue.png" Opacity="0.5" Stretch="UniformToFill" Width="1920" ></Image>-->
+
+        <Viewbox Width="400" Height="300">
+            <Image Margin="20" HorizontalAlignment="Center" VerticalAlignment="Top" Stretch="None">
+                <Image.Source>
+                    <BitmapImage x:Name="VoiceRecogEffect" AutoPlay="False"
+                        UriSource="Assets\circle.gif" ImageOpened="ClickToPlaySource_ImageOpened"/>
+                </Image.Source>
+            </Image>
+        </Viewbox>
+
+        <TextBlock x:Name="tbMicSymbol" FontFamily="Segoe MDL2 Assets" Text="&#xEC71;"  Margin="0,0,0,0"
+                           FontSize="42" VerticalAlignment="Center" HorizontalAlignment="Center"
+                           Foreground="White" DoubleTapped="tbMicSymbol_DoubleTapped" ></TextBlock>
+
+        <StackPanel x:Name="PlaybackButtons" Orientation="Horizontal" Visibility="Collapsed" Margin="30">
+            <Button
+                    x:Name="PlayButton"
+                    Click="{x:Bind VoiceRecogEffect.Play}"
+                    Content="Play"
+                    Margin="10,0,0,0"/>
+            <Button
+                    x:Name="StopButton"
+                    Click="{x:Bind VoiceRecogEffect.Stop}"
+                    Content="Stop"
+                    Margin="10,0,0,0"/>
+        </StackPanel>
     </Grid>
 </Page>

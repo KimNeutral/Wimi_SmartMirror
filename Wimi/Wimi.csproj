@@ -136,6 +136,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\bigBlue.png" />
+    <Content Include="Assets\circle.gif" />
+    <Content Include="Assets\line.gif" />
     <Content Include="Assets\Puppy_Love.mp3">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
