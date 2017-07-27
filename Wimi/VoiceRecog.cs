@@ -306,6 +306,7 @@ namespace Wimi
             }
             else if(args.Status == SpeechRecognitionResultStatus.Success)
             {
+                isListening = false;
                 Recognize();//chris: 음성인식이 끝난후 음성세션이 완료되게 임시방편으로 처리하였으므로 다시 시작되도록 한다.
             }
         }
