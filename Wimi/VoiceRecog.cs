@@ -281,6 +281,8 @@ namespace Wimi
                     resultTextBlock.Text = string.Format("No Confidence.");
                     Debug.WriteLine("ContinuousRecognitionSession_ResultGenerated - {0}, 아무조건도 안걸림", args.Result.Confidence);
                 }
+
+                //Recognize(); //chris: 음성인식이 끝난후 다시 시작되도록, 임시방편
             }
             catch(Exception ex)
             {
@@ -291,23 +293,14 @@ namespace Wimi
         private async void ContinuousRecognitionSession_Completed(SpeechContinuousRecognitionSession sender, SpeechContinuousRecognitionCompletedEventArgs args)
         {
             Debug.WriteLine("ContinuousRecognitionSession_Completed, Status = {0}", args.Status);
-            if (args.Status != SpeechRecognitionResultStatus.Success)
+            //if (args.Status != SpeechRecognitionResultStatus.Success)
             {
+                //chris: 음성인식이 끝난후 음성세션이 완료되게 임시방편으로 처리하였으므로 다시 시작되도록 한다.
                 await dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                 {
-                    resultTextBlock.Text = string.Format("ContinuousRecognitionSession_Completed, status = {0}", args.Status.ToString());
-                    if (args.Status.Equals(SpeechRecognitionResultStatus.PauseLimitExceeded))
-                    {
-                        //do nothing...
-                    }
                     isListening = false;
-                    Recognize();
+                    Recognize(); 
                 });
-            }
-            else if(args.Status == SpeechRecognitionResultStatus.Success)
-            {
-                isListening = false;
-                Recognize();//chris: 음성인식이 끝난후 음성세션이 완료되게 임시방편으로 처리하였으므로 다시 시작되도록 한다.
             }
         }
 

@@ -1,11 +1,8 @@
-﻿using DSMusic;
-using System;
-using System.Diagnostics;
+﻿using System;
+using DSMusic;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
-using Windows.UI;
-using Windows.UI.Xaml.Media;
 
 //test
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
@@ -23,6 +20,9 @@ namespace Wimi
         public MainPage()
         {
             this.InitializeComponent();
+
+            //BackgroundBrush.ImageSource = null; //chris: 이미지 액자로 활용시 BackgroundBrush에 이미지를 설정하면 된다.
+            //GradientAnimation.Begin(); //chris: 음성인식되는중 배경을 쓸지도 몰라서 코드는 남겨둠.
 
             ClockTimer.Tick += ClockTimer_Tick;
             ClockTimer.Interval = new TimeSpan(0, 0, 2);
@@ -58,6 +58,8 @@ namespace Wimi
 
         private async void Grid_Loaded(object sender, RoutedEventArgs e)
         {
+            //gridRoot.Blur(20, 0).Start();
+
             initMusicList();
             initSynthesizer();
             await InitializeRecognizer();
@@ -89,6 +91,10 @@ namespace Wimi
 
             CleanSpeechRecognizer();
             RemoveConstraints();
+        }
+
+        private void gridRoot_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
         }
     }
 }

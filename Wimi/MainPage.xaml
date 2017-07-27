@@ -9,7 +9,7 @@
     mc:Ignorable="d">
 
     <Page.Resources>
-        <Storyboard x:Name="GradientAnimation" RepeatBehavior="Forever" SpeedRatio="0.2">
+        <Storyboard x:Name="GradientAnimation" RepeatBehavior="Forever" SpeedRatio="0.4">
             <ColorAnimationUsingKeyFrames 
                 Storyboard.TargetName="GridVoice"
                 Storyboard.TargetProperty="(UIElement.Background).(LinearGradientBrush.GradientStops)[0].(GradientStop.Color)"
@@ -37,8 +37,15 @@
             </ColorAnimationUsingKeyFrames>
         </Storyboard>
     </Page.Resources>
-    
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Margin="80" Loaded="Grid_Loaded">
+
+    <Page.Background>
+        <ImageBrush x:Name="BackgroundBrush" ImageSource="Assets/bigBlue.png" Opacity="0.5"  AlignmentX="Center" AlignmentY="Center" Stretch="UniformToFill"></ImageBrush>
+    </Page.Background>
+
+    <Grid x:Name="gridRoot"
+          Loaded="Grid_Loaded"
+          SizeChanged="gridRoot_SizeChanged">
+        
         <Grid>
             <StackPanel>
 
@@ -210,8 +217,14 @@
                     <TextBlock Text="℃" FontSize="60"/>-->
         </StackPanel>
         <!--오른쪽 하단 끝-->
-        <Grid x:Name="GridVoice">
-            
+        <Grid x:Name="GridVoice" Opacity="1">
+            <Grid.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                    <GradientStop Offset="0"/>
+                    <GradientStop Offset="1"/>
+                </LinearGradientBrush>
+            </Grid.Background>
         </Grid>
+        <!--<Image Source="Assets/bigBlue.png" Opacity="0.5" Stretch="UniformToFill" Width="1920" ></Image>-->
     </Grid>
 </Page>

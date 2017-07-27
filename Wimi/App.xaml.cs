@@ -5,8 +5,12 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
+using Windows.ApplicationModel.Core;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Foundation.Metadata;
+using Windows.UI;
+using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -57,6 +61,19 @@ namespace Wimi
 
                 // Place the frame in the current Window
                 Window.Current.Content = rootFrame;
+
+                //chris: 타이틀 바 투명하게
+                if (ApiInformation.IsTypePresent("Windows.UI.ViewManagement.ApplicationView"))
+                {
+                    CoreApplication.GetCurrentView().TitleBar.ExtendViewIntoTitleBar = true;
+                    var titleBar = ApplicationView.GetForCurrentView().TitleBar;
+                    if (titleBar != null)
+                    {
+                        titleBar.ButtonForegroundColor = Colors.White;
+                        titleBar.ButtonBackgroundColor = Colors.Transparent;
+                        titleBar.BackgroundColor = Color.FromArgb(255, 13, 15, 30);
+                    }
+                }
             }
 
             if (e.PrelaunchActivated == false)

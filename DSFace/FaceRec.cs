@@ -29,6 +29,9 @@ namespace DSFace
 
         public async Task InitListAsync()
         {
+            if (string.IsNullOrEmpty(Constraints.FaceKey))
+                return;
+
             await CreateWhiteListPersonGroupAsync();
 
             StorageFolder appInstalledFolder = Windows.ApplicationModel.Package.Current.InstalledLocation;
