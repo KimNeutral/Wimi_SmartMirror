@@ -9,9 +9,9 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Windows.UI.Xaml.Shapes;
 
-//test
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 // ref. http://uwpcommunitytoolkit.readthedocs.io/en/master/
+
 namespace Wimi
 {
     /// <summary>
@@ -19,6 +19,8 @@ namespace Wimi
     /// </summary>
     public partial class MainPage : Page
     {
+        const bool USE_FACERECOG = false; //chris: for test
+
         DispatcherTimer ClockTimer = new DispatcherTimer();
         Music mu = new Music();
 
@@ -75,8 +77,11 @@ namespace Wimi
             captureElement.Source = Webcam.mediaCapture;
             await Webcam.StartCameraPreview();
 
-            await face.InitListAsync();
-            InitFaceRec();
+            if(USE_FACERECOG)
+            {
+                await face.InitListAsync();
+                InitFaceRec();
+            }
 
             GetBusInfo();
 #if PC_MODE

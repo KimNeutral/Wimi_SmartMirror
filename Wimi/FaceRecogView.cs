@@ -16,7 +16,7 @@ namespace Wimi
     public sealed partial class MainPage : Page
     {
         WebcamHelper Webcam = new WebcamHelper();
-        FaceRec face = new FaceRec();
+        FaceRec face = null;
 
         DispatcherTimer faceTimer = new DispatcherTimer();
 
@@ -28,6 +28,11 @@ namespace Wimi
 
         private void InitFaceRec()
         {
+            if(face == null)
+            {
+                face = new FaceRec();
+            }
+            
             faceTimer.Interval = new TimeSpan(0, 0, 1);
             faceTimer.Tick += FaceTimer_Tick;
         }
@@ -38,6 +43,9 @@ namespace Wimi
             {
                 return;
             }
+
+            if (face == null)
+                return;
 
             StorageFile captured = await Webcam.CapturePhoto();
 
@@ -143,7 +151,12 @@ namespace Wimi
             IsIdentified = false;
             faceTimer.Stop();
 
-            if(!Webcam.IsInitialized()) //chris - if the webcam isn't connected,
+            if (!Webcam.IsInitialized()) //chris - if the webcam isn't connected,
+            {
+                return false;
+            }
+
+            if(face == null)
             {
                 return false;
             }

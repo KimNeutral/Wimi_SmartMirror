@@ -50,7 +50,7 @@
             <StackPanel>
 
                 <!--카메라프리뷰-->
-                <CaptureElement x:Name="captureElement" Visibility="Collapsed"
+                <CaptureElement x:Name="captureElement" Visibility="Visible"
                             Margin="20" Width="300"
                             VerticalAlignment="Top" 
                             HorizontalAlignment="Left"/>

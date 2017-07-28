@@ -23,9 +23,9 @@ namespace Wimi
         {
 #if true
             lstMusic.Add("남이 될 수 있을까");
-            lstMusic.Add("Uptown Funk");
-            lstMusic.Add("나로 말할 것 같으면");
-            lstMusic.Add("I LUV IT");
+            lstMusic.Add("Beautiful");
+            lstMusic.Add("미치게 만들어");
+            lstMusic.Add("야생화");
 #else
 
             lstMusic.Add("New Face");
