@@ -38,47 +38,36 @@
         </Storyboard>
     </Page.Resources>
 
+    <!--배경화면처리시 사용-->
     <Page.Background>
         <ImageBrush x:Name="BackgroundBrush" ImageSource="Assets/bigBlue.png" Opacity="0.5"  AlignmentX="Center" AlignmentY="Center" Stretch="UniformToFill"></ImageBrush>
     </Page.Background>
 
-    <Grid x:Name="gridRoot"
-          Loaded="Grid_Loaded"
-          SizeChanged="gridRoot_SizeChanged">
-        
-        <Grid>
-            <StackPanel>
+    <Grid x:Name="gridRoot" Loaded="Grid_Loaded">
+        <Grid x:Name="gridConentRoot" Margin="60">
+            
+            <!--우측상단 사용자 정보-->
+            <Grid x:Name="gridUser" HorizontalAlignment="Right" VerticalAlignment="Top">
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Top">
+                    <StackPanel x:Name="spUser" Margin="12" Orientation="Vertical">
+                        <!--얼굴인식누구-->
+                        <TextBlock x:Name="tbFaceName" Text="Guest" FontSize="30" HorizontalAlignment="Right"/>
+                        <TextBlock FontSize="20" HorizontalAlignment="Right">
+                            <Run  Text="&#xE0A5;" FontFamily="Segoe MDL2 Assets" Foreground="Pink"/>
+                            <Run x:Name="tbEmotion" Text="Neutral"/>
+                        </TextBlock>
+                    </StackPanel>
 
-                <!--카메라프리뷰-->
-                <CaptureElement x:Name="captureElement" Visibility="Visible"
-                            Margin="20" Width="300"
-                            VerticalAlignment="Top" 
-                            HorizontalAlignment="Left"/>
-                <!--임시얼굴인식버튼(Hello Or Wimi 명령으로 대체)-->
-                <Button x:Name="btnCapture" Content="인식" Click="btnCapture_Click" Visibility="Collapsed"/>
-
-            </StackPanel>
-        </Grid>
-
-        <!--오른쪽 영역-->
-        <Grid VerticalAlignment="Top">
-            <StackPanel x:Name="spUser" Orientation="Horizontal" HorizontalAlignment="Right" Visibility="Collapsed">
-                <TextBlock Text="&#xE13D;" FontFamily="Segoe MDL2 Assets" FontSize="60" Margin="0,0,15,0"></TextBlock>
-                <StackPanel Orientation="Vertical" VerticalAlignment="Bottom">
-                    <!--얼굴인식누구-->
-                    <TextBlock x:Name="tbFaceName" Text="{Binding CurrentUser}" FontSize="30"/>
-                    <!--얼굴인식감정-->
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="&#xE0A5;" FontFamily="Segoe MDL2 Assets" Foreground="Pink" FontSize="20" Margin="0,5,5,0"/>
-                        <TextBlock x:Name="tbEmotion" Text="Neutral" FontSize="20"/>
+                    <!--카메라프리뷰-->
+                    <StackPanel>
+                        <CaptureElement x:Name="captureElement" Width="240" Visibility="Visible"/>
+                        <!--임시얼굴인식버튼(Hello Or Wimi 명령으로 대체)-->
+                        <Button x:Name="btnCapture" Content="인식" Click="btnCapture_Click" Visibility="Collapsed"/>
                     </StackPanel>
                 </StackPanel>
-            </StackPanel>
+            </Grid>
         </Grid>
-
-        <MediaElement x:Name="mediaElement" Height="500" VerticalAlignment="Bottom" HorizontalAlignment="Center" Visibility="Visible"
-                      AutoPlay="True" AreTransportControlsEnabled="True" Source="Assets/Puppy_Love.mp3" Volume="0.1" Stretch="Uniform"/>
-
+        
         <!--왼쪽 상단-->
         <!--대화창-->
         <TextBlock x:Name="tbHello" FontWeight="Light" Margin="10,0,12,0"
@@ -247,5 +236,9 @@
                     Content="Stop"
                     Margin="10,0,0,0"/>
         </StackPanel>
+
+        <MediaElement x:Name="mediaElement" Height="500" VerticalAlignment="Bottom" HorizontalAlignment="Center" Visibility="Visible"
+                      AutoPlay="True" AreTransportControlsEnabled="True" Source="Assets/Puppy_Love.mp3" Volume="0.1" Stretch="Uniform"/>
+
     </Grid>
 </Page>

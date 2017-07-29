@@ -124,6 +124,9 @@
     <Compile Include="VoiceRecog.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="VoiceRecogCommand.cs">
+      <DependentUpon>MainPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="WeatherView.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>

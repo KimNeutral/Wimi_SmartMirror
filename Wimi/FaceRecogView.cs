@@ -23,7 +23,7 @@ namespace Wimi
         bool IsIdentified = false;
         string comment = "";
 
-        public string CurrentUser;
+        public string CurrentUser = "Guest";
         int CntErr = 0;
 
         private void InitFaceRec()

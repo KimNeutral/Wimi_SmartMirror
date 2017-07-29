@@ -20,7 +20,7 @@ namespace Wimi
         private SpeechSynthesizer synthesizer;
         private ResourceContext speechContext;
         private ResourceMap speechResourceMap;
-        private MediaElement media;
+        private MediaElement mediaTTS;
         public Boolean TTSflag;
 
 
@@ -106,8 +106,8 @@ namespace Wimi
             TTSDispatcherTimer.Tick += TTSDispatcherTimer_Tick;
             TTSDispatcherTimer.Interval = new TimeSpan(0, 0, 3);
 
-            media = new MediaElement(); //mediaElement
-            media.Volume = 1;
+            mediaTTS = new MediaElement(); //mediaElement
+            mediaTTS.Volume = 1;
             synthesizer = new SpeechSynthesizer();
             
             speechContext = ResourceContext.GetForCurrentView();
@@ -131,9 +131,9 @@ namespace Wimi
         {
             //return; //잡음 문제로 일단 아래코드를 처리하지 않는다.
 
-            if (media.CurrentState.Equals(MediaElementState.Playing))
+            if (mediaTTS.CurrentState.Equals(MediaElementState.Playing))
             {
-                media.Stop();
+                mediaTTS.Stop();
             }
             else
             {
@@ -146,19 +146,19 @@ namespace Wimi
                         SpeechSynthesisStream synthesisStream = await synthesizer.SynthesizeTextToStreamAsync(text);
 
                         // Set the source and start playing the synthesized audio stream.
-                        media.AutoPlay = true;
-                        media.SetSource(synthesisStream, synthesisStream.ContentType);
+                        mediaTTS.AutoPlay = true;
+                        mediaTTS.SetSource(synthesisStream, synthesisStream.ContentType);
 
                         TTSDispatcherTimer.Start();
                         TTSflag = true;
-                        media.Play();
+                        mediaTTS.Play();
                     }
                     catch (System.IO.FileNotFoundException)
                     {
                     }
                     catch (Exception)
                     {
-                        media.AutoPlay = false;
+                        mediaTTS.AutoPlay = false;
                     }
                 }
             }

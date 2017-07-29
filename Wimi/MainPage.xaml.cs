@@ -103,10 +103,6 @@ namespace Wimi
             RemoveConstraints();
         }
 
-        private void gridRoot_SizeChanged(object sender, SizeChangedEventArgs e)
-        {
-        }
-
         private void ClickToPlaySource_ImageOpened(object sender, RoutedEventArgs e)
         {
             // Once ImageOpened is raised, we can query whether an image is animated.
