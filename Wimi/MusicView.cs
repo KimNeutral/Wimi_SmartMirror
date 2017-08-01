@@ -10,6 +10,7 @@ using System.IO;
 using Windows.Storage.Streams;
 using System.Collections;
 using System.Diagnostics;
+using Microsoft.Toolkit.Uwp.UI.Animations;
 
 namespace Wimi
 {
@@ -60,6 +61,7 @@ namespace Wimi
             int index = r.Next(0, lstMusic.Count - 1);
             string musicName = lstMusic[index].ToString() + contentExtension;
             Debug.WriteLine(musicName + "을 랜덤 재생합니다");
+            tbMediaName.Text = "♬ " + musicName;
             using (IRandomAccessStream s = await music.GetMusicStream(musicName))
             {
                 gridMedia.Visibility = Windows.UI.Xaml.Visibility.Visible;
@@ -67,6 +69,8 @@ namespace Wimi
                 mediaElement.SetSource(s, type);
                 mediaElement.AutoPlay = true;
                 mediaElement.Play();
+                //await imageSpeaker1.Scale(1.5f, 1.5f, 0, 0, 500, 0, EasingType.Linear).StartAsync();
+                //await imageSpeaker2.Scale(1.5f, 1.5f, 0, 0, 500, 0, EasingType.Linear).StartAsync();
                 //mediaElement.IsFullWindow = true;
             }
         }
@@ -80,6 +84,7 @@ namespace Wimi
         public void StopMusic()
         {
             Debug.WriteLine("음악 중지");
+            tbMediaName.Text = string.Empty;
             mediaElement.Stop();
             mediaElement.IsFullWindow = false;
             gridMedia.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
