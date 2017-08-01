@@ -11,11 +11,15 @@ using Windows.Storage.Streams;
 using System.Collections;
 using System.Diagnostics;
 using Microsoft.Toolkit.Uwp.UI.Animations;
+using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml;
 
 namespace Wimi
 {
     public partial class MainPage : Page
     {
+        bool bIntroPlayed = false;
+
         const string contentExtension = ".mp4";
         Music music = new Music();
         ArrayList lstMusic = new ArrayList();
@@ -57,6 +61,12 @@ namespace Wimi
         public async Task PlayRandomMusic()
         {
             //string musicName = RandomMusicName();
+            if (mediaElement.CurrentState == MediaElementState.Paused)
+            {
+                mediaElement.Play();
+                return;
+            }
+
             Random r = new Random();
             int index = r.Next(0, lstMusic.Count - 1);
             string musicName = lstMusic[index].ToString() + contentExtension;
@@ -103,6 +113,16 @@ namespace Wimi
             {
                 bool isFull = mediaElement.IsFullWindow;
                 mediaElement.IsFullWindow = !isFull;
+            }
+        }
+
+        private void mediaElement_MediaEnded(object sender, RoutedEventArgs e)
+        {
+            if(!bIntroPlayed)
+            {
+                //chris: 처음 media play시 바로 동작하지 않는 문제가 있어 intro음을 넣었으나 끝나고 나면 status가 stop이 되어야 하는데 pause로 유지되고 있어 체크.
+                bIntroPlayed = true;
+                mediaElement.Stop();
             }
         }
     }

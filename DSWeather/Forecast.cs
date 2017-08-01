@@ -32,8 +32,11 @@ namespace DSWeather
             XmlNodeList hourList = docX.GetElementsByTagName("hour"); // 태그 이름으로 노드 리스트 저장
             XmlNodeList tempList = docX.GetElementsByTagName("temp");
             XmlNodeList weatherList = docX.GetElementsByTagName("wfKor");
+            XmlNodeList rehList = docX.GetElementsByTagName("reh"); //습도
+            XmlNodeList popList = docX.GetElementsByTagName("pop"); //강수확률
+            XmlNodeList wsList = docX.GetElementsByTagName("ws"); //풍속
 
-            for(int i = 0; i < count; i++)
+            for (int i = 0; i < count; i++)
             {
                 ForecastInfo info = new ForecastInfo();
                 info.hour = int.Parse(hourList[i].InnerText);

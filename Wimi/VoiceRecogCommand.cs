@@ -51,7 +51,9 @@ namespace Wimi
                 if(tag == "Wimi")
                 {
                     if (mediaElement.CurrentState == MediaElementState.Playing && mediaElement.IsFullWindow == true)
+                    {
                         mediaElement.IsFullWindow = false;
+                    }
 
                     gridCommand.Visibility = Windows.UI.Xaml.Visibility.Visible;
                     gridConentRoot.Blur(20, 800).Start();
@@ -63,9 +65,11 @@ namespace Wimi
                 {
                     ClearPanel();
 
-                    //chris: idle화면으로 나가더라도 계속 플레이하고 싶으면 주석처리하고, idle에서 stop명령 수행가능하도록 처리하면 된다.
                     if (mediaElement.CurrentState == MediaElementState.Playing)
+                    {
+                        //chris: idle화면으로 나가더라도 계속 플레이하고 싶으면 주석처리하고, idle에서 stop명령 수행가능하도록 처리하면 된다.
                         StopMusic();
+                    }
 
                     VoiceRecogEffect.Stop();
                     await gridVoiceHelper.Offset(0, -300, 400, 0, EasingType.Linear).StartAsync();
