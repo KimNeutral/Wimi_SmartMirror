@@ -22,10 +22,10 @@ namespace Wimi
         private void initMusicList()
         {
 #if true
+            lstMusic.Add("I LUV IT");
+            lstMusic.Add("Uptown Funk");
+            lstMusic.Add("나로 말할 것 같으면");
             lstMusic.Add("남이 될 수 있을까");
-            lstMusic.Add("Beautiful");
-            lstMusic.Add("미치게 만들어");
-            lstMusic.Add("야생화");
 #else
 
             lstMusic.Add("New Face");
@@ -62,7 +62,7 @@ namespace Wimi
             Debug.WriteLine(musicName + "을 랜덤 재생합니다");
             using (IRandomAccessStream s = await music.GetMusicStream(musicName))
             {
-                mediaElement.Visibility = Windows.UI.Xaml.Visibility.Visible;
+                gridMedia.Visibility = Windows.UI.Xaml.Visibility.Visible;
                 string type = await music.GetMusicMIME(musicName);
                 mediaElement.SetSource(s, type);
                 mediaElement.AutoPlay = true;
@@ -82,19 +82,19 @@ namespace Wimi
             Debug.WriteLine("음악 중지");
             mediaElement.Stop();
             mediaElement.IsFullWindow = false;
-            mediaElement.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+            gridMedia.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
         }
         public void PlayMusic()
         {
             //Debug.WriteLine("음악 resume");
             //mediaElement.IsFullWindow = true;
             mediaElement.Play();
-            mediaElement.Visibility = Windows.UI.Xaml.Visibility.Visible;
+            gridMedia.Visibility = Windows.UI.Xaml.Visibility.Visible;
         }
 
         public void SetFullScreen()
         {
-            if(mediaElement.Visibility == Windows.UI.Xaml.Visibility.Visible)
+            if(gridMedia.Visibility == Windows.UI.Xaml.Visibility.Visible)
             {
                 bool isFull = mediaElement.IsFullWindow;
                 mediaElement.IsFullWindow = !isFull;

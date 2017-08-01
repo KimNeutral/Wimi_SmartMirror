@@ -26,7 +26,7 @@ namespace Wimi
 
         private void ShowForecast()
         {
-            ClearLeftPanel();
+            ClearPanel();
             lbForcastInfo.Visibility = Visibility.Visible;
         }
 

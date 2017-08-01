@@ -7,8 +7,8 @@
 
     <Application.Resources>
         <Style x:Name="TextBlockStyle" TargetType="TextBlock">
-            <Setter Property="FontFamily" Value="Segoe UI"/>
-            <Setter Property="FontWeight" Value="Light"/>
+            <!--<Setter Property="FontFamily" Value="Segoe UI"/>
+            <Setter Property="FontWeight" Value="Light"/>-->
             <!--Segoe UI--> 
             <!--Segoe UI Light-->
             <!--Noto Sans CJK KR-->

@@ -13,22 +13,18 @@ namespace Wimi
 
         async void Getschedule()
         {
-            IReadOnlyList<Appointment> schedules = await schedule.GetMSSchedule();
+            IReadOnlyList<Appointment> schedules = await schedule.GetMSSchedule(500);
             foreach(var appointment in schedules)
             {
                 ScheduleInfo info = new ScheduleInfo();
                 info.subject = appointment.Subject;
-                //info.dt = appointment.StartTime.DateTime;
-                //string str = string.Format("{0}년 {1}월 {2}일 {3}", 
-                //    appointment.StartTime.DateTime.Year,
-                //    appointment.StartTime.DateTime.Month,
-                //    appointment.StartTime.DateTime.Day,
-                //    appointment.StartTime.DateTime.ti());
+#if false
                 string now = DateTime.Now.ToString("yyyyMMdd");
-                string calstr = appointment.StartTime.DateTime.ToString("yyyyMMdd");
-                if (now.Equals(calstr))
+                string scheduleDate = appointment.StartTime.DateTime.ToString("yyyyMMdd");
+                if (now.Equals(scheduleDate)) //chris: 오늘 일정이 아니더라도 보여준다.
+#endif
                 {
-                    string str = appointment.StartTime.DateTime.ToString("htt");
+                    string str = appointment.StartTime.DateTime.ToString("ddd, MMM dd h:mm");
                     info.dt = str;
                     info.location = appointment.Location;
                     info.details = appointment.Details;
@@ -42,12 +38,12 @@ namespace Wimi
 
         private void ShowSchedule()
         {
-            spSchedule.Visibility = Windows.UI.Xaml.Visibility.Visible;
+            lbScheduleInfo.Visibility = Windows.UI.Xaml.Visibility.Visible;
         }
 
         private void HideSchedule()
         {
-            spSchedule.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+            lbScheduleInfo.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
         }
     }
 

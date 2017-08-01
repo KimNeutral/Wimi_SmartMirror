@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Toolkit.Uwp.UI.Animations;
 using Windows.Media.SpeechRecognition;
 using Windows.UI.Xaml.Controls;
 
@@ -13,6 +14,7 @@ namespace Wimi
     {
         //제약조건
         private SpeechRecognitionListConstraint helloConstraint;
+        private SpeechRecognitionListConstraint ByeConstraint;
         private SpeechRecognitionListConstraint TellWeatherConstraint;
         private SpeechRecognitionListConstraint TestConstraint;
         private SpeechRecognitionListConstraint PlayRandomMusicConstraint;
@@ -40,30 +42,134 @@ namespace Wimi
         private SpeechRecognitionListConstraint WhiteColorLightConstraint;
         #endregion
 #endif
+        private async void VoiceCommandAsync(string heard, string tag, string confidence)
+        {
+            resultTextBlock.Text = string.Format("Heard: {0}, Tag: {1}, Confidence: {2}", heard, tag, confidence);
+            
+            if (!string.IsNullOrEmpty(tag))
+            {
+                if(tag == "Wimi")
+                {
+                    gridCommand.Visibility = Windows.UI.Xaml.Visibility.Visible;
+                    gridConentRoot.Blur(20, 800).Start();
+                    await gridVoiceHelper.Offset(0, 0, 400, 0, EasingType.Linear).StartAsync();
+                    VoiceRecogEffect.Play();
+                    await DetectCalledByWimi();
+                }
+                else if(tag == "Bye")
+                {
+                    ClearPanel();
+                    VoiceRecogEffect.Stop();
+                    await gridVoiceHelper.Offset(0, -300, 400, 0, EasingType.Linear).StartAsync();
+                    gridCommand.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+                    gridConentRoot.Blur(0, 800).Start();
+                }
+                else
+                {
+                    if (gridCommand.Visibility == Windows.UI.Xaml.Visibility.Collapsed)
+                    {
+                        return;
+                    }
+                    switch (tag)
+                    {
+                        //case "Wimi":                        
+                        //    break;
+                        case "Weather":
+                            ShowForecast();
+                            TellmeWeatherAsync();
+                            break;
+                        //case "PlayRandomMusic":
+                        //    await PlayRandomMusic();
+                        //    break;
+                        case "PauseMusic":
+                            PauseMusic();
+                            break;
+                        case "StopMusic":
+                            StopMusic();
+                            break;
+                        case "PlayMusic":
+                            await PlayRandomMusic();
+                            break;
+                        case "FullScreen":
+                            SetFullScreen();
+                            break;
+                        case "News":
+                            ShowNews();
+                            break;
+                        case "Bus":
+                            ShowBus();
+                            break;
+                        case "LightModeOn":
+                            HueAtrBool = await HueControl.HueEffect(1);
+                            break;
+                        case "LightModeOff":
+                            HueAtrBool = await HueControl.HueEffect(0);
+                            break;
+                        case "TurnOn":
+                            HueAtrBool = await HueControl.HueLightOn();
+                            break;
+                        case "TurnOff":
+                            HueAtrBool = await HueControl.HueLightOff();
+                            break;
+                        case "RedColor":
+                            HueAtrBool = await HueControl.SetColor("red");
+                            break;
+                        case "BrownColor":
+                            HueAtrBool = await HueControl.SetColor("brown");
+                            break;
+                        case "YellowColor":
+                            HueAtrBool = await HueControl.SetColor("yellow");
+                            break;
+                        case "GreenColor":
+                            HueAtrBool = await HueControl.SetColor("green");
+                            break;
+                        case "BlueColor":
+                            HueAtrBool = await HueControl.SetColor("blue");
+                            break;
+                        case "PurpleColor":
+                            HueAtrBool = await HueControl.SetColor("purple");
+                            break;
+                        case "PinkColor":
+                            HueAtrBool = await HueControl.SetColor("pink");
+                            break;
+                        case "WhiteColor":
+                            HueAtrBool = await HueControl.SetColor("white");
+                            break;
+                        default:
+                            {
+                                resultTextBlock.Text = "등록된 명령어가 아닙니다";
+                                break;
+                            }
+                    }
+                }
+            }
+        }
 
         public void AddConstraints()
         {
             //{"들을 내용1", "내용2"},"태그이름");
             helloConstraint = new SpeechRecognitionListConstraint(new List<string>()
-            { "wimi" }, "Hello");
+            { "Wimi" }, "Wimi");
+            ByeConstraint = new SpeechRecognitionListConstraint(new List<string>()
+            { "Good bye" }, "Bye");
             TellWeatherConstraint = new SpeechRecognitionListConstraint(new List<string>()
-            { "Tell me forecast", "Tell me Weather", "Tell me weather forecast","today Weather"}, "TellWeather");
+            { "Today Weather"}, "Weather");
             TestConstraint = new SpeechRecognitionListConstraint(new List<string>()
-            { "VoiceTest"}, "Test");
+            { "VoiceTest" }, "Test");
             PlayRandomMusicConstraint = new SpeechRecognitionListConstraint(new List<string>()
-            { "Play Random Music"}, "PlayRandomMusic");
+            { "Play Random Music" }, "PlayRandomMusic");
             StopMusicConstraint = new SpeechRecognitionListConstraint(new List<string>()
             { "Stop Music"}, "StopMusic");
             PauseMusicConstraint = new SpeechRecognitionListConstraint(new List<string>()
             { "Pause Music"}, "PauseMusic");
             PlayMusicConstraint = new SpeechRecognitionListConstraint(new List<string>()
-            {"Play Music"}, "PlayMusic");
+            { "Play Music" }, "PlayMusic");
             ShowNewsConstraint = new SpeechRecognitionListConstraint(new List<string>()
-            {"Show Todays News"}, "ShowNews");
+            { "Show Todays News" }, "News");
             ShowBusConstraint = new SpeechRecognitionListConstraint(new List<string>()
-            {"Where is Bus"}, "ShowBus");
+            { "Where is Bus" }, "Bus");
             FullScreenConstraint = new SpeechRecognitionListConstraint(new List<string>()
-            {"Set FullScreen"}, "FullScreen");
+            { "Set FullScreen" }, "FullScreen");
 
 #if false
             #region
@@ -95,6 +201,7 @@ namespace Wimi
 #endif
 
             speechRecognizer.Constraints.Add(helloConstraint);
+            speechRecognizer.Constraints.Add(ByeConstraint);
             speechRecognizer.Constraints.Add(TellWeatherConstraint);
             speechRecognizer.Constraints.Add(TestConstraint);
             speechRecognizer.Constraints.Add(PlayRandomMusicConstraint);
@@ -125,6 +232,7 @@ namespace Wimi
         public void RemoveConstraints()
         {
             speechRecognizer.Constraints.Remove(helloConstraint);
+            speechRecognizer.Constraints.Remove(ByeConstraint);
 
             speechRecognizer.Constraints.Remove(TellWeatherConstraint);
             speechRecognizer.Constraints.Remove(TestConstraint);

@@ -156,86 +156,9 @@ namespace Wimi
                 {
                     Debug.WriteLine(string.Format("********************************************** 인식: '{0}', (태그: '{1}', 정확도: {2})", args.Result.Text, tag, args.Result.Confidence.ToString()));
 
-                    await dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+                    await dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                     {
-                         //Confidence
-                        resultTextBlock.Text = string.Format("Heard: {0}, Tag: {1}, Confidence: {2}", args.Result.Text, tag, args.Result.Confidence.ToString());
-                        if (!string.IsNullOrEmpty(tag))
-                        {
-                            switch (tag)
-                            {
-                                case "Hello":
-                                    ClearLeftPanel();
-                                    await DetectCalledByWimi();
-                                    break;
-                                case "TellWeather":
-                                    ShowForecast();
-                                    TellmeWeatherAsync();
-                                    break;
-                                //case "PlayRandomMusic":
-                                //    await PlayRandomMusic();
-                                //    break;
-                                case "PauseMusic":
-                                        PauseMusic();
-                                        break;
-                                case "StopMusic":
-                                    StopMusic();
-                                    break;
-                                case "PlayMusic":
-                                    await PlayRandomMusic();
-                                    break;
-                                case "FullScreen":
-                                    SetFullScreen();
-                                    break;
-                                case "ShowNews":
-                                    ShowNews();
-                                    break;
-                                case "ShowBus":
-                                    ShowBus();
-                                    break;
-                                case "LightModeOn":
-                                    HueAtrBool = await HueControl.HueEffect(1);
-                                    break;
-                                case "LightModeOff":
-                                    HueAtrBool = await HueControl.HueEffect(0);
-                                    break;
-                                case "TurnOn":
-                                    HueAtrBool = await HueControl.HueLightOn();
-                                    break;
-                                case "TurnOff":
-                                    HueAtrBool = await HueControl.HueLightOff();
-                                    break;
-                                case "RedColor":
-                                    HueAtrBool = await HueControl.SetColor("red");
-                                    break;
-                                case "BrownColor":
-                                    HueAtrBool = await HueControl.SetColor("brown");
-                                    break;
-                                case "YellowColor":
-                                    HueAtrBool = await HueControl.SetColor("yellow");
-                                    break;
-                                case "GreenColor":
-                                    HueAtrBool = await HueControl.SetColor("green");
-                                    break;
-                                case "BlueColor":
-                                    HueAtrBool = await HueControl.SetColor("blue");
-                                    break;
-                                case "PurpleColor":
-                                    HueAtrBool = await HueControl.SetColor("purple");
-                                    break;
-                                case "PinkColor":
-                                    HueAtrBool = await HueControl.SetColor("pink");
-                                    break;
-                                case "WhiteColor":
-                                    HueAtrBool = await HueControl.SetColor("white");
-                                    break;
-                                default:
-                                    {
-                                        resultTextBlock.Text = "등록된 명령어가 아닙니다";
-                                        break;
-                                    }
-                            }
-                        }
+                        VoiceCommandAsync(args.Result.Text, tag, args.Result.Confidence.ToString());
                     });
                 }
                 else if (args.Result.Confidence == SpeechRecognitionConfidence.Rejected)

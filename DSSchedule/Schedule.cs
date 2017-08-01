@@ -16,12 +16,12 @@ namespace DSSchedule
     public class Schedule
     {
 
-        public async Task<IReadOnlyList<Appointment>> GetMSSchedule()
+        public async Task<IReadOnlyList<Appointment>> GetMSSchedule(int hour)
         {
             AppointmentStore appointmentStore = await AppointmentManager.RequestStoreAsync(AppointmentStoreAccessType.AllCalendarsReadOnly);
 
             var dateToShow = DateTime.Now.AddDays(0);
-            var duration = TimeSpan.FromHours(100);
+            var duration = TimeSpan.FromHours(hour);
 
             IReadOnlyList<Appointment> appCalendars = await appointmentStore.FindAppointmentsAsync(dateToShow, duration);
             return appCalendars;

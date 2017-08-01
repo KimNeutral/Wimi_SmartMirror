@@ -81,7 +81,7 @@ namespace Wimi
                     spUser.Visibility = Visibility.Collapsed;
                     IsIdentified = false;
                     HideSchedule();
-                    ClearLeftPanel();
+                    ClearPanel();
                 }
             }
         }

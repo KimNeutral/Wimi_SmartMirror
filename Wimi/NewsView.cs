@@ -21,7 +21,7 @@ namespace Wimi
 
         private void ShowNews()
         {
-            ClearLeftPanel();
+            ClearPanel();
             lbNewsInfo.Visibility = Windows.UI.Xaml.Visibility.Visible;
         }
     }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using DSMusic;
+using Microsoft.Toolkit.Uwp.UI.Animations;
 using Windows.UI;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
@@ -27,7 +28,6 @@ namespace Wimi
         public MainPage()
         {
             this.InitializeComponent();
-
             BackgroundBrush.ImageSource = null; //chris: 이미지 액자로 활용시 BackgroundBrush에 이미지를 설정하면 된다.
             //GradientAnimation.Begin(); //chris: 음성인식되는중 배경을 쓸지도 몰라서 코드는 남겨둠.
 
@@ -36,7 +36,7 @@ namespace Wimi
             ClockTimer.Start();
         }
 
-        private void ClearLeftPanel()
+        private void ClearPanel()
         {
             spBus.Visibility = Visibility.Collapsed;
             lbForcastInfo.Visibility = Visibility.Collapsed;
@@ -46,7 +46,7 @@ namespace Wimi
 
         private void ShowTbHello(string ment)
         {
-            ClearLeftPanel();
+            ClearPanel();
             tbHello.Text = ment;
             tbHello.Visibility = Visibility.Visible;
         }
@@ -59,13 +59,14 @@ namespace Wimi
         public void SetTime()
         {
             DateTime dt = DateTime.Now;
-            tbDateTime.Text = dt.ToString("ddd, MMM d") + "th";
-            tbTime.Text = dt.ToString("h:mmtt");
+            tbDateTime.Text = dt.ToString("ddd, MMM d").ToUpper() + "TH";
+            tbTime.Text = dt.ToString("h:mm");
+            tbAmPm.Text = dt.ToString("tt");
         }
 
         private async void Grid_Loaded(object sender, RoutedEventArgs e)
         {
-            //gridRoot.Blur(20, 0).Start();
+            await gridVoiceHelper.Offset(0, -400, 0, 0, EasingType.Linear).StartAsync(); 
 
             initMusicList();
             initSynthesizer();
@@ -108,7 +109,7 @@ namespace Wimi
             // Once ImageOpened is raised, we can query whether an image is animated.
             if (VoiceRecogEffect.IsAnimatedBitmap)
             {
-                PlaybackButtons.Visibility = Visibility.Visible;
+                //PlaybackButtons.Visibility = Visibility.Visible;
             }
         }
     }

@@ -43,7 +43,7 @@ namespace Wimi
 
         private void ShowBus()
         {
-            ClearLeftPanel();
+            ClearPanel();
             spBus.Visibility = Windows.UI.Xaml.Visibility.Visible;
         }
     }
