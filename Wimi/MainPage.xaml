@@ -151,12 +151,12 @@
                     </Image>
                 </Viewbox>
                 <TextBlock x:Name="tbMicSymbol" Text="&#xEC71;" Margin="0,0,0,0"
-                           FontFamily="Segoe MDL2 Assets" FontSize="42" 
+                           FontFamily="Segoe MDL2 Assets" FontSize="64" 
                            VerticalAlignment="Center" HorizontalAlignment="Center"
                            DoubleTapped="tbMicSymbol_DoubleTapped" ></TextBlock>
             </Grid>
             <StackPanel x:Name="spRecogText" Grid.Row="0" Grid.Column="2" Margin="0,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Left">
-                <TextBlock x:Name="tbRecog" FontWeight="ExtraLight" FontSize="80" Foreground="WhiteSmoke"></TextBlock>
+                <TextBlock x:Name="tbRecog" FontWeight="ExtraLight" FontSize="72" Foreground="WhiteSmoke"></TextBlock>
                 <TextBlock x:Name="resultTextBlock" FontSize="24" Foreground="LightCyan"/>
             </StackPanel>
 

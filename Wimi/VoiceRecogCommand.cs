@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.Toolkit.Uwp.UI.Animations;
 using Windows.Media.SpeechRecognition;
 using Windows.UI.Xaml.Controls;
-
+using Windows.UI.Xaml.Media;
 
 namespace Wimi
 {
@@ -59,6 +59,11 @@ namespace Wimi
                 else if(tag == "Bye")
                 {
                     ClearPanel();
+
+                    //chris: idle화면으로 나가더라도 계속 플레이하고 싶으면 주석처리하고, idle에서 stop명령 수행가능하도록 처리하면 된다.
+                    if (mediaElement.CurrentState == MediaElementState.Playing)
+                        StopMusic();
+
                     VoiceRecogEffect.Stop();
                     await gridVoiceHelper.Offset(0, -300, 400, 0, EasingType.Linear).StartAsync();
                     gridCommand.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
