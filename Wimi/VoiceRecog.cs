@@ -216,6 +216,7 @@ namespace Wimi
                         case SpeechRecognizerState.Capturing:
                             {
                                 tbMicSymbol.Foreground = new SolidColorBrush(Colors.DeepPink);
+                                resultTextBlock.Text = string.Empty;
                                 break;
                             }
                         case SpeechRecognizerState.Processing:
@@ -225,7 +226,6 @@ namespace Wimi
                         case SpeechRecognizerState.SoundStarted:
                             {
                                 tbMicSymbol.Foreground = new SolidColorBrush(Colors.DeepPink);
-                                resultTextBlock.Text = string.Empty;
                                 break;
                             }
                         case SpeechRecognizerState.SoundEnded:

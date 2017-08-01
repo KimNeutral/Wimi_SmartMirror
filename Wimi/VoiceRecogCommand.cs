@@ -50,6 +50,9 @@ namespace Wimi
             {
                 if(tag == "Wimi")
                 {
+                    if (mediaElement.CurrentState == MediaElementState.Playing && mediaElement.IsFullWindow == true)
+                        mediaElement.IsFullWindow = false;
+
                     gridCommand.Visibility = Windows.UI.Xaml.Visibility.Visible;
                     gridConentRoot.Blur(20, 800).Start();
                     await gridVoiceHelper.Offset(0, 0, 400, 0, EasingType.Linear).StartAsync();
