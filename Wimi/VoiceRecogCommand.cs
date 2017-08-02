@@ -17,10 +17,9 @@ namespace Wimi
         private SpeechRecognitionListConstraint ByeConstraint;
         private SpeechRecognitionListConstraint TellWeatherConstraint;
         private SpeechRecognitionListConstraint TestConstraint;
-        private SpeechRecognitionListConstraint PlayRandomMusicConstraint;
+        private SpeechRecognitionListConstraint PlayMusicConstraint;
         private SpeechRecognitionListConstraint StopMusicConstraint;
         private SpeechRecognitionListConstraint PauseMusicConstraint;
-        private SpeechRecognitionListConstraint PlayMusicConstraint;
         private SpeechRecognitionListConstraint ShowNewsConstraint;
         private SpeechRecognitionListConstraint ShowBusConstraint;
         private SpeechRecognitionListConstraint FullScreenConstraint;
@@ -90,9 +89,6 @@ namespace Wimi
                             ShowForecast();
                             TellmeWeatherAsync();
                             break;
-                        //case "PlayRandomMusic":
-                        //    await PlayRandomMusic();
-                        //    break;
                         case "PauseMusic":
                             PauseMusic();
                             break;
@@ -100,7 +96,7 @@ namespace Wimi
                             StopMusic();
                             break;
                         case "PlayMusic":
-                            await PlayRandomMusic();
+                            await PlayMusic();
                             break;
                         case "FullScreen":
                             SetFullScreen();
@@ -168,14 +164,12 @@ namespace Wimi
             { "Today Weather"}, "Weather");
             TestConstraint = new SpeechRecognitionListConstraint(new List<string>()
             { "VoiceTest" }, "Test");
-            PlayRandomMusicConstraint = new SpeechRecognitionListConstraint(new List<string>()
-            { "Play Random Music" }, "PlayRandomMusic");
+            PlayMusicConstraint = new SpeechRecognitionListConstraint(new List<string>()
+            { "Play Music" }, "PlayMusic");
             StopMusicConstraint = new SpeechRecognitionListConstraint(new List<string>()
             { "Stop Music"}, "StopMusic");
             PauseMusicConstraint = new SpeechRecognitionListConstraint(new List<string>()
             { "Pause Music"}, "PauseMusic");
-            PlayMusicConstraint = new SpeechRecognitionListConstraint(new List<string>()
-            { "Play Music" }, "PlayMusic");
             ShowNewsConstraint = new SpeechRecognitionListConstraint(new List<string>()
             { "Show Todays News" }, "News");
             ShowBusConstraint = new SpeechRecognitionListConstraint(new List<string>()
@@ -216,10 +210,9 @@ namespace Wimi
             speechRecognizer.Constraints.Add(ByeConstraint);
             speechRecognizer.Constraints.Add(TellWeatherConstraint);
             speechRecognizer.Constraints.Add(TestConstraint);
-            speechRecognizer.Constraints.Add(PlayRandomMusicConstraint);
+            speechRecognizer.Constraints.Add(PlayMusicConstraint);
             speechRecognizer.Constraints.Add(StopMusicConstraint);
             speechRecognizer.Constraints.Add(PauseMusicConstraint);
-            speechRecognizer.Constraints.Add(PlayMusicConstraint);
             speechRecognizer.Constraints.Add(FullScreenConstraint);
             speechRecognizer.Constraints.Add(ShowNewsConstraint);
             speechRecognizer.Constraints.Add(ShowBusConstraint);
@@ -245,13 +238,11 @@ namespace Wimi
         {
             speechRecognizer.Constraints.Remove(helloConstraint);
             speechRecognizer.Constraints.Remove(ByeConstraint);
-
             speechRecognizer.Constraints.Remove(TellWeatherConstraint);
             speechRecognizer.Constraints.Remove(TestConstraint);
-            speechRecognizer.Constraints.Remove(PlayRandomMusicConstraint);
+            speechRecognizer.Constraints.Remove(PlayMusicConstraint);
             speechRecognizer.Constraints.Remove(StopMusicConstraint);
             speechRecognizer.Constraints.Remove(PauseMusicConstraint);
-            speechRecognizer.Constraints.Remove(PlayMusicConstraint);
             speechRecognizer.Constraints.Remove(FullScreenConstraint);
             speechRecognizer.Constraints.Remove(ShowNewsConstraint);
             speechRecognizer.Constraints.Remove(ShowNewsConstraint);

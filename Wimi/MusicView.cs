@@ -13,6 +13,8 @@ using System.Diagnostics;
 using Microsoft.Toolkit.Uwp.UI.Animations;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml;
+using Windows.Storage.Search;
+using Windows.Storage;
 
 namespace Wimi
 {
@@ -20,29 +22,23 @@ namespace Wimi
     {
         bool bIntroPlayed = false;
 
-        const string contentExtension = ".mp4";
         Music music = new Music();
-        ArrayList lstMusic = new ArrayList();
+        List<StorageFile> lstMusic = new List<StorageFile>();
 
-        private void initMusicList()
+        private async void initMusicList()
         {
-#if true
-            lstMusic.Add("I LUV IT");
-            lstMusic.Add("Uptown Funk");
-            lstMusic.Add("나로 말할 것 같으면");
-            lstMusic.Add("남이 될 수 있을까");
-#else
+            QueryOptions queryOption = new QueryOptions(CommonFileQuery.OrderByTitle, new string[] { ".mp3", ".mp4", ".wma" });
+            queryOption.FolderDepth = FolderDepth.Deep;
+            Queue<IStorageFolder> folders = new Queue<IStorageFolder>();
 
-            lstMusic.Add("New Face");
-            lstMusic.Add("SIGNAL");
-            lstMusic.Add("Rookie");
-            lstMusic.Add("야생화");
-            lstMusic.Add("남이 될 수 있을까");
-            lstMusic.Add("LA SONG");
-            lstMusic.Add("Beautiful");
-            lstMusic.Add("비도 오고 그래서");
-            lstMusic.Add("미치게 만들어");
-#endif
+            var files = await KnownFolders.MusicLibrary.CreateFileQueryWithOptions(queryOption).GetFilesAsync();
+
+            StorageFolder musicLib = KnownFolders.MusicLibrary;
+            foreach (var file in files)
+            {
+                lstMusic.Add(file);
+            }
+
             mediaElement.Volume = 1;
             mediaElement.Stop();
         }
@@ -58,7 +54,7 @@ namespace Wimi
             }
         }
 
-        public async Task PlayRandomMusic()
+        public async Task PlayMusic()
         {
             //string musicName = RandomMusicName();
             if (mediaElement.CurrentState == MediaElementState.Paused)
@@ -68,20 +64,19 @@ namespace Wimi
             }
 
             Random r = new Random();
-            int index = r.Next(0, lstMusic.Count - 1);
-            string musicName = lstMusic[index].ToString() + contentExtension;
-            Debug.WriteLine(musicName + "을 랜덤 재생합니다");
-            tbMediaName.Text = "♬ " + musicName;
-            using (IRandomAccessStream s = await music.GetMusicStream(musicName))
+            int index = r.Next(lstMusic.Count);
+
+            StorageFile storageFile = lstMusic[index];
+            using (var stream = await storageFile.OpenAsync(FileAccessMode.Read))
             {
                 gridMedia.Visibility = Windows.UI.Xaml.Visibility.Visible;
-                string type = await music.GetMusicMIME(musicName);
-                mediaElement.SetSource(s, type);
+                string musicName = storageFile.DisplayName;
+                Debug.WriteLine(musicName + "을 랜덤 재생합니다");
+                tbMediaName.Text = "♬ " + musicName;
+
+                mediaElement.SetSource(stream, storageFile.ContentType);
                 mediaElement.AutoPlay = true;
                 mediaElement.Play();
-                //await imageSpeaker1.Scale(1.5f, 1.5f, 0, 0, 500, 0, EasingType.Linear).StartAsync();
-                //await imageSpeaker2.Scale(1.5f, 1.5f, 0, 0, 500, 0, EasingType.Linear).StartAsync();
-                //mediaElement.IsFullWindow = true;
             }
         }
 
@@ -98,13 +93,6 @@ namespace Wimi
             mediaElement.Stop();
             mediaElement.IsFullWindow = false;
             gridMedia.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
-        }
-        public void PlayMusic()
-        {
-            //Debug.WriteLine("음악 resume");
-            //mediaElement.IsFullWindow = true;
-            mediaElement.Play();
-            gridMedia.Visibility = Windows.UI.Xaml.Visibility.Visible;
         }
 
         public void SetFullScreen()
