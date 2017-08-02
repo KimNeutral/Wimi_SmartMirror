@@ -24,6 +24,7 @@ namespace Wimi
 
         Music music = new Music();
         List<StorageFile> lstMusic = new List<StorageFile>();
+        List<StorageFile> lstMusicPlaying = new List<StorageFile>();
 
         private async void initMusicList()
         {
@@ -38,6 +39,8 @@ namespace Wimi
             {
                 lstMusic.Add(file);
             }
+
+            lstMusicPlaying = lstMusic;
 
             mediaElement.Volume = 1;
             mediaElement.Stop();
@@ -66,6 +69,7 @@ namespace Wimi
             Random r = new Random();
             int index = r.Next(lstMusic.Count);
 
+
             StorageFile storageFile = lstMusic[index];
             using (var stream = await storageFile.OpenAsync(FileAccessMode.Read))
             {
@@ -77,6 +81,12 @@ namespace Wimi
                 mediaElement.SetSource(stream, storageFile.ContentType);
                 mediaElement.AutoPlay = true;
                 mediaElement.Play();
+            }
+
+            lstMusicPlaying.RemoveAt(index);
+            if(lstMusicPlaying.Count == 0)
+            {
+                lstMusicPlaying = lstMusic;
             }
         }
 
@@ -106,12 +116,20 @@ namespace Wimi
 
         private void mediaElement_MediaEnded(object sender, RoutedEventArgs e)
         {
-            if(!bIntroPlayed)
+            if (!bIntroPlayed)
             {
                 //chris: 처음 media play시 바로 동작하지 않는 문제가 있어 intro음을 넣었으나 끝나고 나면 status가 stop이 되어야 하는데 pause로 유지되고 있어 체크.
                 bIntroPlayed = true;
                 mediaElement.Stop();
+                return;
             }
+
+            if (mediaElement.CurrentState == MediaElementState.Paused)
+            {
+                mediaElement.Play();
+                return;
+            }
+
         }
     }
 }

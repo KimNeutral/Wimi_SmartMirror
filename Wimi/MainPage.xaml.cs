@@ -103,14 +103,5 @@ namespace Wimi
             CleanSpeechRecognizer();
             RemoveConstraints();
         }
-
-        private void ClickToPlaySource_ImageOpened(object sender, RoutedEventArgs e)
-        {
-            // Once ImageOpened is raised, we can query whether an image is animated.
-            if (VoiceRecogEffect.IsAnimatedBitmap)
-            {
-                //PlaybackButtons.Visibility = Visibility.Visible;
-            }
-        }
     }
 }

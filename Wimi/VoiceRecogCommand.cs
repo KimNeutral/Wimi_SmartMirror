@@ -81,6 +81,8 @@ namespace Wimi
                     {
                         return;
                     }
+
+                    ClearPanel();
                     switch (tag)
                     {
                         //case "Wimi":                        

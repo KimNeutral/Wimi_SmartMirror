@@ -145,8 +145,7 @@
                 <Viewbox Width="480" Height="400">
                     <Image Margin="20" Stretch="None">
                         <Image.Source>
-                            <BitmapImage x:Name="VoiceRecogEffect" AutoPlay="False"
-                                         UriSource="Assets\circle.gif" ImageOpened="ClickToPlaySource_ImageOpened"/>
+                            <BitmapImage x:Name="VoiceRecogEffect" AutoPlay="False" UriSource="Assets\circle.gif"/>
                         </Image.Source>
                     </Image>
                 </Viewbox>
@@ -171,7 +170,11 @@
                 <Image x:Name="imageSpeaker1" Source="Assets/speaker.png" Grid.Row="1" Width="200" Stretch="Uniform" HorizontalAlignment="Left" Margin="80"></Image>
                 <Image x:Name="imageSpeaker2" Source="Assets/speaker.png" Grid.Row="1" Width="200" Stretch="Uniform" HorizontalAlignment="Right" Margin="80" VerticalAlignment="Center"></Image>
                 <MediaElement x:Name="mediaElement" Grid.Row="1" Height="480" HorizontalAlignment="Center" VerticalAlignment="Center"
-                      AutoPlay="True" AreTransportControlsEnabled="True" Source="Assets/Puppy_Love.mp3" Volume="0.1" Stretch="Uniform" MediaEnded="mediaElement_MediaEnded"/>
+                      AutoPlay="True" AreTransportControlsEnabled="True" Source="Assets/Puppy_Love.mp3" Volume="0.1" Stretch="Uniform" MediaEnded="mediaElement_MediaEnded">
+                    <MediaElement.TransportControls>
+                        <MediaTransportControls IsFullWindowButtonVisible="True"/>
+                    </MediaElement.TransportControls>
+                </MediaElement>
 
             </Grid>
 
