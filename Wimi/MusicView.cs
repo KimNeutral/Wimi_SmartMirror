@@ -40,7 +40,7 @@ namespace Wimi
                 lstMusic.Add(file);
             }
 
-            lstMusicPlaying = lstMusic;
+            lstMusicPlaying.InsertRange(0, lstMusic); //chris: deep copy, no reference
 
             mediaElement.Volume = 1;
             mediaElement.Stop();
@@ -67,10 +67,9 @@ namespace Wimi
             }
 
             Random r = new Random();
-            int index = r.Next(lstMusic.Count);
+            int index = r.Next(lstMusicPlaying.Count);
 
-
-            StorageFile storageFile = lstMusic[index];
+            StorageFile storageFile = lstMusicPlaying[index];
             using (var stream = await storageFile.OpenAsync(FileAccessMode.Read))
             {
                 gridMedia.Visibility = Windows.UI.Xaml.Visibility.Visible;
@@ -84,9 +83,10 @@ namespace Wimi
             }
 
             lstMusicPlaying.RemoveAt(index);
-            if(lstMusicPlaying.Count == 0)
+
+            if (lstMusicPlaying.Count == 0)
             {
-                lstMusicPlaying = lstMusic;
+                lstMusicPlaying.InsertRange(0, lstMusic);
             }
         }
 
