@@ -132,7 +132,7 @@ namespace Wimi
 
             foreach(var forcast in lForcastInfo)
             {
-                string stat = forcast.stat;
+                string stat = forcast.wfKor;
                 if (stat.Equals("비"))
                 {
                     hour = forcast.hour;
