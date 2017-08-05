@@ -54,6 +54,7 @@ namespace Wimi
                         mediaElement.IsFullWindow = false;
                     }
 
+                    SetVoice("wimi.mp3", true);
                     gridCommand.Visibility = Windows.UI.Xaml.Visibility.Visible;
                     gridConentRoot.Blur(20, 800).Start();
                     await gridVoiceHelper.Offset(0, 0, 400, 0, EasingType.Linear).StartAsync();
@@ -62,6 +63,7 @@ namespace Wimi
                 }
                 else if(tag == "Bye")
                 {
+                    SetVoice("wimi_close.mp3", true);
                     ClearPanel();
 
                     if (mediaElement.CurrentState == MediaElementState.Playing)
@@ -81,6 +83,7 @@ namespace Wimi
                     {
                         return;
                     }
+                    SetVoice("wimi_succeed.mp3", true);
 
                     ClearPanel();
                     switch (tag)

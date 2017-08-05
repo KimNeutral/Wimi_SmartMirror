@@ -144,6 +144,15 @@
     <Content Include="Assets\Puppy_Love.mp3">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Assets\wimi.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\wimi_close.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\wimi_succeed.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Assets\speaker.png" />
     <Content Include="Assets\김대용\2017.Jul.15 05-16-40 Facial Recognition Door.jpg" />
     <Content Include="Assets\장용윤\2017.Jul.15 05-19-41 Facial Recognition Door.jpg" />

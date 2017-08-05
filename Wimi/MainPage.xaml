@@ -77,7 +77,8 @@
 
             <!--일정-->
             <Grid Grid.Row="1" Margin="50" HorizontalAlignment="Right" VerticalAlignment="Top">
-                <ListBox x:Name="lbScheduleInfo" Background="Transparent" ScrollViewer.VerticalScrollBarVisibility="Disabled" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                <ListBox x:Name="lbScheduleInfo" Background="Transparent" BorderBrush="Transparent"
+                         ScrollViewer.VerticalScrollBarVisibility="Disabled" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
                     <ListBox.ItemContainerStyle>
                         <Style TargetType="ListBoxItem">
                             <Setter Property="HorizontalContentAlignment" Value="Stretch"/>

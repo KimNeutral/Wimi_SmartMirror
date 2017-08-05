@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Resources.Core;
 using Windows.Media.SpeechSynthesis;
+using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
@@ -20,7 +21,7 @@ namespace Wimi
         private SpeechSynthesizer synthesizer;
         private ResourceContext speechContext;
         private ResourceMap speechResourceMap;
-        private MediaElement mediaTTS;
+        private MediaElement feedbackMediaElement;
         public Boolean TTSflag;
 
 
@@ -106,8 +107,11 @@ namespace Wimi
             TTSDispatcherTimer.Tick += TTSDispatcherTimer_Tick;
             TTSDispatcherTimer.Interval = new TimeSpan(0, 0, 3);
 
-            mediaTTS = new MediaElement(); //mediaElement
-            mediaTTS.Volume = 1;
+            feedbackMediaElement = new MediaElement();
+            feedbackMediaElement.AutoPlay = true;
+            feedbackMediaElement.Volume = 1;
+            feedbackMediaElement.MediaOpened += FeedbackMediaElement_MediaOpened;
+            feedbackMediaElement.MediaFailed += FeedbackMediaElement_MediaFailed;
             synthesizer = new SpeechSynthesizer();
             
             speechContext = ResourceContext.GetForCurrentView();
@@ -126,14 +130,13 @@ namespace Wimi
             }
         }
 
-        
-        public async void SetVoice(string str)
+        public async void SetVoice(string str, bool isFilePath = false)
         {
             //return; //잡음 문제로 일단 아래코드를 처리하지 않는다.
 
-            if (mediaTTS.CurrentState.Equals(MediaElementState.Playing))
+            if (feedbackMediaElement.CurrentState.Equals(MediaElementState.Playing))
             {
-                mediaTTS.Stop();
+                feedbackMediaElement.Stop();
             }
             else
             {
@@ -142,26 +145,48 @@ namespace Wimi
                 {
                     try
                     {
-                        // Create a stream from the text. This will be played using a media element.
-                        SpeechSynthesisStream synthesisStream = await synthesizer.SynthesizeTextToStreamAsync(text);
-
-                        // Set the source and start playing the synthesized audio stream.
-                        mediaTTS.AutoPlay = true;
-                        mediaTTS.SetSource(synthesisStream, synthesisStream.ContentType);
-
+                        feedbackMediaElement.AutoPlay = true;
                         TTSDispatcherTimer.Start();
                         TTSflag = true;
-                        mediaTTS.Play();
+
+                        if (isFilePath)
+                        {
+                            Windows.Storage.StorageFolder folder = await Windows.ApplicationModel.Package.Current.InstalledLocation.GetFolderAsync("Assets");
+                            Windows.Storage.StorageFile file = await folder.GetFileAsync(str);
+                            var stream = await file.OpenAsync(Windows.Storage.FileAccessMode.Read);
+                            feedbackMediaElement.SetSource(stream, file.ContentType);
+                        }
+                        else
+                        {
+                            // Create a stream from the text. This will be played using a media element.
+                            SpeechSynthesisStream synthesisStream = await synthesizer.SynthesizeTextToStreamAsync(text);
+
+                            // Set the source and start playing the synthesized audio stream.
+                            feedbackMediaElement.SetSource(synthesisStream, synthesisStream.ContentType);
+                            feedbackMediaElement.Play();
+                        }
                     }
                     catch (System.IO.FileNotFoundException)
                     {
+                        Debug.WriteLine("SetVoice - System.IO.FileNotFoundException");
                     }
-                    catch (Exception)
+                    catch (Exception ex)
                     {
-                        mediaTTS.AutoPlay = false;
+                        feedbackMediaElement.AutoPlay = false;
+                        Debug.WriteLine(ex.Message);
                     }
                 }
             }
+        }
+
+        private void FeedbackMediaElement_MediaFailed(object sender, ExceptionRoutedEventArgs e)
+        {
+            Debug.WriteLine(e.ErrorMessage);
+        }
+
+        private void FeedbackMediaElement_MediaOpened(object sender, RoutedEventArgs e)
+        {
+            Debug.WriteLine("FeedbackMediaElement_MediaOpened");
         }
     }
 }

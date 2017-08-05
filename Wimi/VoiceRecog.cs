@@ -13,6 +13,10 @@ using Windows.UI.Xaml.Media;
 
 namespace Wimi
 {
+    /// <summary>
+    /// https://docs.microsoft.com/en-us/windows/uwp/input-and-devices/speech-interactions
+    /// NOTE: 음성인식 지침문서에 보면 마이크가 아닌 다른 장치에서의 인식이 감지되면 음성명령이 중지될 수 있다고 작성되어 있음.
+    /// </summary>
     public partial class MainPage : Page
     {
 
@@ -268,23 +272,11 @@ namespace Wimi
             // If input speech is too quiet, prompt the user to speak louder.
             if (args.Problem != Windows.Media.SpeechRecognition.SpeechRecognitionAudioProblem.None) //TooQuiet
             {
-                // Generate the audio stream from plain text.
-                Windows.Media.SpeechSynthesis.SpeechSynthesisStream stream;
-                try
-                {
-                    stream = await speechSynthesizer.SynthesizeTextToStreamAsync("Try speaking louder");
-                    stream.Seek(0);
-                }
-                catch (Exception)
-                {
-                    stream = null;
-                }
-
                 // Send the stream to the MediaElement declared in XAML.
                 await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.High, () =>
                 {
                     resultTextBlock.Text = "RecognitionQualityDegrading: " + args.Problem.ToString();
-                    mediaTTS.SetSource(stream, stream.ContentType);
+                    SetVoice("Try speaking louder");
                 });
             }
         }
