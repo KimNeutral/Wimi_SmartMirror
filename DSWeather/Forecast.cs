@@ -31,7 +31,7 @@ namespace DSWeather
         /// </summary>
         public int y { get; set; }
 
-        public async Task<List<ForecastInfo>> GetForecastInfoByCountAsync(int count = 5)
+        public async Task<List<ForecastInfo>> GetForecastInfoByCountAsync(int maxCount = 7)
         {
             List<ForecastInfo> lForcastInfo = new List<ForecastInfo>();
             string response = await httpClient.GetStringAsync(new Uri("http://www.kma.go.kr/wid/queryDFS.jsp?gridx=86&gridy=86"));
@@ -88,9 +88,15 @@ namespace DSWeather
 
             lForcastInfo.Clear();
 
-
+            int count = 0;
             foreach (var weather in weatherInfo)
             {
+                count++;
+                if(count > maxCount)
+                {
+                    break;
+                }
+
                 ForecastInfo unit = new ForecastInfo();
 
                 if (!string.IsNullOrEmpty(weather.hour))
@@ -364,6 +370,9 @@ namespace DSWeather
                 case "구름 많음":
                     sky = "\uE285";
                     //구름 많음
+                    break;
+                case "흐림":
+                    sky = "\uE28D";
                     break;
                 case "비":
                     sky = "\uE288";

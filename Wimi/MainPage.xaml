@@ -11,6 +11,11 @@
     FontWeight="Light">
 
     <Page.Resources>
+        <Style x:Name="WeatherText" TargetType="TextBlock">
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="FontSize" Value="36"/>
+            <Setter Property="FontWeight" Value="ExtraLight"/>
+        </Style>
         <Storyboard x:Name="GradientAnimation" RepeatBehavior="Forever" SpeedRatio="0.4">
             <ColorAnimationUsingKeyFrames 
                 Storyboard.TargetName="GridVoice"
@@ -77,7 +82,7 @@
 
             <!--일정-->
             <Grid Grid.Row="1" Margin="50" HorizontalAlignment="Right" VerticalAlignment="Top">
-                <ListBox x:Name="lbScheduleInfo" Background="Transparent" BorderBrush="Transparent"
+                <ListBox x:Name="lbScheduleInfo" Background="Transparent" BorderBrush="Transparent" IsHitTestVisible="False" IsFocusEngagementEnabled="False"
                          ScrollViewer.VerticalScrollBarVisibility="Disabled" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
                     <ListBox.ItemContainerStyle>
                         <Style TargetType="ListBoxItem">
@@ -219,21 +224,39 @@
                 </ListBox.ItemTemplate>
             </ListBox>
             <!--날씨예보-->
-            <ListBox x:Name="lbForcastInfo" Background="Transparent" IsHitTestVisible="False" Visibility="Collapsed">
+            <ListBox x:Name="lbForcastInfo" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" HorizontalAlignment="Center" VerticalAlignment="Top"
+                     Background="Transparent" IsHitTestVisible="False" Visibility="Collapsed">
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Horizontal"/>
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <Grid Margin="0,-10,0,-10">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="230"/>
-                                <ColumnDefinition Width="140"/>
-                                <ColumnDefinition Width="140"/>
-                                <!--<ColumnDefinition Width="*"/>-->
-                            </Grid.ColumnDefinitions>
-                            <TextBlock TextAlignment="Right" FontSize="70" Grid.Column="0" Text="{Binding strHour}" Margin="0,0,40,0"/>
-                            <TextBlock FontFamily="Segoe UI Symbol" FontSize="70" Grid.Column="1" Text="{Binding statSymbol}" Margin="24,0,0,0"/>
-                            <TextBlock FontSize="70" Grid.Column="2" Text="{Binding temp}" Margin="24,0,0,0"/>
-                            <TextBlock Text="℃" HorizontalAlignment="Right" Margin="0,10,5,0" FontSize="40" Grid.Column="2"/>
-                            <!--<TextBlock Grid.Column="3" Text="{Binding note}" Margin="24,0,0,0"/>-->
+                        <Grid Margin="0,0,0,0" Width="140">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="42"/>
+                                <RowDefinition Height="100"/>
+                                <RowDefinition Height="60"/>
+                                <RowDefinition Height="50"/>
+                                <RowDefinition Height="50"/>
+                            </Grid.RowDefinitions>
+                            <TextBlock Text="{Binding strHour}" Grid.Row="0" Style="{StaticResource WeatherText}"/>
+                            <TextBlock Text="{Binding statSymbol}" Grid.Row="1" FontSize="72" FontFamily="Segoe UI Symbol" Style="{StaticResource WeatherText}"/>
+                            <TextBlock Grid.Row="2" Style="{StaticResource WeatherText}">
+                                <Run Text="{Binding temp}"></Run>
+                                <Run Text="℃" FontSize="20"></Run>
+                            </TextBlock>
+                            <TextBlock Grid.Row="3" Style="{StaticResource WeatherText}">
+                                <Run Text="{Binding reh}"></Run>
+                                <Run Text="%" FontSize="20"></Run>
+                            </TextBlock>
+                            <TextBlock Grid.Row="4" Style="{StaticResource WeatherText}">
+                                <Run Text="{Binding wdKor}" FontSize="28"></Run>
+                                <Run Text="{Binding ws}"></Run>
+                                <Run Text="㎧" FontSize="20"></Run>
+                            </TextBlock>
+
                         </Grid>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
