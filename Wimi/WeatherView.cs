@@ -27,7 +27,7 @@ namespace Wimi
         private void ShowForecast()
         {
             ClearPanel();
-            lbForcastInfo.Visibility = Visibility.Visible;
+            gridWeather.Visibility = Visibility.Visible;
         }
 
         private async void tbWeather_Loaded(object sender, RoutedEventArgs e)
@@ -119,7 +119,16 @@ namespace Wimi
         async Task GetForecastInfo()
         {
             lForcastInfo = await weather.GetForecastInfoByCountAsync(7);
-            lbForcastInfo.ItemsSource = lForcastInfo;
+            if(lForcastInfo.Count > 0)
+            {
+                lbForcastInfo.ItemsSource = lForcastInfo;
+                ForecastInfo info = lbForcastInfo.Items[0] as ForecastInfo;
+                if(info.tmx != -999 && info.tmn != -999)
+                {
+                    tbMaxTemp.Text = info.tmx.ToString();
+                    tbMinTemp.Text = info.tmn.ToString();
+                }
+            }
         }
 
         async Task<int> CheckIfRainyAsync()

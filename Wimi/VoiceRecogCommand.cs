@@ -49,6 +49,8 @@ namespace Wimi
             {
                 if(tag == "Wimi")
                 {
+                    ClearPanel();
+
                     if (mediaElement.CurrentState == MediaElementState.Playing && mediaElement.IsFullWindow == true)
                     {
                         mediaElement.IsFullWindow = false;

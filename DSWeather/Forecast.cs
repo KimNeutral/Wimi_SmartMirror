@@ -220,7 +220,6 @@ namespace DSWeather
             }
 
 #endif
-
             return lForcastInfo;
         }
 

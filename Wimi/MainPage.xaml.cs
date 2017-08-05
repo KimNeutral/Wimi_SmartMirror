@@ -39,7 +39,7 @@ namespace Wimi
         private void ClearPanel()
         {
             spBus.Visibility = Visibility.Collapsed;
-            lbForcastInfo.Visibility = Visibility.Collapsed;
+            gridWeather.Visibility = Visibility.Collapsed;
             lbNewsInfo.Visibility = Visibility.Collapsed;
             tbHello.Visibility = Visibility.Collapsed;
         }
