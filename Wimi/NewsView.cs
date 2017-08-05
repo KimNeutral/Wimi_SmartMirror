@@ -15,14 +15,14 @@ namespace Wimi
 
         async Task GetNewsInfo()
         {
-            lNewsList = await news.GetHeadlineAsync();
+            lNewsList = await news.GetDaumNewsAsync();
             lbNewsInfo.ItemsSource = lNewsList;
         }
 
         private void ShowNews()
         {
             ClearPanel();
-            lbNewsInfo.Visibility = Windows.UI.Xaml.Visibility.Visible;
+            gridNews.Visibility = Windows.UI.Xaml.Visibility.Visible;
         }
     }
 }

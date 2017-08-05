@@ -197,6 +197,9 @@
     <PackageReference Include="Microsoft.Toolkit.Uwp.UI.Controls">
       <Version>1.5.1</Version>
     </PackageReference>
+    <PackageReference Include="WindowsAppStudio.Uwp">
+      <Version>1.5.3</Version>
+    </PackageReference>
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

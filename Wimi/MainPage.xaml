@@ -6,6 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:appstudiocontrols="using:AppStudio.Uwp.Controls"
     mc:Ignorable="d"
     FontFamily="Segoe UI"
     FontWeight="Light">
@@ -111,7 +112,7 @@
                 <StackPanel Orientation="Horizontal"  Loaded="tbWeather_Loaded">
                     <StackPanel Orientation="Horizontal" Margin="0,-10,0,0">
                         <TextBlock x:Name="tbTc" Margin="12,0,0,12"
-                               FontSize="80" VerticalAlignment="Bottom" Text="25"/>
+                               FontSize="100" VerticalAlignment="Bottom" Text="25"/>
                         <TextBlock Text="℃" Margin="0,0,0,40" FontSize="42" VerticalAlignment="Center"/>
                         <TextBlock x:Name="tbSky" FontFamily="Segoe UI Symbol" Text="&#xE288;"
                                FontSize="80" />
@@ -124,10 +125,10 @@
             <!--시계-->
             <Grid Grid.Row="2" Margin="50">
                 <StackPanel HorizontalAlignment="Left" VerticalAlignment="Bottom">
-                    <TextBlock x:Name="tbDateTime" Margin="0,0,0,0" FontSize="40" HorizontalAlignment="Left"/>
+                    <TextBlock x:Name="tbDateTime" Margin="0,0,0,0" FontSize="36" HorizontalAlignment="Left"/>
                     <StackPanel Orientation="Horizontal" Margin="0,-20,0,0">
                         <TextBlock x:Name="tbAmPm" Margin="6,24,10,0"  FontSize="20" FontWeight="SemiBold" VerticalAlignment="Top"></TextBlock>
-                        <TextBlock x:Name="tbTime" FontSize="80" HorizontalAlignment="Left" Foreground="WhiteSmoke"></TextBlock>
+                        <TextBlock x:Name="tbTime" FontSize="100" HorizontalAlignment="Left" Foreground="WhiteSmoke"></TextBlock>
                     </StackPanel>
                 </StackPanel>
             </Grid>
@@ -208,28 +209,54 @@
                     </ListBox.ItemTemplate>
                 </ListBox>
             </StackPanel>
+            
             <!--뉴스헤드라인-->
-            <ListBox x:Name="lbNewsInfo" Background="Transparent" IsHitTestVisible="False" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Collapsed" Margin="-30,0,0,0">
+            <Grid x:Name="gridNews" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Visibility="Collapsed">
+                <appstudiocontrols:VariableSizedGrid x:Name="lbNewsInfo" Margin="12"
+                                            AspectRatio="0.5"
+                                            Orientation="Horizontal"
+                                            MaximumRowsOrColumns="4"            
+                                            HorizontalAlignment="Left" VerticalAlignment="Top">
+                    <appstudiocontrols:VariableSizedGrid.ItemTemplate>
+                        <DataTemplate>
+                            <Grid BorderBrush="DarkGray" BorderThickness="1">
+                                <Image Source="{Binding image}" Stretch="UniformToFill" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                <Grid VerticalAlignment="Top">
+                                    <Border Background="Black" Opacity="0.7"></Border>
+                                    <TextBlock FontSize="24" Text="{Binding title}" Margin="12" TextWrapping="Wrap" FontWeight="SemiLight"/>
+                                </Grid>
+                            </Grid>
+                        </DataTemplate>
+                    </appstudiocontrols:VariableSizedGrid.ItemTemplate>
+                </appstudiocontrols:VariableSizedGrid>
+                <!--Note: 다음뉴스가 공식은 아니므로 문제발생시 대체를 위해 남겨둔다-->
+                <!--<ListBox x:Name="lbNewsInfo" Background="Transparent" IsHitTestVisible="False" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Collapsed" Margin="-30,0,0,0">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <Grid Margin="5">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/>
-                                <!--<ColumnDefinition Width="*"/>-->
+                                -->
+                <!--<ColumnDefinition Width="*"/>-->
+                <!--
                             </Grid.ColumnDefinitions>
                             <TextBlock TextAlignment="Right" Grid.Column="0" FontSize="20" Text="{Binding title}" Margin="24,0,0,0"/>
-                            <!--<TextBlock Grid.Column="3" Text="{Binding note}" Margin="24,0,0,0"/>-->
+                            -->
+                <!--<TextBlock Grid.Column="3" Text="{Binding note}" Margin="24,0,0,0"/>-->
+                <!--
                         </Grid>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
-            </ListBox>
+            </ListBox>-->
+            </Grid>
+  
             <!--날씨예보-->
             <Grid x:Name="gridWeather" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Visibility="Collapsed">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="180"/>
+                    <RowDefinition Height="140"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-                <TextBlock Grid.Row="0" FontSize="56" HorizontalAlignment="Center" FontWeight="ExtraLight">
+                <TextBlock Grid.Row="0" FontSize="56" HorizontalAlignment="Center" VerticalAlignment="Top" FontWeight="ExtraLight">
                     <Run Text="최고기온" Foreground="OrangeRed"/>
                     <Run Text="은 "/>
                     <Run x:Name="tbMaxTemp" Foreground="OrangeRed" FontSize="84"/>

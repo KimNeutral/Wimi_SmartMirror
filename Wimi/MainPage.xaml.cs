@@ -40,7 +40,7 @@ namespace Wimi
         {
             spBus.Visibility = Visibility.Collapsed;
             gridWeather.Visibility = Visibility.Collapsed;
-            lbNewsInfo.Visibility = Visibility.Collapsed;
+            gridNews.Visibility = Visibility.Collapsed;
             tbHello.Visibility = Visibility.Collapsed;
         }
 
@@ -59,7 +59,7 @@ namespace Wimi
         public void SetTime()
         {
             DateTime dt = DateTime.Now;
-            tbDateTime.Text = dt.ToString("ddd, MMM d").ToUpper() + "TH";
+            tbDateTime.Text = dt.ToString("dddd, MMM d").ToUpper() + "th";
             tbTime.Text = dt.ToString("h:mm");
             tbAmPm.Text = dt.ToString("tt");
         }
