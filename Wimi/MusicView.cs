@@ -112,6 +112,10 @@ namespace Wimi
                 bool isFull = mediaElement.IsFullWindow;
                 mediaElement.IsFullWindow = !isFull;
             }
+            else
+            {
+                SetVoice("먼저 음악을 재생하세요");
+            }
         }
 
         private void mediaElement_MediaEnded(object sender, RoutedEventArgs e)
