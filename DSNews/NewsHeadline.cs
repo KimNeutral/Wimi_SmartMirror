@@ -80,7 +80,7 @@ namespace DSNews
                               select new
                               {
                                   title = news.Element("title").Value,
-                                  image = news.Element("enclosure").Attribute("url").Value
+                                  image = ( news.Element("enclosure") != null ? news.Element("enclosure").Attribute("url").Value : string.Empty)
                               };
 
 

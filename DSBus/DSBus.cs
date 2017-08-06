@@ -29,8 +29,10 @@ namespace DSBus
         public async Task<List<BusInfo>> LoadBusInfo()
         {
             Init();
-            string url = @"http://m.businfo.go.kr/bp/m/realTime.do?act=arrInfo&bsId=7111041200&bsNm=%B1%B8%C1%F6%B8%E9%BB%E7%B9%AB%BC%D2%B0%C7%B3%CA";
+            //string url = @"http://m.businfo.go.kr/bp/m/realTime.do?act=arrInfo&bsId=7111041200&bsNm=%B1%B8%C1%F6%B8%E9%BB%E7%B9%AB%BC%D2%B0%C7%B3%CA"; //구지면사무소건너
+            string url = @"http://m.businfo.go.kr/bp/m/realTime.do?act=arrInfo&bsId=7111059500&bsNm=%B1%B8%C1%F6%C3%BB%BE%C6%B6%F7%B0%C7%B3%CA"; //구지청아람건너
             //string url = @"http://m.businfo.go.kr/bp/m/realTime.do?act=arrInfo&bsId=7021020600&bsNm=%BA%B9%C7%F6%BF%C0%B0%C5%B8%AE1"; //복현동
+
             HttpClient http = new HttpClient();
             byte[] b = await http.GetByteArrayAsync(url);
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);

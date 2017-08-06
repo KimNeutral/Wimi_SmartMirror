@@ -28,16 +28,25 @@ namespace DSHue
         {
             if (client == null)
             {
-                ip = await GetIP();
-                if (string.IsNullOrEmpty(ip))
-                    return false;
+                try
+                {
+                    ip = await GetIP();
+                    if (string.IsNullOrEmpty(ip))
+                        return false;
 
-                client = new LocalHueClient(ip);
-                key = await GetKey(client);
-                client.Initialize(key);
-                var command = new LightCommand();
-                command.TurnOff();
-                await client.SendCommandAsync(command);
+                    client = new LocalHueClient(ip);
+                    key = await GetKey(client);
+                    client.Initialize(key);
+                    var command = new LightCommand();
+                    command.TurnOff();
+                    await client.SendCommandAsync(command);
+                }
+                catch(Exception ex)
+                {
+                    Debug.WriteLine(ex.Message);
+                    return false;
+                }
+
             }
             return true;
         }

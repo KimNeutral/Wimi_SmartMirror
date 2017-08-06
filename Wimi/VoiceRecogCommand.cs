@@ -178,7 +178,7 @@ namespace Wimi
             PauseMusicConstraint = new SpeechRecognitionListConstraint(new List<string>()
             { "Pause Music"}, "PauseMusic");
             ShowNewsConstraint = new SpeechRecognitionListConstraint(new List<string>()
-            { "Show Todays News" }, "News");
+            { "Today News", "Show Todays News" }, "News");
             ShowBusConstraint = new SpeechRecognitionListConstraint(new List<string>()
             { "Where is Bus" }, "Bus");
             FullScreenConstraint = new SpeechRecognitionListConstraint(new List<string>()

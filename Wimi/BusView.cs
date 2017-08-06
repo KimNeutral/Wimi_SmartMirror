@@ -44,7 +44,7 @@ namespace Wimi
         private void ShowBus()
         {
             ClearPanel();
-            spBus.Visibility = Windows.UI.Xaml.Visibility.Visible;
+            gridBus.Visibility = Windows.UI.Xaml.Visibility.Visible;
         }
     }
 }

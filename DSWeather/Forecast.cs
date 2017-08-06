@@ -31,6 +31,9 @@ namespace DSWeather
         /// </summary>
         public int y { get; set; }
 
+        public string strMaxTemperature = string.Empty;
+        public string strMinTemperature = string.Empty;
+
         public async Task<List<ForecastInfo>> GetForecastInfoByCountAsync(int maxCount = 7)
         {
             List<ForecastInfo> lForcastInfo = new List<ForecastInfo>();
@@ -127,6 +130,13 @@ namespace DSWeather
                 if (!string.IsNullOrEmpty(weather.tmn))
                 {
                     unit.tmn = float.Parse(weather.tmn, CultureInfo.InvariantCulture);
+                }
+
+                if (unit.tmx != -999 && unit.tmn != -999)
+                {
+                    //chris: 제대로된 처리가 아님. 기상청 데이터상 오늘이 아닌 내일의 최고/최저기온이 될 수 있기 때문
+                    strMaxTemperature = weather.tmx;
+                    strMinTemperature = weather.tmn;
                 }
 
                 if (!string.IsNullOrEmpty(weather.sky))

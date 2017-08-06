@@ -17,6 +17,11 @@
             <Setter Property="FontSize" Value="36"/>
             <Setter Property="FontWeight" Value="ExtraLight"/>
         </Style>
+        <Style x:Name="BusText" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="40"/>
+            <Setter Property="FontWeight" Value="ExtraLight"/>
+        </Style>
+        
         <Storyboard x:Name="GradientAnimation" RepeatBehavior="Forever" SpeedRatio="0.4">
             <ColorAnimationUsingKeyFrames 
                 Storyboard.TargetName="GridVoice"
@@ -186,29 +191,41 @@
             </Grid>
 
             <!--버스-->
-            <StackPanel x:Name="spBus" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,12,0,12" Visibility="Collapsed">
-                <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xEB47;"  Margin="10,0,12,0"
-                           FontSize="60" VerticalAlignment="Top" HorizontalAlignment="Center"
-                           Foreground="White"></TextBlock>
-                <ListBox x:Name="lbBusInfo" Margin="0,-3,0,0" Background="Transparent" IsHitTestVisible="False" Visibility="Visible">
+            <Grid x:Name="gridBus" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Visibility="Collapsed">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="100"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="140"/>
+                </Grid.RowDefinitions>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xEB47;" FontSize="60" 
+                           VerticalAlignment="Top" HorizontalAlignment="Center"></TextBlock>
+                    <TextBlock x:Name="tbBusState" Text="구지청아람건너" Margin="24,0,0,0" FontSize="52"/>
+                </StackPanel>
+                <ListBox x:Name="lbBusInfo" Grid.Row="1" Background="Transparent" IsHitTestVisible="False" Margin="150,0,0,0"
+                         HorizontalAlignment="Center" VerticalAlignment="Top">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <Grid Margin="5" HorizontalAlignment="Right" Width="430">
+                            <Grid Margin="0,-10">
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="100"/>
-                                    <ColumnDefinition Width="100"/>
+                                    <ColumnDefinition Width="160"/>
+                                    <ColumnDefinition Width="140"/>
                                     <ColumnDefinition Width="*"/>
                                     <!--<ColumnDefinition Width="*"/>-->
                                 </Grid.ColumnDefinitions>
-                                <TextBlock Grid.Column="0" FontSize="30" Text="{Binding number}" Margin="0,0,0,0"/>
-                                <TextBlock Grid.Column="1" FontSize="30" Text="{Binding state}" Margin="0,0,0,0"/>
-                                <TextBlock Grid.Column="2" FontSize="30" Text="{Binding position}" Margin="0,0,0,0"/>
+                                <TextBlock Grid.Column="0" Text="{Binding number}" Style="{StaticResource BusText}"/>
+                                <TextBlock Grid.Column="1" Text="{Binding state}"  Style="{StaticResource BusText}"/>
+                                <TextBlock Grid.Column="2" Text="{Binding position}"  Style="{StaticResource BusText}"/>
                                 <!--<TextBlock Grid.Column="3" Text="{Binding note}" Margin="24,0,0,0"/>-->
                             </Grid>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                 </ListBox>
-            </StackPanel>
+                <Grid Grid.Row="2" Margin="36" Background="DarkRed" HorizontalAlignment="Center">
+                    <TextBlock Text="▶ 현 정류소에서 10정류소 이내에 있는 버스의 노선만 조회됩니다" Margin="6" FontSize="36" 
+                               HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </Grid>
+            </Grid>
             
             <!--뉴스헤드라인-->
             <Grid x:Name="gridNews" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Visibility="Collapsed">
@@ -219,7 +236,7 @@
                                             HorizontalAlignment="Left" VerticalAlignment="Top">
                     <appstudiocontrols:VariableSizedGrid.ItemTemplate>
                         <DataTemplate>
-                            <Grid BorderBrush="DarkGray" BorderThickness="1">
+                            <Grid BorderBrush="DarkGray" BorderThickness="1" Margin="4">
                                 <Image Source="{Binding image}" Stretch="UniformToFill" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                 <Grid VerticalAlignment="Top">
                                     <Border Background="Black" Opacity="0.7"></Border>
@@ -299,7 +316,6 @@
                                 <Run Text="{Binding ws}"></Run>
                                 <Run Text="㎧" FontSize="20"></Run>
                                 </TextBlock>
-
                             </Grid>
                         </DataTemplate>
                     </ListBox.ItemTemplate>

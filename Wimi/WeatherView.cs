@@ -122,12 +122,8 @@ namespace Wimi
             if(lForcastInfo.Count > 0)
             {
                 lbForcastInfo.ItemsSource = lForcastInfo;
-                ForecastInfo info = lbForcastInfo.Items[0] as ForecastInfo;
-                if(info.tmx != -999 && info.tmn != -999)
-                {
-                    tbMaxTemp.Text = info.tmx.ToString();
-                    tbMinTemp.Text = info.tmn.ToString();
-                }
+                tbMaxTemp.Text = weather.strMaxTemperature;
+                tbMinTemp.Text = weather.strMinTemperature;
             }
         }
 
