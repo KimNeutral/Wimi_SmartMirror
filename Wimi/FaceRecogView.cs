@@ -130,13 +130,13 @@ namespace Wimi
                 Dictionary<Guid, Emotion> emotions = await face.GetEmotionByGuidAsync(s);
                 foreach (var emo in emotions)
                 {
-                    await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                    await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
                     {
                         tbEmotion.Text = emo.Value.ToString();
                         if (!IsIdentified)
                         {
                             string cmt = EmotionUtil.GetCommentByEmotion(emo.Value);
-                            //HueAtrBool = await HueControl.HueLightWithEmotion(emo.Value);
+                            HueAtrBool = await HueControl.HueLightWithEmotion(emo.Value);
                             comment += cmt;
                             faceTimer.Start();
                         }
@@ -148,8 +148,8 @@ namespace Wimi
 
         private async Task<bool> DetectCalledByWimi()
         {
-            IsIdentified = false;
             faceTimer.Stop();
+            IsIdentified = false;
 
             if (!Webcam.IsInitialized()) //chris - if the webcam isn't connected,
             {
@@ -163,15 +163,13 @@ namespace Wimi
 
             StorageFile captured = await Webcam.CapturePhoto();
             bool suc = await DetectFace(captured);
-            await DetectEmotion(captured);
             if (!suc)
             {
                 comment = "인식하지 못했어요. 다시 한번 해주세요.";
             }
             else
             {
-                ShowSchedule();
-                
+                await DetectEmotion(captured);
                 string ment = "Hello\n";
                 if (CurrentUser.Equals("손님"))
                 {
@@ -180,7 +178,10 @@ namespace Wimi
                 else
                 {
                     ment += CurrentUser + "!";
+                    ShowSchedule();
+                    faceTimer.Start();
                 }
+                IsIdentified = true;
                 tbFaceName.Text = CurrentUser;
                 spUser.Visibility = Visibility.Visible;
                 ShowTbHello(ment);

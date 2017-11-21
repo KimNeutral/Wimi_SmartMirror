@@ -28,7 +28,7 @@ namespace Wimi
 
         private async void initMusicList()
         {
-            QueryOptions queryOption = new QueryOptions(CommonFileQuery.OrderByTitle, new string[] { ".mp3", ".mp4", ".wma" });
+            QueryOptions queryOption = new QueryOptions(CommonFileQuery.OrderByTitle, new string[] { ".mp3", ".mp4", ".wma", ".flac" });
             queryOption.FolderDepth = FolderDepth.Deep;
             Queue<IStorageFolder> folders = new Queue<IStorageFolder>();
 

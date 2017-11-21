@@ -68,7 +68,7 @@
             <!--우측상단 사용자 정보-->
             <Grid x:Name="gridUser" Grid.Row="0" Margin="50" HorizontalAlignment="Right" VerticalAlignment="Top">
                 <StackPanel Orientation="Horizontal">
-                    <StackPanel x:Name="spUser" Margin="12" Orientation="Vertical">
+                    <StackPanel x:Name="spUser" Margin="12" Orientation="Vertical" Visibility="Collapsed">
                         <!--얼굴인식누구-->
                         <TextBlock x:Name="tbFaceName" Text="Guest" FontSize="30" HorizontalAlignment="Right"/>
                         <TextBlock FontSize="20" HorizontalAlignment="Right">
@@ -79,7 +79,7 @@
 
                     <!--카메라프리뷰-->
                     <StackPanel>
-                        <CaptureElement x:Name="captureElement" Width="240" Visibility="Visible"/>
+                        <CaptureElement x:Name="captureElement" Width="240"/>
                         <!--임시얼굴인식버튼(Hello Or Wimi 명령으로 대체)-->
                         <Button x:Name="btnCapture" Content="인식" Click="btnCapture_Click" Visibility="Collapsed"/>
                     </StackPanel>
@@ -89,7 +89,7 @@
             <!--일정-->
             <Grid Grid.Row="1" Margin="50" HorizontalAlignment="Right" VerticalAlignment="Top">
                 <ListBox x:Name="lbScheduleInfo" Background="Transparent" BorderBrush="Transparent" IsHitTestVisible="False" IsFocusEngagementEnabled="False"
-                         ScrollViewer.VerticalScrollBarVisibility="Disabled" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                         ScrollViewer.VerticalScrollBarVisibility="Disabled" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Visibility="Collapsed">
                     <ListBox.ItemContainerStyle>
                         <Style TargetType="ListBoxItem">
                             <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
@@ -342,6 +342,7 @@
 
         <!--<Image Source="Assets/bigBlue.png" Opacity="0.5" Stretch="UniformToFill" Width="1920" ></Image>-->
 
-        <TextBlock x:Name="tbVoiceRecogState" FontWeight="SemiLight" VerticalAlignment="Bottom" HorizontalAlignment="Center"></TextBlock>
+        <TextBlock x:Name="tbVoiceRecogState" FontWeight="SemiLight" VerticalAlignment="Top" HorizontalAlignment="Left"></TextBlock>
+        <TextBlock x:Name="tbHelp" FontWeight="SemiLight" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="30" FontSize="50">Say "Wimi" to Command</TextBlock>
     </Grid>
 </Page>

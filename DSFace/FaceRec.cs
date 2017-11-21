@@ -23,7 +23,7 @@ namespace DSFace
 
         public FaceRec()
         {
-            _faceServiceClient = new FaceServiceClient(Constraints.FaceKey);
+            _faceServiceClient = new FaceServiceClient(Constraints.FaceKey, "https://eastasia.api.cognitive.microsoft.com/face/v1.0");
             Persons = new List<DPerson>();
         }
 
@@ -234,14 +234,14 @@ namespace DSFace
 
         public async Task AddPersonFaceAsync(Guid guid, Stream stream)
         {
-            try
-            {
+            //try
+            //{
                 await _faceServiceClient.AddPersonFaceAsync(NameId, guid, stream);
-            }
-            catch(Exception e)
-            {
-                Debug.WriteLine("Fail to Add Person Face. - {0}", e.Message);
-            }
+            //}
+            //catch(Exception e)
+            //{
+            //    Debug.WriteLine("Fail to Add Person Face. - "+ e.Message);
+            //}
         }
 
         public async Task<IdentifyResult[]> IdentifyAsync(Stream stream = null, Face[] faces = null)

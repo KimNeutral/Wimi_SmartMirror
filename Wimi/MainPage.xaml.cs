@@ -9,6 +9,7 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Windows.UI.Xaml.Shapes;
+using System.Threading;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 // ref. http://uwpcommunitytoolkit.readthedocs.io/en/master/
@@ -20,7 +21,7 @@ namespace Wimi
     /// </summary>
     public partial class MainPage : Page
     {
-        const bool USE_FACERECOG = false; //chris: for test
+        const bool USE_FACERECOG = true; //chris: for test
 
         DispatcherTimer ClockTimer = new DispatcherTimer();
         Music mu = new Music();
@@ -66,7 +67,7 @@ namespace Wimi
 
         private async void Grid_Loaded(object sender, RoutedEventArgs e)
         {
-            await gridVoiceHelper.Offset(0, -400, 0, 0, EasingType.Linear).StartAsync(); 
+            await gridVoiceHelper.Offset(0, -400, 0, 0, EasingType.Linear).StartAsync();
 
             initMusicList();
             initSynthesizer();
@@ -80,8 +81,8 @@ namespace Wimi
 
             if(USE_FACERECOG)
             {
-                await face.InitListAsync();
                 InitFaceRec();
+                await face.InitListAsync();
             }
 
             GetBusInfo();
@@ -91,6 +92,7 @@ namespace Wimi
             await GetForecastInfo();
 
             await GetNewsInfo();
+
         }
 
         protected async override void OnNavigatedFrom(NavigationEventArgs e)

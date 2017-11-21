@@ -24,7 +24,7 @@ namespace Wimi
         private SpeechRecognitionListConstraint ShowBusConstraint;
         private SpeechRecognitionListConstraint FullScreenConstraint;
 
-#if false
+#if true
         #region 조명
         private SpeechRecognitionListConstraint TurnOnLightConstraint;
         private SpeechRecognitionListConstraint TurnOffLightConstraint;
@@ -49,6 +49,8 @@ namespace Wimi
             {
                 if(tag == "Wimi")
                 {
+                    CurrentUser = "";
+                    tbFaceName.Text = "";
                     ClearPanel();
 
                     if (mediaElement.CurrentState == MediaElementState.Playing && mediaElement.IsFullWindow == true)
@@ -56,6 +58,7 @@ namespace Wimi
                         mediaElement.IsFullWindow = false;
                     }
 
+                    tbHelp.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
                     SetVoice("wimi.mp3", true);
                     gridCommand.Visibility = Windows.UI.Xaml.Visibility.Visible;
                     gridConentRoot.Blur(20, 800).Start();
@@ -66,7 +69,8 @@ namespace Wimi
                 else if(tag == "Bye")
                 {
                     SetVoice("wimi_close.mp3", true);
-                    ClearPanel();
+                    //ClearPanel();
+                    tbHello.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
 
                     if (mediaElement.CurrentState == MediaElementState.Playing)
                     {
@@ -74,6 +78,7 @@ namespace Wimi
                         StopMusic();
                     }
 
+                    tbHelp.Visibility = Windows.UI.Xaml.Visibility.Visible;
                     VoiceRecogEffect.Stop();
                     await gridVoiceHelper.Offset(0, -300, 400, 0, EasingType.Linear).StartAsync();
                     gridCommand.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
@@ -184,7 +189,7 @@ namespace Wimi
             FullScreenConstraint = new SpeechRecognitionListConstraint(new List<string>()
             { "Set FullScreen" }, "FullScreen");
 
-#if false
+#if true
             #region
             TurnOnLightConstraint = new SpeechRecognitionListConstraint(new List<string>()
             { "turn On the Light"}, "TurnOn");
@@ -223,7 +228,7 @@ namespace Wimi
             speechRecognizer.Constraints.Add(FullScreenConstraint);
             speechRecognizer.Constraints.Add(ShowNewsConstraint);
             speechRecognizer.Constraints.Add(ShowBusConstraint);
-#if false
+#if true
             #region 조명
             speechRecognizer.Constraints.Add(TurnOnLightConstraint);
             speechRecognizer.Constraints.Add(TurnOffLightConstraint);
@@ -253,7 +258,7 @@ namespace Wimi
             speechRecognizer.Constraints.Remove(FullScreenConstraint);
             speechRecognizer.Constraints.Remove(ShowNewsConstraint);
             speechRecognizer.Constraints.Remove(ShowNewsConstraint);
-#if false
+#if true
             #region 조명
             speechRecognizer.Constraints.Remove(TurnOnLightConstraint);
             speechRecognizer.Constraints.Remove(TurnOffLightConstraint);
