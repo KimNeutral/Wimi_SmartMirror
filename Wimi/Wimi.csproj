@@ -203,6 +203,10 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <ProjectReference Include="..\DSBingSpeech\DSBingSpeech.csproj">
+      <Project>{57af6892-03af-44b2-8fff-31dd01fab823}</Project>
+      <Name>DSBingSpeech</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DSBus\DSBus.csproj">
       <Project>{cd271c12-85c4-4bec-8230-08a6b70e2e78}</Project>
       <Name>DSBus</Name>

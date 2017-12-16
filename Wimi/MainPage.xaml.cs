@@ -75,14 +75,22 @@ namespace Wimi
 
             HueInit();
 
-            await Webcam.InitializeCameraAsync();
-            captureElement.Source = Webcam.mediaCapture;
-            await Webcam.StartCameraPreview();
+            bool isInit = await Webcam.InitializeCameraAsync();
 
-            if(USE_FACERECOG)
+            if (isInit)
             {
-                InitFaceRec();
-                await face.InitListAsync();
+                captureElement.Source = Webcam.mediaCapture;
+                await Webcam.StartCameraPreview();
+
+                if (USE_FACERECOG)
+                {
+                    InitFaceRec();
+                    await face.InitListAsync();
+                }
+            }
+            else
+            {
+                tbCameraStat.Text = "연결되어있는 웹캠이 존재하지 않습니다!";
             }
 
             GetBusInfo();

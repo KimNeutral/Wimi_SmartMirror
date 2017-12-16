@@ -80,6 +80,7 @@
                     <!--카메라프리뷰-->
                     <StackPanel>
                         <CaptureElement x:Name="captureElement" Width="240"/>
+                        <TextBlock x:Name="tbCameraStat"></TextBlock>
                         <!--임시얼굴인식버튼(Hello Or Wimi 명령으로 대체)-->
                         <Button x:Name="btnCapture" Content="인식" Click="btnCapture_Click" Visibility="Collapsed"/>
                     </StackPanel>

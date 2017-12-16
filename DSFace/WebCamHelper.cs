@@ -18,7 +18,7 @@ namespace DSFace
         /// <summary>
         /// Asynchronously initializes webcam feed
         /// </summary>
-        public async Task InitializeCameraAsync()
+        public async Task<bool> InitializeCameraAsync()
         {
             if (mediaCapture == null)
             {
@@ -30,7 +30,7 @@ namespace DSFace
                     // No camera found, report the error and break out of initialization
                     Debug.WriteLine("No camera found!");
                     initialized = false;
-                    return;
+                    return false;
                 }
 
                 // Creates MediaCapture initialization settings with foudnd webcam device
@@ -39,7 +39,9 @@ namespace DSFace
                 mediaCapture = new MediaCapture();
                 await mediaCapture.InitializeAsync(settings);
                 initialized = true;
+                return true;
             }
+            return true;
         }
 
         /// <summary>

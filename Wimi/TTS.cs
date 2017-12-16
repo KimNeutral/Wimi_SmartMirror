@@ -130,7 +130,7 @@ namespace Wimi
             }
         }
 
-        public async Task SetVoice(string str, bool isFilePath = false)
+        public async void SetVoice(string str, bool isFilePath = false)
         {
             //return; //잡음 문제로 일단 아래코드를 처리하지 않는다.
 
