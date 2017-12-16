@@ -74,6 +74,7 @@ namespace Wimi
                         //await DetectCalledByWimi();//얼굴인식
 
                         string result = await StartRecordingAsync();
+                        BingSpeechTextBlock.Text = result;//음성인식 결과 출력 디버그용.
                         CommandByVoiceAsync(result);
                     }
                 }
@@ -202,7 +203,7 @@ namespace Wimi
             SetVoice("wimi_succeed.mp3", true);
 
             ClearPanel();
-            //명령어 추가 ㅠ필요
+            //명령어 추가 필요 아마 키워드를 통한 명령을 하지싶음.
             if (str.Contains("날씨"))
             {
                 ShowForecast();
@@ -229,6 +230,8 @@ namespace Wimi
             { "Wimi" }, "Wimi");
             ByeConstraint = new SpeechRecognitionListConstraint(new List<string>()
             { "Good bye" }, "Bye");
+#if false
+#region 영어 인식 제약
             TellWeatherConstraint = new SpeechRecognitionListConstraint(new List<string>()
             { "Today Weather"}, "Weather");
             TestConstraint = new SpeechRecognitionListConstraint(new List<string>()
@@ -246,7 +249,8 @@ namespace Wimi
             FullScreenConstraint = new SpeechRecognitionListConstraint(new List<string>()
             { "Set FullScreen" }, "FullScreen");
             HaloConstraint = new SpeechRecognitionListConstraint(new List<String>() { "Hello", "Hi" }, "Halo");
-
+#endregion
+#endif
 
 #if false
 #region 조명
@@ -279,6 +283,8 @@ namespace Wimi
 
             speechRecognizer.Constraints.Add(helloConstraint);
             speechRecognizer.Constraints.Add(ByeConstraint);
+#if false
+#region 영어 인식 제약 추가
             speechRecognizer.Constraints.Add(TellWeatherConstraint);
             speechRecognizer.Constraints.Add(TestConstraint);
             speechRecognizer.Constraints.Add(PlayMusicConstraint);
@@ -288,8 +294,10 @@ namespace Wimi
             speechRecognizer.Constraints.Add(ShowNewsConstraint);
             speechRecognizer.Constraints.Add(ShowBusConstraint);
             speechRecognizer.Constraints.Add(HaloConstraint);
+            #endregion 
+#endif
 #if false
-#region 조명
+            #region 조명
             speechRecognizer.Constraints.Add(TurnOnLightConstraint);
             speechRecognizer.Constraints.Add(TurnOffLightConstraint);
             speechRecognizer.Constraints.Add(ChangeLightModeOn);
@@ -302,7 +310,7 @@ namespace Wimi
             speechRecognizer.Constraints.Add(PinkColorLightConstraint);
             speechRecognizer.Constraints.Add(PurpleColorLightConstraint);
             speechRecognizer.Constraints.Add(WhiteColorLightConstraint);
-#endregion
+            #endregion
 #endif
         }
 
@@ -310,6 +318,8 @@ namespace Wimi
         {
             speechRecognizer.Constraints.Remove(helloConstraint);
             speechRecognizer.Constraints.Remove(ByeConstraint);
+#if false
+
             speechRecognizer.Constraints.Remove(TellWeatherConstraint);
             speechRecognizer.Constraints.Remove(TestConstraint);
             speechRecognizer.Constraints.Remove(PlayMusicConstraint);
@@ -319,6 +329,9 @@ namespace Wimi
             speechRecognizer.Constraints.Remove(ShowNewsConstraint);
             speechRecognizer.Constraints.Remove(ShowNewsConstraint);
             speechRecognizer.Constraints.Remove(HaloConstraint);
+#endif
+
+
 #if false
 #region 조명
             speechRecognizer.Constraints.Remove(TurnOnLightConstraint);

@@ -92,7 +92,7 @@ namespace Wimi
             {
                 tbCameraStat.Text = "연결되어있는 웹캠이 존재하지 않습니다!";
             }
-
+            
             GetBusInfo();
 #if PC_MODE
             Getschedule();

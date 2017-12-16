@@ -170,6 +170,7 @@
             <StackPanel x:Name="spRecogText" Grid.Row="0" Grid.Column="2" Margin="0,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Left">
                 <TextBlock x:Name="tbRecog" FontWeight="ExtraLight" FontSize="72" Foreground="WhiteSmoke"></TextBlock>
                 <TextBlock x:Name="resultTextBlock" FontSize="22" Foreground="LightCyan" TextWrapping="Wrap"/>
+                <TextBlock x:Name="BingSpeechTextBlock" FontSize="22" Foreground="WhiteSmoke" TextWrapping="Wrap"/>
             </StackPanel>
 
             <!--미디어플레이-->

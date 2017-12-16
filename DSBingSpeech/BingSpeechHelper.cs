@@ -54,7 +54,6 @@ namespace DSBingSpeech
                         var speechResults = JsonConvert.DeserializeObject<BinSpeechResult>(responseContent);
 
                         content.Dispose();
-
                         return speechResults.DisplayText;
                     }
                     catch (Exception e)
