@@ -23,8 +23,9 @@ namespace Wimi
         private SpeechRecognitionListConstraint ShowNewsConstraint;
         private SpeechRecognitionListConstraint ShowBusConstraint;
         private SpeechRecognitionListConstraint FullScreenConstraint;
+        private SpeechRecognitionListConstraint HaloConstraint;
 
-#if true
+#if false
         #region 조명
         private SpeechRecognitionListConstraint TurnOnLightConstraint;
         private SpeechRecognitionListConstraint TurnOffLightConstraint;
@@ -90,13 +91,16 @@ namespace Wimi
                     {
                         return;
                     }
-                    SetVoice("wimi_succeed.mp3", true);
+                    await SetVoice("wimi_succeed.mp3", true);
 
                     ClearPanel();
                     switch (tag)
                     {
                         //case "Wimi":                        
                         //    break;
+                        case "Halo":
+                            await SetVoice("안녕하세요.");
+                            break;
                         case "Weather":
                             ShowForecast();
                             TellmeWeatherAsync();
@@ -188,9 +192,11 @@ namespace Wimi
             { "Where is Bus" }, "Bus");
             FullScreenConstraint = new SpeechRecognitionListConstraint(new List<string>()
             { "Set FullScreen" }, "FullScreen");
+            HaloConstraint = new SpeechRecognitionListConstraint(new List<String>() { "Hello", "Hi" }, "Halo");
 
-#if true
-            #region
+
+#if false
+            #region 조명
             TurnOnLightConstraint = new SpeechRecognitionListConstraint(new List<string>()
             { "turn On the Light"}, "TurnOn");
             TurnOffLightConstraint = new SpeechRecognitionListConstraint(new List<string>()
@@ -228,7 +234,8 @@ namespace Wimi
             speechRecognizer.Constraints.Add(FullScreenConstraint);
             speechRecognizer.Constraints.Add(ShowNewsConstraint);
             speechRecognizer.Constraints.Add(ShowBusConstraint);
-#if true
+            speechRecognizer.Constraints.Add(HaloConstraint);
+#if false
             #region 조명
             speechRecognizer.Constraints.Add(TurnOnLightConstraint);
             speechRecognizer.Constraints.Add(TurnOffLightConstraint);
@@ -258,7 +265,8 @@ namespace Wimi
             speechRecognizer.Constraints.Remove(FullScreenConstraint);
             speechRecognizer.Constraints.Remove(ShowNewsConstraint);
             speechRecognizer.Constraints.Remove(ShowNewsConstraint);
-#if true
+            speechRecognizer.Constraints.Remove(HaloConstraint);
+#if false
             #region 조명
             speechRecognizer.Constraints.Remove(TurnOnLightConstraint);
             speechRecognizer.Constraints.Remove(TurnOffLightConstraint);
