@@ -4,9 +4,10 @@ namespace DSFace
 {
     class Constraints
     {
-        public const String FaceKey = ""; //user key
-        //b66b337ac3ec4d0399d636cbb77d557d
-        //851744bbd6a34c6e9bff209c62b8ffd6
+        public const String FaceKey = "fd9b2998d0d2418c87f5f379c1eeadbc"; //user key
+        //choose one
+        //fd9b2998d0d2418c87f5f379c1eeadbc
+        //5821266c7f00442384f6969bc305a263
         public const String EmotionKey = "";
     }
 }
