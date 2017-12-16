@@ -118,7 +118,7 @@ namespace Wimi
                 Recognize();
 
                 resultTextBlock.Text = string.Format("음성인식이 시작되었습니다.");
-                tbRecog.Text = "Listening...";
+                //tbRecog.Text = "Listening...";
             }
             else
             {
@@ -170,7 +170,7 @@ namespace Wimi
                     await dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                     {
                         //SetVoice("다시 말해주세요."); //Please say it again. //Tell me again. //What did you say? //Say what? //다른건 발음이 이상하게 나옴 ㅋㅋ
-                        resultTextBlock.Text = string.Format("음성인식이 실패하였습니다.");
+                        //resultTextBlock.Text = string.Format("음성인식이 실패하였습니다.");
                         Debug.WriteLine("ContinuousRecognitionSession_ResultGenerated - Rejected");
                     });
                 }

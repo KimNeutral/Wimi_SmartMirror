@@ -69,6 +69,7 @@ namespace Wimi
         {
             await gridVoiceHelper.Offset(0, -400, 0, 0, EasingType.Linear).StartAsync();
 
+            InitVoiceCommand();
             initMusicList();
             initSynthesizer();
             await InitializeRecognizer();
@@ -100,7 +101,6 @@ namespace Wimi
             await GetForecastInfo();
 
             await GetNewsInfo();
-
         }
 
         protected async override void OnNavigatedFrom(NavigationEventArgs e)

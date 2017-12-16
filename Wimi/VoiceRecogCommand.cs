@@ -8,6 +8,8 @@ using Windows.Media.SpeechRecognition;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 using DSBingSpeech;
+using System.Threading;
+using Windows.UI.Xaml;
 
 namespace Wimi
 {
@@ -16,6 +18,8 @@ namespace Wimi
         //제약조건
         private SpeechRecognitionListConstraint helloConstraint;
         private SpeechRecognitionListConstraint ByeConstraint;
+#if false
+        #region 영어제약조건
         private SpeechRecognitionListConstraint TellWeatherConstraint;
         private SpeechRecognitionListConstraint TestConstraint;
         private SpeechRecognitionListConstraint PlayMusicConstraint;
@@ -25,6 +29,8 @@ namespace Wimi
         private SpeechRecognitionListConstraint ShowBusConstraint;
         private SpeechRecognitionListConstraint FullScreenConstraint;
         private SpeechRecognitionListConstraint HaloConstraint;
+        #endregion
+#endif
         AudioRecorder audioRecorder = new AudioRecorder();
 
 #if false
@@ -47,16 +53,28 @@ namespace Wimi
 
         private bool _isWimiRecording = false;
 
+        private DispatcherTimer listenTimer = new DispatcherTimer();
+        public DateTime TimerStart { get; set; }
+
+        private const int INTERVAL = 4;
+
+        private void InitVoiceCommand()
+        {
+            listenTimer.Interval = new TimeSpan(0, 0, 1);
+            listenTimer.Tick += ListenTimer_Tick;
+        }
+
         private async void VoiceCommandAsync(string heard, string tag, string confidence)
         {
             resultTextBlock.Text = string.Format("Heard: {0}, Tag: {1}, Confidence: {2}", heard, tag, confidence);
             
             if (!string.IsNullOrEmpty(tag))
             {
-                if (tag == "Wimi")
+                if (tag == "Wimi" && !_isWimiRecording)
                 {
                     if (audioRecorder.GetStatues())
                     {
+                        _isWimiRecording = true;
                         CurrentUser = "";
                         tbFaceName.Text = "";
                         ClearPanel();
@@ -69,13 +87,15 @@ namespace Wimi
                         SetVoice("wimi.mp3", true);
                         gridCommand.Visibility = Windows.UI.Xaml.Visibility.Visible;
                         gridConentRoot.Blur(20, 800).Start();
+                        tbRecog.Text = "Listening..." + INTERVAL;
                         await gridVoiceHelper.Offset(0, 0, 400, 0, EasingType.Linear).StartAsync();
                         VoiceRecogEffect.Play();
                         //await DetectCalledByWimi();//얼굴인식
 
                         string result = await StartRecordingAsync();
-                        BingSpeechTextBlock.Text = result;//음성인식 결과 출력 디버그용.
+                        tbRecog.Text = result;//음성인식 결과 출력 디버그용.
                         CommandByVoiceAsync(result);
+                        _isWimiRecording = false;
                     }
                 }
                 else if(tag == "Bye")
@@ -97,7 +117,7 @@ namespace Wimi
                     gridConentRoot.Blur(0, 800).Start();
                 }
 #if false
-#region 영어인식파트
+    #region 영어인식파트
                 else
                 {
                     if (gridCommand.Visibility == Windows.UI.Xaml.Visibility.Collapsed)
@@ -179,19 +199,32 @@ namespace Wimi
                             }
                     }
                 }
-#endregion
+    #endregion
 #endif
             }
         }
 
         private async Task<string> StartRecordingAsync()
         {
-            _isWimiRecording = true;
+            TimerStart = DateTime.Now;
+            listenTimer.Start();
+
             audioRecorder.StartRecord();//음성 녹화 시작.
             await Task.Delay(5000);
             string result = await audioRecorder.StopRecord();
-            _isWimiRecording = false;
             return result;
+        }
+
+        private void ListenTimer_Tick(object sender, object e)
+        {
+            var currentValue = DateTime.Now - this.TimerStart;
+            var remainSec = INTERVAL - currentValue.Seconds;
+            if(remainSec == -1)
+            {
+                listenTimer.Stop();
+                return;
+            }
+            tbRecog.Text = "Listening..." + remainSec;
         }
 
         private void CommandByVoiceAsync(string str)
@@ -231,7 +264,7 @@ namespace Wimi
             ByeConstraint = new SpeechRecognitionListConstraint(new List<string>()
             { "Good bye" }, "Bye");
 #if false
-#region 영어 인식 제약
+    #region 영어인식제약
             TellWeatherConstraint = new SpeechRecognitionListConstraint(new List<string>()
             { "Today Weather"}, "Weather");
             TestConstraint = new SpeechRecognitionListConstraint(new List<string>()
@@ -253,7 +286,7 @@ namespace Wimi
 #endif
 
 #if false
-#region 조명
+    #region 조명
             TurnOnLightConstraint = new SpeechRecognitionListConstraint(new List<string>()
             { "turn On the Light"}, "TurnOn");
             TurnOffLightConstraint = new SpeechRecognitionListConstraint(new List<string>()
@@ -280,11 +313,10 @@ namespace Wimi
             { "Change color White","turn on White"}, "WhiteColor");
 #endregion
 #endif
-
             speechRecognizer.Constraints.Add(helloConstraint);
             speechRecognizer.Constraints.Add(ByeConstraint);
 #if false
-#region 영어 인식 제약 추가
+    #region 영어인식제약추가
             speechRecognizer.Constraints.Add(TellWeatherConstraint);
             speechRecognizer.Constraints.Add(TestConstraint);
             speechRecognizer.Constraints.Add(PlayMusicConstraint);
@@ -294,10 +326,11 @@ namespace Wimi
             speechRecognizer.Constraints.Add(ShowNewsConstraint);
             speechRecognizer.Constraints.Add(ShowBusConstraint);
             speechRecognizer.Constraints.Add(HaloConstraint);
-            #endregion 
+#endregion
 #endif
+
 #if false
-            #region 조명
+    #region 조명
             speechRecognizer.Constraints.Add(TurnOnLightConstraint);
             speechRecognizer.Constraints.Add(TurnOffLightConstraint);
             speechRecognizer.Constraints.Add(ChangeLightModeOn);
@@ -310,7 +343,7 @@ namespace Wimi
             speechRecognizer.Constraints.Add(PinkColorLightConstraint);
             speechRecognizer.Constraints.Add(PurpleColorLightConstraint);
             speechRecognizer.Constraints.Add(WhiteColorLightConstraint);
-            #endregion
+#endregion
 #endif
         }
 
@@ -319,7 +352,7 @@ namespace Wimi
             speechRecognizer.Constraints.Remove(helloConstraint);
             speechRecognizer.Constraints.Remove(ByeConstraint);
 #if false
-
+    #region 영어인식제약삭제
             speechRecognizer.Constraints.Remove(TellWeatherConstraint);
             speechRecognizer.Constraints.Remove(TestConstraint);
             speechRecognizer.Constraints.Remove(PlayMusicConstraint);
@@ -329,11 +362,11 @@ namespace Wimi
             speechRecognizer.Constraints.Remove(ShowNewsConstraint);
             speechRecognizer.Constraints.Remove(ShowNewsConstraint);
             speechRecognizer.Constraints.Remove(HaloConstraint);
+#endregion
 #endif
 
-
 #if false
-#region 조명
+    #region 조명
             speechRecognizer.Constraints.Remove(TurnOnLightConstraint);
             speechRecognizer.Constraints.Remove(TurnOffLightConstraint);
             speechRecognizer.Constraints.Remove(ChangeLightModeOn);
