@@ -28,18 +28,18 @@ namespace Wimi
 
         private void InitFaceRec()
         {
-            if(face == null)
+            if (face == null)
             {
                 face = new FaceRec();
             }
-            
+
             faceTimer.Interval = new TimeSpan(0, 0, 1);
             faceTimer.Tick += FaceTimer_Tick;
         }
-
+        
         private async void FaceTimer_Tick(object sender, object e)
         {
-            if (!Webcam.IsInitialized())
+            if (!Webcam.IsInitialized() || !face.IsInit())
             {
                 return;
             }
@@ -49,11 +49,11 @@ namespace Wimi
 
             StorageFile captured = await Webcam.CapturePhoto();
 
-            if(captured != null)
+            if (captured != null)
             {
                 try
                 {
-                    if(await DetectFace(captured))
+                    if (await DetectFace(captured))
                     {
                         if (CurrentUser != tbFaceName.Text)
                         {
@@ -73,7 +73,7 @@ namespace Wimi
                 {
                     Debug.WriteLine(ex.Message);
                 }
-                if(CntErr == 5)
+                if (CntErr == 5)
                 {
                     faceTimer.Stop();
                     CurrentUser = "";
@@ -151,7 +151,7 @@ namespace Wimi
             faceTimer.Stop();
             IsIdentified = false;
 
-            if (!Webcam.IsInitialized()) //chris - if the webcam isn't connected,
+            if (!Webcam.IsInitialized() || face.IsInit()) //chris - if the webcam isn't connected,
             {
                 return false;
             }

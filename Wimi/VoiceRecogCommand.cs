@@ -219,9 +219,10 @@ namespace Wimi
         {
             var currentValue = DateTime.Now - this.TimerStart;
             var remainSec = INTERVAL - currentValue.Seconds;
-            if(remainSec == -1)
+            if(remainSec <= -1)
             {
                 listenTimer.Stop();
+                tbRecog.Text = "Processing...";
                 return;
             }
             tbRecog.Text = "Listening..." + remainSec;
