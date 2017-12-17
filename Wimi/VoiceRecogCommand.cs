@@ -83,7 +83,6 @@ namespace Wimi
                         {
                             mediaElement.IsFullWindow = false;
                         }
-                        tbHelp.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
                         SetVoice("wimi.mp3", true);
                         gridCommand.Visibility = Windows.UI.Xaml.Visibility.Visible;
                         gridConentRoot.Blur(20, 800).Start();
@@ -110,7 +109,6 @@ namespace Wimi
                         StopMusic();
                     }
 
-                    tbHelp.Visibility = Windows.UI.Xaml.Visibility.Visible;
                     VoiceRecogEffect.Stop();
                     await gridVoiceHelper.Offset(0, -300, 400, 0, EasingType.Linear).StartAsync();
                     gridCommand.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
