@@ -56,7 +56,7 @@ namespace Wimi
         private DispatcherTimer listenTimer = new DispatcherTimer();
         public DateTime TimerStart { get; set; }
 
-        private const int INTERVAL = 4;
+        private const int INTERVAL = 3;
 
         private void InitVoiceCommand()
         {
@@ -75,6 +75,7 @@ namespace Wimi
                     if (audioRecorder.GetStatues())
                     {
                         _isWimiRecording = true;
+                        mediaElement.Volume = 0.1;
                         CurrentUser = "";
                         tbFaceName.Text = "";
                         ClearPanel();
@@ -95,6 +96,7 @@ namespace Wimi
                         tbRecog.Text = result;//음성인식 결과 출력 디버그용.
                         CommandByVoiceAsync(result);
                         _isWimiRecording = false;
+                        mediaElement.Volume = 0.5;
                     }
                 }
                 else if(tag == "Bye")
@@ -226,7 +228,7 @@ namespace Wimi
             tbRecog.Text = "Listening..." + remainSec;
         }
 
-        private void CommandByVoiceAsync(string str)
+        private async void CommandByVoiceAsync(string str)
         {
             if (gridCommand.Visibility == Windows.UI.Xaml.Visibility.Collapsed)
             {
@@ -249,9 +251,44 @@ namespace Wimi
             {
                 ShowNews();
             }
-            else
+            else if (str.Contains("음악") || str.Contains("노래"))
             {
-
+                if (str.Contains("재생") || str.Contains("틀") || str.Contains("들"))
+                {
+                    await PlayMusic();
+                }
+                else if (str.Contains("일시정지"))
+                {
+                    PauseMusic();
+                }
+                else if (str.Contains("정지") || str.Contains("멈"))
+                {
+                    StopMusic();
+                }
+            }
+            else if (str.Contains("안녕"))
+            {
+                string hello = "안녕하세요!";
+                if (!string.IsNullOrEmpty(CurrentUser) && !CurrentUser.Equals("Guest"))
+                {
+                    hello += CurrentUser + "님!";
+                }
+                SetVoice(hello);
+            }
+            else if (str.Contains("불"))
+            {
+                if (!HueControl.IsInit())
+                {
+                    SetVoice("조명제어는 현재 지원하지 않는 기능입니다.");
+                }
+                if (str.Contains("켜"))
+                {
+                    await HueControl.HueLightOn();
+                }
+                else if (str.Contains("꺼"))
+                {
+                    await HueControl.HueLightOff();
+                }
             }
         }
 
