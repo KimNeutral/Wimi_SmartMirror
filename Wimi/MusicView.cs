@@ -74,7 +74,8 @@ namespace Wimi
             {
                 gridMedia.Visibility = Windows.UI.Xaml.Visibility.Visible;
                 string musicName = storageFile.DisplayName;
-                Debug.WriteLine(musicName + "을 랜덤 재생합니다");
+                //Debug.WriteLine(musicName + "을 랜덤 재생합니다");
+                SetVoice(musicName + "을 랜덤 재생합니다");
                 tbMediaName.Text = "♬ " + musicName;
 
                 mediaElement.SetSource(stream, storageFile.ContentType);
