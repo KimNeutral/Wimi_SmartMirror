@@ -297,8 +297,16 @@ namespace DSHue
                     writeFile.WriteLine(key);
                 }
             }
-
             return key;
+        }
+
+        /// <summary>
+        /// 초기화 유무 체크
+        /// </summary>
+        /// <returns>true/false</returns>
+        public bool IsInit()
+        {
+            return client == null ? false : true;
         }
     }
 }
