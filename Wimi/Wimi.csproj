@@ -143,6 +143,11 @@
   <ItemGroup>
     <Content Include="Assets\bigBlue.png" />
     <Content Include="Assets\circle.gif" />
+    <Content Include="Assets\Icons\Hue.png" />
+    <Content Include="Assets\Icons\Music.png" />
+    <Content Include="Assets\Icons\News.png" />
+    <Content Include="Assets\Icons\Siri.png" />
+    <Content Include="Assets\Icons\Weather.png" />
     <Content Include="Assets\line.gif" />
     <Content Include="Assets\Puppy_Love.mp3">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
