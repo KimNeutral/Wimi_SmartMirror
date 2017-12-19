@@ -143,6 +143,7 @@
   <ItemGroup>
     <Content Include="Assets\bigBlue.png" />
     <Content Include="Assets\circle.gif" />
+    <Content Include="Assets\Icons\Bus.png" />
     <Content Include="Assets\Icons\Hue.png" />
     <Content Include="Assets\Icons\Music.png" />
     <Content Include="Assets\Icons\News.png" />

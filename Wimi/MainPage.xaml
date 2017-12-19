@@ -185,6 +185,30 @@
                 <TextBlock x:Name="BingSpeechTextBlock" FontSize="22" Foreground="WhiteSmoke" TextWrapping="Wrap"/>
             </StackPanel>
 
+            <!--위치 조회-->
+            <Grid x:Name="gridLocation" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Visibility="Collapsed">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="100"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                </Grid.RowDefinitions>
+                <TextBlock Text="랩실 현황판" FontSize="40" Margin="190,0,0,0"></TextBlock>
+                <ListBox x:Name="lbLocation" Grid.Row="1" Background="Transparent" IsHitTestVisible="False" Margin="150,0,0,0"
+                         HorizontalAlignment="Center" VerticalAlignment="Top">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Margin="0,-5">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="120"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Image Grid.Column="0" Source="{Binding ThumbImg}" Width="70" Height="70" Margin="0"></Image>
+                                <TextBlock Text="{Binding Example}"  Style="{StaticResource HelpExampleText}"/>
+                            </Grid>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </Grid>
+
             <!--명령어 목록-->
             <Grid x:Name="gridHelp" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Visibility="Collapsed">
                 <Grid.RowDefinitions>
