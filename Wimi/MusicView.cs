@@ -91,6 +91,20 @@ namespace Wimi
             }
         }
 
+        public void SetMusicVolume(bool b)
+        {
+            if (b)
+            {
+                if(mediaElement.Volume != 1)
+                    mediaElement.Volume += 0.25f;
+            }
+            else
+            {
+                if(mediaElement.Volume != 0)
+                    mediaElement.Volume -= 0.25f;
+            }
+        }
+
         public void PauseMusic()
         {
             Debug.WriteLine("음악 일시중지");
