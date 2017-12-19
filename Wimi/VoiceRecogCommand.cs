@@ -238,35 +238,35 @@ namespace Wimi
 
             ClearPanel();
             //명령어 추가 필요 아마 키워드를 통한 명령을 하지싶음.
-            if (str.Contains("날씨"))
+            if (str.Contains("날씨"))             //날씨알려줘
             {
                 ShowForecast();
                 TellmeWeatherAsync();
             }
-            else if (str.Contains("버스"))
+            else if (str.Contains("버스"))        //버스 정보
             {
                 ShowBus();
             }
-            else if (str.Contains("뉴스"))
+            else if (str.Contains("뉴스"))        //뉴스 알려줘
             {
                 ShowNews();
             }
             else if (str.Contains("음악") || str.Contains("노래"))
             {
-                if (str.Contains("재생") || str.Contains("틀") || str.Contains("들"))
+                if (str.Contains("재생") || str.Contains("틀") || str.Contains("들"))   //음악 틀어줘
                 {
                     await PlayMusic();
                 }
-                else if (str.Contains("일시정지"))
+                else if (str.Contains("일시정지"))//음악 일시정지
                 {
                     PauseMusic();
                 }
-                else if (str.Contains("정지") || str.Contains("멈"))
+                else if (str.Contains("정지") || str.Contains("멈"))   //음악 멈춰
                 {
                     StopMusic();
                 }
             }
-            else if (str.Contains("안녕"))
+            else if (str.Contains("안녕"))        //안녕
             {
                 string hello = "안녕하세요!";
                 if (!string.IsNullOrEmpty(CurrentUser) && !CurrentUser.Equals("Guest"))
@@ -281,11 +281,11 @@ namespace Wimi
                 {
                     SetVoice("조명제어는 현재 지원하지 않는 기능입니다.");
                 }
-                if (str.Contains("켜"))
+                if (str.Contains("켜"))           //불켜
                 {
                     await HueControl.HueLightOn();
                 }
-                else if (str.Contains("꺼"))
+                else if (str.Contains("꺼"))      //불꺼
                 {
                     await HueControl.HueLightOff();
                 }
