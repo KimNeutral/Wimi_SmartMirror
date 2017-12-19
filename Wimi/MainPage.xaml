@@ -204,7 +204,7 @@
                                 <Image Source="{Binding ThumbImg}"></Image>
                                 <StackPanel Grid.Column="1">
                                     <TextBlock Text="{Binding Feature}"  Style="{StaticResource HelpFeatureText}"/>
-                                    <TextBlock Text="{Binding ExampleText}"  Style="{StaticResource HelpExampleText}"/>
+                                    <TextBlock Text="{Binding Example}"  Style="{StaticResource HelpExampleText}"/>
                                 </StackPanel>
                             </Grid>
                         </DataTemplate>
