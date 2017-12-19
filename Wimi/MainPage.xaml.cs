@@ -39,9 +39,20 @@ namespace Wimi
 
         private void ClearPanel()
         {
-            gridBus.Visibility = Visibility.Collapsed;
-            gridWeather.Visibility = Visibility.Collapsed;
-            gridNews.Visibility = Visibility.Collapsed;
+            int count = VisualTreeHelper.GetChildrenCount(gridCommand);
+            for (int i = 0; i < count; i++)
+            {
+                UIElement child = (UIElement)VisualTreeHelper.GetChild(gridCommand, i);
+
+                if (child is Grid && !((Grid)child).Name.Equals("gridVoiceHelper"))
+                {
+                    child.Visibility = Visibility.Collapsed;
+                }
+            }
+
+            //gridBus.Visibility = Visibility.Collapsed;
+            //gridWeather.Visibility = Visibility.Collapsed;
+            //gridNews.Visibility = Visibility.Collapsed;
             tbHello.Visibility = Visibility.Collapsed;
         }
 
