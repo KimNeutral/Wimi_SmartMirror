@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.15
+VisualStudioVersion = 15.0.26730.15
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wimi", "Wimi\Wimi.csproj", "{B83632FD-DA4B-4F7B-927B-96D9C986A23F}"
 EndProject
@@ -26,6 +26,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DSNews", "DSNews\DSNews.csproj", "{03B2BC42-0584-4E5D-AB39-C55C0D4497A4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DSBingSpeech", "DSBingSpeech\DSBingSpeech.csproj", "{57AF6892-03AF-44B2-8FFF-31DD01FAB823}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DSLocation", "DSLocation\DSLocation.csproj", "{FB78F339-1281-408B-861E-6F6E8713D017}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -233,8 +235,27 @@ Global
 		{57AF6892-03AF-44B2-8FFF-31DD01FAB823}.Release|x64.Build.0 = Release|x64
 		{57AF6892-03AF-44B2-8FFF-31DD01FAB823}.Release|x86.ActiveCfg = Release|x86
 		{57AF6892-03AF-44B2-8FFF-31DD01FAB823}.Release|x86.Build.0 = Release|x86
+		{FB78F339-1281-408B-861E-6F6E8713D017}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FB78F339-1281-408B-861E-6F6E8713D017}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FB78F339-1281-408B-861E-6F6E8713D017}.Debug|ARM.ActiveCfg = Debug|ARM
+		{FB78F339-1281-408B-861E-6F6E8713D017}.Debug|ARM.Build.0 = Debug|ARM
+		{FB78F339-1281-408B-861E-6F6E8713D017}.Debug|x64.ActiveCfg = Debug|x64
+		{FB78F339-1281-408B-861E-6F6E8713D017}.Debug|x64.Build.0 = Debug|x64
+		{FB78F339-1281-408B-861E-6F6E8713D017}.Debug|x86.ActiveCfg = Debug|x86
+		{FB78F339-1281-408B-861E-6F6E8713D017}.Debug|x86.Build.0 = Debug|x86
+		{FB78F339-1281-408B-861E-6F6E8713D017}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FB78F339-1281-408B-861E-6F6E8713D017}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FB78F339-1281-408B-861E-6F6E8713D017}.Release|ARM.ActiveCfg = Release|ARM
+		{FB78F339-1281-408B-861E-6F6E8713D017}.Release|ARM.Build.0 = Release|ARM
+		{FB78F339-1281-408B-861E-6F6E8713D017}.Release|x64.ActiveCfg = Release|x64
+		{FB78F339-1281-408B-861E-6F6E8713D017}.Release|x64.Build.0 = Release|x64
+		{FB78F339-1281-408B-861E-6F6E8713D017}.Release|x86.ActiveCfg = Release|x86
+		{FB78F339-1281-408B-861E-6F6E8713D017}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8FDBBE71-E5AD-41B3-BB45-6694F749C178}
 	EndGlobalSection
 EndGlobal
