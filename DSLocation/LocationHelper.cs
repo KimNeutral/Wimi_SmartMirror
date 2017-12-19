@@ -14,6 +14,7 @@ namespace DSLocation
         {
             uri = @"http://dgswn.us-east-2.elasticbeanstalk.com/";
         }
+
         public async Task<Users> getLocationInfosAsync()
         {
             using (var client = new HttpClient())
@@ -23,7 +24,7 @@ namespace DSLocation
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 try
                 {
-                    HttpResponseMessage response = await client.GetAsync("users/location");
+                    HttpResponseMessage response = await client.GetAsync("targets");
                     var responseContent = await response.Content.ReadAsStringAsync();
                     var locationInfos = JsonConvert.DeserializeObject<Users>(responseContent);
                     return locationInfos;
