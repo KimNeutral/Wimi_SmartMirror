@@ -11,7 +11,7 @@ namespace Wimi
     {
     }
 
-    class VoiceCommand
+    public class VoiceCommand
     {
         /// <summary>
         /// 샘플이미지
