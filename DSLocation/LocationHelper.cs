@@ -30,9 +30,8 @@ namespace DSLocation
                     return locationInfos;
                 }catch(Exception e)
                 {
-                    
+                    return null;
                 }
-                return null;
             }
         }
     }

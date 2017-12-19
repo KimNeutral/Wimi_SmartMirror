@@ -232,6 +232,10 @@
       <Project>{229d7005-cda9-4583-8b79-ba0c7bb52b4e}</Project>
       <Name>DSHue</Name>
     </ProjectReference>
+    <ProjectReference Include="..\DSLocation\DSLocation.csproj">
+      <Project>{b9af866d-9478-44ed-b5d1-9013656ad7ac}</Project>
+      <Name>DSLocation</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DSMusic\DSMusic.csproj">
       <Project>{a4c7addb-1b43-4998-a162-103e951358bb}</Project>
       <Name>DSMusic</Name>
