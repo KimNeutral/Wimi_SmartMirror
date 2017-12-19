@@ -121,6 +121,7 @@
     <Compile Include="TTS.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="VoiceCommendList.cs" />
     <Compile Include="VoiceRecog.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
