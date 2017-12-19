@@ -9,6 +9,12 @@ namespace Wimi
 {
     public partial class MainPage : Page
     {
+        public void ShowHelp()
+        {
+            ClearPanel();
+            gridHelp.Visibility = Windows.UI.Xaml.Visibility.Visible;
+            lbHelp.ItemsSource = VoiceCommand.Data.list;
+        }
     }
 
     public class VoiceCommand

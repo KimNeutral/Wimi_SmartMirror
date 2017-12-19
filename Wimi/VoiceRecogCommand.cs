@@ -290,6 +290,10 @@ namespace Wimi
                     await HueControl.HueLightOff();
                 }
             }
+            else if (str.Contains("명령"))
+            {
+                ShowHelp();
+            }
         }
 
         public void AddConstraints()
