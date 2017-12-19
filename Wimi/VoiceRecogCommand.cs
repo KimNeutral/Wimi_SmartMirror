@@ -74,6 +74,7 @@ namespace Wimi
                 {
                     if (audioRecorder.GetStatues())
                     {
+                        double pVolume = mediaElement.Volume;
                         _isWimiRecording = true;
                         mediaElement.Volume = 0.1;
                         CurrentUser = "";
@@ -94,9 +95,9 @@ namespace Wimi
 
                         string result = await StartRecordingAsync();
                         tbRecog.Text = result;//음성인식 결과 출력 디버그용.
+                        mediaElement.Volume = pVolume;
                         CommandByVoiceAsync(result);
                         _isWimiRecording = false;
-                        mediaElement.Volume = 0.5;
                     }
                 }
                 else if(tag == "Bye")
