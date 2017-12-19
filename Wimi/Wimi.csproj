@@ -105,6 +105,9 @@
     <Compile Include="FaceRecogView.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="HelpView.cs">
+      <DependentUpon>MainPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="HueView.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
@@ -121,7 +124,6 @@
     <Compile Include="TTS.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="VoiceCommendList.cs" />
     <Compile Include="VoiceRecog.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
