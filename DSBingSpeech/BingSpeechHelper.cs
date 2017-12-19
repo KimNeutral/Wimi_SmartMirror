@@ -15,6 +15,7 @@ namespace DSBingSpeech
         private const string DICTATION = "dictation";
 
         private readonly string _language = "ko-KR";
+        //private readonly string _language = "en-US";
         private readonly string _requestUri;
         //private IAuthenticationService _authenticationService;
 
@@ -25,12 +26,13 @@ namespace DSBingSpeech
                 $@"https://speech.platform.bing.com/speech/recognition/{
                     INTERACTIVE}/cognitiveservices/v1?language={
                         _language}";*/
-            _requestUri = @"https://speech.platform.bing.com/speech/recognition/interactive/cognitiveservices/v1?language=ko-KR&format=simple";
+            _requestUri = @"https://speech.platform.bing.com/speech/recognition/interactive/cognitiveservices/v1?language=" + _language + "& format=simple";
         }
 
         public async Task<string> GetTextResultAsync(string recordedFilename)
         {
             var file = await ApplicationData.Current.LocalFolder.GetFileAsync(recordedFilename);
+
 
             using (var fileStream = new FileStream(file.Path, FileMode.Open, FileAccess.Read))
             {
@@ -43,6 +45,7 @@ namespace DSBingSpeech
                     //4fbb88204e0e4cb398afbc6b08035836
                     //26d7094ca0fc41f88b8bc482d89cc478
                     //둘 중 하나 
+                    //client.Timeout = new TimeSpan(0, 0, 5);
 
                     var content = new StreamContent(fileStream);
                     content.Headers.Add("ContentType", new[] { "audio/wav", "codec=audio/pcm", "samplerate=16000" });
@@ -53,13 +56,15 @@ namespace DSBingSpeech
                         var responseContent = await response.Content.ReadAsStringAsync();
                         var speechResults = JsonConvert.DeserializeObject<BinSpeechResult>(responseContent);
 
-                        content.Dispose();
                         return speechResults.DisplayText;
                     }
                     catch (Exception e)
                     {
+                        return "실패";
+                    }
+                    finally
+                    {
                         content.Dispose();
-                        throw;
                     }
                 }
             }
