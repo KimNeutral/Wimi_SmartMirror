@@ -1,5 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
@@ -15,7 +17,7 @@ namespace DSLocation
             uri = @"http://dgswn.us-east-2.elasticbeanstalk.com/";
         }
 
-        public async Task<Users> getLocationInfosAsync()
+        public async Task<List<User>> getLocationInfosAsync()
         {
             using (var client = new HttpClient())
             {
@@ -26,10 +28,12 @@ namespace DSLocation
                 {
                     HttpResponseMessage response = await client.GetAsync("targets");
                     var responseContent = await response.Content.ReadAsStringAsync();
-                    var locationInfos = JsonConvert.DeserializeObject<Users>(responseContent);
-                    return locationInfos;
-                }catch(Exception e)
+                    var locationInfos = JsonConvert.DeserializeObject<RootObject>(responseContent);
+                    return locationInfos.users;
+                }
+                catch (Exception e)
                 {
+                    Debug.WriteLine(e.Message);
                     return null;
                 }
             }

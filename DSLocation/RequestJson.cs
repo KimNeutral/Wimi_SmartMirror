@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DSLocation
 {
-    public class Users
+    public class User
     {
         public int classNum { get; set; }
         public string name { get; set; }
@@ -23,5 +23,8 @@ namespace DSLocation
         public int rssi { get; set; }
         public string time { get; set; }
     }
-
+    public class RootObject
+    {
+        public List<User> users { get; set; }
+    }
 }

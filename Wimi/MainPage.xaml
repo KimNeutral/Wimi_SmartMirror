@@ -201,8 +201,11 @@
                                     <ColumnDefinition Width="120"/>
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
-                                <Image Grid.Column="0" Source="{Binding ThumbImg}" Width="70" Height="70" Margin="0"></Image>
-                                <TextBlock Text="{Binding Example}"  Style="{StaticResource HelpExampleText}"/>
+                                <Image Grid.Column="0" Source="{Binding profilePic}" Width="70" Height="70" Margin="0"></Image>
+                                <TextBlock Style="{StaticResource HelpExampleText}">
+                                    <Run Text="{Binding classNum}"></Run>
+                                    <Run Text="{Binding name}"></Run>
+                                </TextBlock>
                             </Grid>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
