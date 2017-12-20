@@ -14,7 +14,11 @@ namespace Wimi
         public async void ShowLocationAsync()
         {
             List<User> users = await LocationHelper.getLocationInfosAsync();
-            lbLocation.ItemsSource = users;
+            gridLocation.Visibility = Windows.UI.Xaml.Visibility.Visible;
+
+            var groups = from c in users
+                         group c by c.location.pname;
+            lbLocation.ItemsSource = groups;
         }
     }
 }

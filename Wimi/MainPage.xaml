@@ -32,7 +32,7 @@
             <Setter Property="FontSize" Value="40"/>
             <Setter Property="FontWeight" Value="ExtraLight"/>
         </Style>
-        
+
         <Storyboard x:Name="GradientAnimation" RepeatBehavior="Forever" SpeedRatio="0.4">
             <ColorAnimationUsingKeyFrames 
                 Storyboard.TargetName="GridVoice"
@@ -209,6 +209,14 @@
                             </Grid>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
+                    <ListBox.GroupStyle>
+                        <GroupStyle>
+                            <GroupStyle.HeaderTemplate>
+                                <DataTemplate>
+                                </DataTemplate>
+                            </GroupStyle.HeaderTemplate>
+                        </GroupStyle>
+                    </ListBox.GroupStyle>
                 </ListBox>
             </Grid>
 

@@ -10,18 +10,12 @@ namespace DSLocation
 {
     public class LocationHelper
     {
-        string uri;
-        
-        public LocationHelper()
-        {
-            uri = @"http://dgswn.us-east-2.elasticbeanstalk.com/";
-        }
 
         public async Task<List<User>> getLocationInfosAsync()
         {
             using (var client = new HttpClient())
             {
-                client.BaseAddress = new Uri(uri);
+                client.BaseAddress = new Uri(Common.SERVER_URL);
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 try
@@ -38,5 +32,7 @@ namespace DSLocation
                 }
             }
         }
+
+        
     }
 }
