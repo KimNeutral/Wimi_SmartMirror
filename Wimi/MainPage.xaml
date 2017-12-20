@@ -12,28 +12,34 @@
     FontWeight="Light">
 
     <Page.Resources>
-        <Style x:Name="WeatherText" TargetType="TextBlock">
+        <Style x:Key="WeatherText" TargetType="TextBlock">
             <Setter Property="HorizontalAlignment" Value="Center"/>
             <Setter Property="FontSize" Value="36"/>
             <Setter Property="FontWeight" Value="ExtraLight"/>
         </Style>
 
-        <Style x:Name="HelpFeatureText" TargetType="TextBlock">
+        <Style x:Key="HelpFeatureText" TargetType="TextBlock">
             <Setter Property="FontSize" Value="25"/>
             <Setter Property="FontWeight" Value="ExtraLight"/>
         </Style>
-        <Style x:Name="HelpExampleText" TargetType="TextBlock">
+        <Style x:Key="HelpExampleText" TargetType="TextBlock">
             <Setter Property="Foreground" Value="Gray"/>
             <Setter Property="FontSize" Value="20"/>
             <Setter Property="FontWeight" Value="ExtraLight"/>
         </Style>
 
-        <Style x:Name="BusText" TargetType="TextBlock">
+        <Style x:Key="LocationText" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="25"/>
+            <Setter Property="FontWeight" Value="ExtraLight"/>
+        </Style>
+
+        <Style x:Key="BusText" TargetType="TextBlock">
             <Setter Property="FontSize" Value="40"/>
             <Setter Property="FontWeight" Value="ExtraLight"/>
         </Style>
 
-        <Storyboard x:Name="GradientAnimation" RepeatBehavior="Forever" SpeedRatio="0.4">
+        <Storyboard x:Key="GradientAnimation" RepeatBehavior="Forever" SpeedRatio="0.4">
             <ColorAnimationUsingKeyFrames 
                 Storyboard.TargetName="GridVoice"
                 Storyboard.TargetProperty="(UIElement.Background).(LinearGradientBrush.GradientStops)[0].(GradientStop.Color)"
@@ -194,7 +200,7 @@
                     <RowDefinition Height="*"></RowDefinition>
                 </Grid.RowDefinitions>
                 <TextBlock Text="랩실 현황판" FontSize="40" Margin="190,0,0,0"></TextBlock>
-                <ListView x:Name="lvLocation" Grid.Row="1" Background="Transparent" IsHitTestVisible="False" Margin="150,0,0,0"
+                <ListView x:Name="lvLocation" Grid.Row="1" Background="Transparent" IsHitTestVisible="False" IsEnabled="False"
                          HorizontalAlignment="Center" VerticalAlignment="Top" ItemsSource="{Binding Source={StaticResource cvs}}">
                     <ListView.ItemTemplate>
                         <DataTemplate>
@@ -204,18 +210,23 @@
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
                                 <Image Grid.Column="0" Source="{Binding profilePic}" Width="70" Height="70" Margin="0"></Image>
-                                <TextBlock Style="{StaticResource HelpExampleText}">
+                                <TextBlock Style="{StaticResource LocationText}" Foreground="White">
                                     <Run Text="{Binding classNum}"></Run>
                                     <Run Text="{Binding name}"></Run>
                                 </TextBlock>
                             </Grid>
                         </DataTemplate>
                     </ListView.ItemTemplate>
+                    <ListView.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <ItemsStackPanel Orientation="Horizontal"/>
+                        </ItemsPanelTemplate>
+                    </ListView.ItemsPanel>
                     <ListView.GroupStyle>
                         <GroupStyle>
                             <GroupStyle.HeaderTemplate>
                                 <DataTemplate>
-                                    <TextBlock Foreground="White" Text="{Binding Key}">
+                                    <TextBlock Foreground="White" Style="{StaticResource LocationText}" Text="{Binding Key}">
                                     </TextBlock>
                                 </DataTemplate>
                             </GroupStyle.HeaderTemplate>

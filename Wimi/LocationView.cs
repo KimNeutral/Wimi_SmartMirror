@@ -19,6 +19,8 @@ namespace Wimi
             var groups = from c in users
                          group c by c.location.pname;
             cvs.Source = groups;
+
+            lvLocation.SelectedIndex = -1;
         }
     }
 }
