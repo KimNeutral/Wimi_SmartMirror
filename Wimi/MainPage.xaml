@@ -60,6 +60,8 @@
                 <LinearColorKeyFrame KeyTime="0:0:07" Value="#FF0000"/>
             </ColorAnimationUsingKeyFrames>
         </Storyboard>
+
+        <CollectionViewSource x:Key="cvs" x:Name="cvs" IsSourceGrouped="True" />
     </Page.Resources>
 
     <!--배경화면처리시 사용-->
@@ -192,9 +194,9 @@
                     <RowDefinition Height="*"></RowDefinition>
                 </Grid.RowDefinitions>
                 <TextBlock Text="랩실 현황판" FontSize="40" Margin="190,0,0,0"></TextBlock>
-                <ListBox x:Name="lbLocation" Grid.Row="1" Background="Transparent" IsHitTestVisible="False" Margin="150,0,0,0"
-                         HorizontalAlignment="Center" VerticalAlignment="Top">
-                    <ListBox.ItemTemplate>
+                <ListView x:Name="lvLocation" Grid.Row="1" Background="Transparent" IsHitTestVisible="False" Margin="150,0,0,0"
+                         HorizontalAlignment="Center" VerticalAlignment="Top" ItemsSource="{Binding Source={StaticResource cvs}}">
+                    <ListView.ItemTemplate>
                         <DataTemplate>
                             <Grid Margin="0,-5">
                                 <Grid.ColumnDefinitions>
@@ -208,16 +210,18 @@
                                 </TextBlock>
                             </Grid>
                         </DataTemplate>
-                    </ListBox.ItemTemplate>
-                    <ListBox.GroupStyle>
+                    </ListView.ItemTemplate>
+                    <ListView.GroupStyle>
                         <GroupStyle>
                             <GroupStyle.HeaderTemplate>
                                 <DataTemplate>
+                                    <TextBlock Foreground="White" Text="{Binding Key}">
+                                    </TextBlock>
                                 </DataTemplate>
                             </GroupStyle.HeaderTemplate>
                         </GroupStyle>
-                    </ListBox.GroupStyle>
-                </ListBox>
+                    </ListView.GroupStyle>
+                </ListView>
             </Grid>
 
             <!--명령어 목록-->
