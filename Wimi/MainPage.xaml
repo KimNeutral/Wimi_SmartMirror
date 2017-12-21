@@ -87,7 +87,7 @@
         <TextBlock x:Name="tbHelp" FontWeight="SemiLight" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="30" FontSize="50">Say "Wimi" to Command</TextBlock>
         <Grid x:Name="gridConentRoot">
             <Grid.RowDefinitions>
-                <RowDefinition Height="200"/>
+                <RowDefinition Height="400"/>
                 <RowDefinition Height="400"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
@@ -106,7 +106,10 @@
 
                     <!--카메라프리뷰-->
                     <StackPanel>
-                        <CaptureElement x:Name="captureElement" Width="240"/>
+                        <Grid>
+                            <CaptureElement x:Name="captureElement" Width="400"/>
+                            <Canvas Name="VisualizationCanvas" Width="400" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,0,0,0" />
+                        </Grid>
                         <TextBlock x:Name="tbCameraStat"></TextBlock>
                         <!--임시얼굴인식버튼(Hello Or Wimi 명령으로 대체)-->
                         <Button x:Name="btnCapture" Content="인식" Click="btnCapture_Click" Visibility="Collapsed"/>

@@ -12,6 +12,7 @@ namespace DSFace
     public class WebcamHelper
     {
         public MediaCapture mediaCapture;
+        public VideoEncodingProperties videoProperties;
 
         private bool initialized = false;
 
@@ -39,6 +40,8 @@ namespace DSFace
                 mediaCapture = new MediaCapture();
                 await mediaCapture.InitializeAsync(settings);
                 initialized = true;
+
+                this.videoProperties = mediaCapture.VideoDeviceController.GetMediaStreamProperties(MediaStreamType.VideoPreview) as VideoEncodingProperties;
                 return true;
             }
             return true;

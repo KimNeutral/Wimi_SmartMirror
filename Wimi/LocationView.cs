@@ -34,11 +34,14 @@ namespace Wimi
 
             List<User> users = await LocationHelper.getLocationInfosAsync();
 
-            var groups = from c in users
-                         group c by c.location.pname;
-            cvs.Source = groups;
+            if(users != null)
+            {
+                var groups = from c in users
+                             group c by c.location.pname;
+                cvs.Source = groups;
 
-            lvLocation.SelectedIndex = -1;
+                lvLocation.SelectedIndex = -1;
+            }
         }
     }
 }

@@ -97,7 +97,7 @@ namespace Wimi
 
                 if (USE_FACERECOG)
                 {
-                    InitFaceRec();
+                    InitFaceRecAsync();
                     await face.InitListAsync();
                 }
             }
