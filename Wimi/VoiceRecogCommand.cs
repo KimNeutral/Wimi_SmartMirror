@@ -266,6 +266,14 @@ namespace Wimi
                 {
                     StopMusic();
                 }
+                else if (str.Contains("크게"))
+                {
+                    SetMusicVolume(true);
+                }
+                else if (str.Contains("작게"))
+                {
+                    SetMusicVolume(false);
+                }
             }
             else if (str.Contains("안녕"))        //안녕
             {
