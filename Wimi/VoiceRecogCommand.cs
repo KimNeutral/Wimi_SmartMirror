@@ -60,7 +60,7 @@ namespace Wimi
         public DateTime ExpireTimerStart { get; set; }
 
         private const int INTERVAL = 3;
-        private const int ExpireINTERVAL = 10;
+        private const int ExpireINTERVAL = 10;//명령없을 시 만료되기위한 시간(초)
 
         private void InitVoiceCommand()
         {
@@ -247,7 +247,7 @@ namespace Wimi
             listenTimer.Start();
 
             audioRecorder.StartRecord();//음성 녹화 시작.
-            await Task.Delay(5000);
+            await Task.Delay((INTERVAL + 1) * 1000);
             string result = await audioRecorder.StopRecord();
             return result;
         }
