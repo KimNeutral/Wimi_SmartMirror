@@ -291,7 +291,7 @@ namespace Wimi
                     await HueControl.HueLightOff();
                 }
             }
-            else if (str.Contains("연구실"))
+            else if (str.Contains("연구"))
             {
                 ShowLocationAsync();
             }
