@@ -276,7 +276,7 @@ namespace Wimi
                 }
                 SetVoice(hello);
             }
-            else if (str.Contains("불"))
+            else if (str.Contains("불") || str.Contains("조명"))
             {
                 if (!HueControl.IsInit())
                 {
@@ -299,7 +299,7 @@ namespace Wimi
             {
                 ShowHelp();
             }
-            else if (str.Contains("급식"))
+            else if (str.Contains("급식") || str.Contains("육십") || str.Contains("급십"))
             {
                 ShowMeal();
             }
