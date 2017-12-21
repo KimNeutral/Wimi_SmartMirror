@@ -66,7 +66,6 @@
                 <LinearColorKeyFrame KeyTime="0:0:07" Value="#FF0000"/>
             </ColorAnimationUsingKeyFrames>
         </Storyboard>
-
         <CollectionViewSource x:Key="cvs" x:Name="cvs" IsSourceGrouped="True" />
     </Page.Resources>
 
@@ -197,44 +196,36 @@
             
             <!--급식 정보-->
             <Grid x:Name="gridMeal" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Visibility="Collapsed">
-                <Grid.RowDefinitions>
+                <!--<Grid.RowDefinitions>
                     <RowDefinition Height="100"></RowDefinition>
                     <RowDefinition Height="*"></RowDefinition>
                 </Grid.RowDefinitions>
-                <TextBlock Text="투데이즈 급식" FontSize="40" Margin="190,0,0,0"></TextBlock>
-                <ListView x:Name="lvMeal" Grid.Row="1" Background="Transparent" IsHitTestVisible="False" IsEnabled="False"
-                         HorizontalAlignment="Center" VerticalAlignment="Top" ItemsSource="{Binding Source={StaticResource cvs}}">
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <Grid Margin="0,-5">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="120"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-                                <Image Grid.Column="0" Source="{Binding profilePic}" Width="70" Height="70" Margin="0"></Image>
-                                <TextBlock Style="{StaticResource LocationText}" Foreground="White">
-                                    <Run Text="{Binding classNum}"></Run>
-                                    <Run Text="{Binding name}"></Run>
-                                </TextBlock>
-                            </Grid>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                    <ListView.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <ItemsStackPanel Orientation="Horizontal"/>
-                        </ItemsPanelTemplate>
-                    </ListView.ItemsPanel>
-                    <ListView.GroupStyle>
-                        <GroupStyle>
-                            <GroupStyle.HeaderTemplate>
-                                <DataTemplate>
-                                    <TextBlock Foreground="White" Style="{StaticResource LocationText}" Text="{Binding Key}">
-                                    </TextBlock>
-                                </DataTemplate>
-                            </GroupStyle.HeaderTemplate>
-                        </GroupStyle>
-                    </ListView.GroupStyle>
-                </ListView>
+                <TextBlock Text="투데이즈 급식" FontSize="40" Margin="190,0,0,0"></TextBlock>-->
+                <Grid Grid.Row="1" Margin="200,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="0.3*"></ColumnDefinition>
+                        <ColumnDefinition Width="0.3*"></ColumnDefinition>
+                        <ColumnDefinition Width="0.3*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Column="0" Margin="50,0,50,50">
+                        <TextBlock FontSize="30" Margin="10,0,0,10">아침</TextBlock>
+                        <MenuFlyoutSeparator></MenuFlyoutSeparator>
+                        <ListView x:Name="lvMealBreakfast" Background="Transparent" IsHitTestVisible="False" IsEnabled="False" Foreground="White">
+                        </ListView>
+                    </StackPanel>
+                    <StackPanel Grid.Column="1" Margin="50,0,50,50">
+                        <TextBlock FontSize="30" Margin="10,0,0,10">점심</TextBlock>
+                        <MenuFlyoutSeparator></MenuFlyoutSeparator>
+                        <ListView x:Name="lvMealLunch" Background="Transparent" IsHitTestVisible="False" IsEnabled="False" Foreground="White">
+                        </ListView>
+                    </StackPanel>
+                    <StackPanel Grid.Column="2" Margin="50,0,50,50">
+                        <TextBlock FontSize="30" Margin="10,0,0,10">저녁</TextBlock>
+                        <MenuFlyoutSeparator></MenuFlyoutSeparator>
+                        <ListView x:Name="lvMealDinner" Background="Transparent" IsHitTestVisible="False" IsEnabled="False" Foreground="White">
+                        </ListView>
+                    </StackPanel>
+                </Grid>
             </Grid>
 
             <!--위치 조회-->

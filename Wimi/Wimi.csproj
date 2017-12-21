@@ -117,6 +117,9 @@
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="MealView.cs">
+      <DependentUpon>MainPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MusicView.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
@@ -254,6 +257,10 @@
     <ProjectReference Include="..\DSWeather\DSWeather.csproj">
       <Project>{de9c5525-752d-4d16-97fc-3dc21d91fb50}</Project>
       <Name>DSWeather</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SchoolMeal\SchoolMeal.csproj">
+      <Project>{e142bab9-fdf4-479f-8dcc-732b274148b3}</Project>
+      <Name>SchoolMeal</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">

@@ -299,6 +299,10 @@ namespace Wimi
             {
                 ShowHelp();
             }
+            else if (str.Contains("급식"))
+            {
+                ShowMeal();
+            }
         }
 
         public void AddConstraints()
