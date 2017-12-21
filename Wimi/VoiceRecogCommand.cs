@@ -91,7 +91,10 @@ namespace Wimi
                         tbRecog.Text = "Listening..." + INTERVAL;
                         await gridVoiceHelper.Offset(0, 0, 400, 0, EasingType.Linear).StartAsync();
                         VoiceRecogEffect.Play();
-                        //await DetectCalledByWimi();//얼굴인식
+                        if (USE_FACERECOG && false)
+                        {
+                            await DetectCalledByWimi();//얼굴인식
+                        }
 
                         string result = await StartRecordingAsync();
                         tbRecog.Text = result;//음성인식 결과 출력 디버그용.

@@ -151,7 +151,7 @@ namespace Wimi
             faceTimer.Stop();
             IsIdentified = false;
 
-            if (!Webcam.IsInitialized() || face.IsInit()) //chris - if the webcam isn't connected,
+            if (!Webcam.IsInitialized() || !face.IsInit()) //chris - if the webcam isn't connected,
             {
                 return false;
             }

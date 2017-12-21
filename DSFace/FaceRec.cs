@@ -35,7 +35,7 @@ namespace DSFace
             await CreateWhiteListPersonGroupAsync();
 
             StorageFolder appInstalledFolder = Windows.ApplicationModel.Package.Current.InstalledLocation;
-            StorageFolder assets = await appInstalledFolder.GetFolderAsync("Assets");
+            StorageFolder assets = await appInstalledFolder.GetFolderAsync(@"Assets\Faces");
             var files = await assets.GetFoldersAsync();
 
             foreach (var file in files)
