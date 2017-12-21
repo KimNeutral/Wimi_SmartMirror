@@ -171,6 +171,8 @@
                 <ColumnDefinition Width="500"/>
                 <ColumnDefinition Width=".5*"/>
             </Grid.ColumnDefinitions>
+            
+            
 
             <!--음성인식정보-->
             <Grid x:Name="gridVoiceHelper" Grid.Row="0" Grid.Column="1"
@@ -192,6 +194,48 @@
                 <TextBlock x:Name="resultTextBlock" FontSize="22" Foreground="LightCyan" TextWrapping="Wrap"/>
                 <TextBlock x:Name="BingSpeechTextBlock" FontSize="22" Foreground="WhiteSmoke" TextWrapping="Wrap"/>
             </StackPanel>
+            
+            <!--급식 정보-->
+            <Grid x:Name="gridMeal" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Visibility="Collapsed">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="100"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                </Grid.RowDefinitions>
+                <TextBlock Text="투데이즈 급식" FontSize="40" Margin="190,0,0,0"></TextBlock>
+                <ListView x:Name="lvMeal" Grid.Row="1" Background="Transparent" IsHitTestVisible="False" IsEnabled="False"
+                         HorizontalAlignment="Center" VerticalAlignment="Top" ItemsSource="{Binding Source={StaticResource cvs}}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Margin="0,-5">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="120"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Image Grid.Column="0" Source="{Binding profilePic}" Width="70" Height="70" Margin="0"></Image>
+                                <TextBlock Style="{StaticResource LocationText}" Foreground="White">
+                                    <Run Text="{Binding classNum}"></Run>
+                                    <Run Text="{Binding name}"></Run>
+                                </TextBlock>
+                            </Grid>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                    <ListView.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <ItemsStackPanel Orientation="Horizontal"/>
+                        </ItemsPanelTemplate>
+                    </ListView.ItemsPanel>
+                    <ListView.GroupStyle>
+                        <GroupStyle>
+                            <GroupStyle.HeaderTemplate>
+                                <DataTemplate>
+                                    <TextBlock Foreground="White" Style="{StaticResource LocationText}" Text="{Binding Key}">
+                                    </TextBlock>
+                                </DataTemplate>
+                            </GroupStyle.HeaderTemplate>
+                        </GroupStyle>
+                    </ListView.GroupStyle>
+                </ListView>
+            </Grid>
 
             <!--위치 조회-->
             <Grid x:Name="gridLocation" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Visibility="Collapsed">
@@ -259,6 +303,11 @@
                             </Grid>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
+                    <ListBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <ItemsStackPanel Orientation="Horizontal"/>
+                        </ItemsPanelTemplate>
+                    </ListBox.ItemsPanel>
                 </ListBox>
             </Grid>
 
