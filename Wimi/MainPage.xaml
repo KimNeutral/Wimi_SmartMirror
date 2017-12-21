@@ -39,6 +39,14 @@
             <Setter Property="FontWeight" Value="ExtraLight"/>
         </Style>
 
+        <Style x:Key="RemoveListAnimation" TargetType="ListView">
+            <Setter Property="ItemContainerTransitions">
+                <Setter.Value>
+                    <TransitionCollection/>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
         <Storyboard x:Key="GradientAnimation" RepeatBehavior="Forever" SpeedRatio="0.4">
             <ColorAnimationUsingKeyFrames 
                 Storyboard.TargetName="GridVoice"
@@ -235,7 +243,7 @@
                     <RowDefinition Height="*"></RowDefinition>
                 </Grid.RowDefinitions>
                 <TextBlock Text="랩실 현황판" FontSize="40" Margin="190,0,0,0"></TextBlock>
-                <ListView x:Name="lvLocation" Grid.Row="1" Background="Transparent" IsHitTestVisible="False" IsEnabled="False"
+                <ListView x:Name="lvLocation" Grid.Row="1" Background="Transparent" IsHitTestVisible="False" IsEnabled="False" Style="{StaticResource RemoveListAnimation}"
                          HorizontalAlignment="Center" VerticalAlignment="Top" ItemsSource="{Binding Source={StaticResource cvs}}">
                     <ListView.ItemTemplate>
                         <DataTemplate>
@@ -248,6 +256,8 @@
                                 <TextBlock Style="{StaticResource LocationText}" Foreground="White">
                                     <Run Text="{Binding classNum}"></Run>
                                     <Run Text="{Binding name}"></Run>
+                                    <Run Text="{Binding location.cur}"></Run>
+                                    <Run Text="{Binding location.pname}"></Run>
                                 </TextBlock>
                             </Grid>
                         </DataTemplate>

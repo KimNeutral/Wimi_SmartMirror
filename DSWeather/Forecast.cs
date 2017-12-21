@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Net.Http;
@@ -37,7 +38,17 @@ namespace DSWeather
         public async Task<List<ForecastInfo>> GetForecastInfoByCountAsync(int maxCount = 7)
         {
             List<ForecastInfo> lForcastInfo = new List<ForecastInfo>();
-            string response = await httpClient.GetStringAsync(new Uri("http://www.kma.go.kr/wid/queryDFS.jsp?gridx=86&gridy=86"));
+            string response = "";
+            try
+            {
+                var uri = new Uri("http://www.kma.go.kr/wid/queryDFS.jsp?gridx=86&gridy=86");
+                response = await httpClient.GetStringAsync(uri);
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine("Failed to get html - " +  e.Message);
+                return new List<ForecastInfo>();
+            }
 
             XDocument x = XDocument.Parse(response);
             XElement header = x.Element("wid").Element("header");

@@ -29,37 +29,44 @@ namespace DSFace
 
         public async Task InitListAsync()
         {
-            if (string.IsNullOrEmpty(Constraints.FaceKey))
-                return;
-
-            await CreateWhiteListPersonGroupAsync();
-
-            StorageFolder appInstalledFolder = Windows.ApplicationModel.Package.Current.InstalledLocation;
-            StorageFolder assets = await appInstalledFolder.GetFolderAsync(@"Assets\Faces");
-            var files = await assets.GetFoldersAsync();
-
-            foreach (var file in files)
+            try
             {
-                string name = file.Name;
-                DPerson per = new DPerson(name);
-                var f = await file.GetFilesAsync();
-                if (f.Count != 0)
-                {
-                    per.Id = await AddPersonAsync(name);
-                }
-                foreach (var t in f)
-                {
-                    using (Stream s = await t.OpenStreamForReadAsync())
-                    {
-                        await AddPersonFaceAsync(per.Id, s);
-                    }
-                }
-                Persons.Add(per);
-            }
+                if (string.IsNullOrEmpty(Constraints.FaceKey))
+                    return;
 
-            await TrainAsync();
-            isInit = true;
-            Debug.WriteLine("Initalize Completed");
+                await CreateWhiteListPersonGroupAsync();
+
+                StorageFolder appInstalledFolder = Windows.ApplicationModel.Package.Current.InstalledLocation;
+                StorageFolder assets = await appInstalledFolder.GetFolderAsync(@"Assets\Faces");
+                var files = await assets.GetFoldersAsync();
+
+                foreach (var file in files)
+                {
+                    string name = file.Name;
+                    DPerson per = new DPerson(name);
+                    var f = await file.GetFilesAsync();
+                    if (f.Count != 0)
+                    {
+                        per.Id = await AddPersonAsync(name);
+                    }
+                    foreach (var t in f)
+                    {
+                        using (Stream s = await t.OpenStreamForReadAsync())
+                        {
+                            await AddPersonFaceAsync(per.Id, s);
+                        }
+                    }
+                    Persons.Add(per);
+                }
+
+                await TrainAsync();
+                isInit = true;
+                Debug.WriteLine("Initalize Completed");
+            }
+            catch(Exception e)
+            {
+                Debug.WriteLine("Failed To Init! - " +  e.Message);
+            }
         }
 
         private bool LoadList()
@@ -78,12 +85,12 @@ namespace DSFace
             }
             catch (FileNotFoundException e)
             {
-                Debug.WriteLine("File Not Exists! - {0}", e.Message);
+                Debug.WriteLine("File Not Exists! - " + e.Message);
                 return false;
             }
             catch (Exception e)
             {
-                Debug.WriteLine("Could not load list - {0}", e.Message);
+                Debug.WriteLine("Could not load list - " + e.Message);
                 return false;
             }
         }
@@ -101,7 +108,7 @@ namespace DSFace
             }
             catch (Exception e)
             {
-                Debug.WriteLine("Could not save list - {0}", e.Message);
+                Debug.WriteLine("Could not save list - " + e.Message);
                 return false;
             }
         }
@@ -118,7 +125,7 @@ namespace DSFace
             }
             catch (FaceAPIException e)
             {
-                Debug.WriteLine("Could not find any faces. - {0}", e.Message);
+                Debug.WriteLine("Could not find any faces. - " + e.Message);
                 return new Face[0];
             }
         }
