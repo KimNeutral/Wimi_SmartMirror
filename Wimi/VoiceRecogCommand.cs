@@ -56,12 +56,21 @@ namespace Wimi
         private DispatcherTimer listenTimer = new DispatcherTimer();
         public DateTime TimerStart { get; set; }
 
+        private DispatcherTimer expireTimer = new DispatcherTimer();
+        public DateTime ExpireTimerStart { get; set; }
+
         private const int INTERVAL = 3;
+        private const int ExpireINTERVAL = 10;//명령없을 시 만료되기위한 시간(초)
 
         private void InitVoiceCommand()
         {
             listenTimer.Interval = new TimeSpan(0, 0, 1);
             listenTimer.Tick += ListenTimer_Tick;
+        }
+        private void InitExpireCommand()
+        {
+            expireTimer.Interval = new TimeSpan(0, 0, 1);
+            expireTimer.Tick += ExpireTimer_Tick;
         }
 
         private async void VoiceCommandAsync(string heard, string tag, string confidence)
@@ -74,6 +83,7 @@ namespace Wimi
                 {
                     if (audioRecorder.GetStatues())
                     {
+                        expireTimer.Stop();
                         double pVolume = mediaElement.Volume;
                         _isWimiRecording = true;
                         mediaElement.Volume = 0.1;
@@ -99,26 +109,15 @@ namespace Wimi
                         string result = await StartRecordingAsync();
                         tbRecog.Text = result;//음성인식 결과 출력 디버그용.
                         mediaElement.Volume = pVolume;
-                        CommandByVoiceAsync(result);
+                        bool Ordered = await CommandByVoiceAsync(result);
                         _isWimiRecording = false;
+                        if (Ordered)//명령 수행이 없을 시에 10초후 창을 닫음.
+                            StartExpiring();
                     }
                 }
                 else if(tag == "Bye")
                 {
-                    SetVoice("wimi_close.mp3", true);
-                    //ClearPanel();
-                    tbHello.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
-
-                    if (mediaElement.CurrentState == MediaElementState.Playing)
-                    {
-                        //chris: idle화면으로 나가더라도 계속 플레이하고 싶으면 주석처리하고, idle에서 stop명령 수행가능하도록 처리하면 된다.
-                        StopMusic();
-                    }
-
-                    VoiceRecogEffect.Stop();
-                    await gridVoiceHelper.Offset(0, -300, 400, 0, EasingType.Linear).StartAsync();
-                    gridCommand.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
-                    gridConentRoot.Blur(0, 800).Start();
+                    WimiClose();
                 }
 #if false
     #region 영어인식파트
@@ -208,13 +207,47 @@ namespace Wimi
             }
         }
 
+        private async void WimiClose()
+        {
+            SetVoice("wimi_close.mp3", true);
+            //ClearPanel();
+            tbHello.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+
+            if (mediaElement.CurrentState == MediaElementState.Playing)
+            {
+                //chris: idle화면으로 나가더라도 계속 플레이하고 싶으면 주석처리하고, idle에서 stop명령 수행가능하도록 처리하면 된다.
+                StopMusic();
+            }
+
+            VoiceRecogEffect.Stop();
+            await gridVoiceHelper.Offset(0, -300, 400, 0, EasingType.Linear).StartAsync();
+            gridCommand.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+            gridConentRoot.Blur(0, 800).Start();
+        }
+        private void StartExpiring()
+        {
+            ExpireTimerStart = DateTime.Now;
+            expireTimer.Start();
+        }
+        private void ExpireTimer_Tick(object sender, object e)
+        {
+            var currentValue = DateTime.Now - this.ExpireTimerStart;
+            var remainSec = ExpireINTERVAL - currentValue.Seconds;
+            if (remainSec <= -1)
+            {
+                expireTimer.Stop();
+                WimiClose();
+                return;
+            }
+        }
+
         private async Task<string> StartRecordingAsync()
         {
             TimerStart = DateTime.Now;
             listenTimer.Start();
 
             audioRecorder.StartRecord();//음성 녹화 시작.
-            await Task.Delay(5000);
+            await Task.Delay((INTERVAL + 1) * 1000);
             string result = await audioRecorder.StopRecord();
             return result;
         }
@@ -232,11 +265,11 @@ namespace Wimi
             tbRecog.Text = "Listening..." + remainSec;
         }
 
-        private async void CommandByVoiceAsync(string str)
+        private async Task<bool> CommandByVoiceAsync(string str)
         {
             if (gridCommand.Visibility == Windows.UI.Xaml.Visibility.Collapsed)
             {
-                return;
+                return true;
             }
             SetVoice("wimi_succeed.mp3", true);
 
@@ -314,6 +347,11 @@ namespace Wimi
             {
                 ShowMeal();
             }
+            else//명령을 찿지 못했을때.
+            {
+                return true;
+            }
+            return false;
         }
 
         public void AddConstraints()

@@ -80,6 +80,7 @@ namespace Wimi
         {
             await gridVoiceHelper.Offset(0, -400, 0, 0, EasingType.Linear).StartAsync();
 
+            InitExpireCommand();
             InitVoiceCommand();
             initMusicList();
             initSynthesizer();
