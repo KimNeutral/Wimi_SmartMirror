@@ -87,7 +87,7 @@ namespace Wimi
                     if (FaceDetector.IsBitmapPixelFormatSupported(previewFrame.SoftwareBitmap.BitmapPixelFormat))
                     {
                         faces = await this.faceTracker.ProcessNextFrameAsync(previewFrame);
-                        if (!IsIdentified)
+                        if (!IsIdentified && faces.Count > 0)
                         {
                             await this.dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () => { await DetectCalledByFaceTrackerAsync(); });
                         }
@@ -100,8 +100,8 @@ namespace Wimi
                     var previewFrameSize = new Windows.Foundation.Size(previewFrame.SoftwareBitmap.PixelWidth, previewFrame.SoftwareBitmap.PixelHeight);
                     var ignored = Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                     {
-                        this.SetupVisualization(previewFrameSize, faces);
-                        Debug.WriteLine(previewFrameSize.Width + ", " + previewFrameSize.Height + ", Count : " + faces.Count);
+                        this.SetupVisualizationAsync(previewFrameSize, faces);
+                        //Debug.WriteLine(previewFrameSize.Width + ", " + previewFrameSize.Height + ", Count : " + faces.Count);
                     });
                 }
             }
@@ -139,7 +139,7 @@ namespace Wimi
         //}
 
         //Canvas에 감지된 얼굴 그리기
-        private void SetupVisualization(Windows.Foundation.Size framePizelSize, IList<DetectedFace> foundFaces)
+        private void SetupVisualizationAsync(Windows.Foundation.Size framePizelSize, IList<DetectedFace> foundFaces)
         {
             this.VisualizationCanvas.Children.Clear();
 
@@ -163,7 +163,7 @@ namespace Wimi
                     box.StrokeThickness = this.lineThickness;
                     box.Margin = new Thickness((uint)(face.FaceBox.X / widthScale), (uint)(face.FaceBox.Y / heightScale), 0, 0);
 
-                    Debug.WriteLine(face.FaceBox.X + ", " + face.FaceBox.Y);
+                    //Debug.WriteLine(face.FaceBox.X + ", " + face.FaceBox.Y);
                     this.VisualizationCanvas.Children.Add(box);
                 }
             }
@@ -226,6 +226,10 @@ namespace Wimi
             }
             using (Stream s = await captured.OpenStreamForReadAsync())
             {
+                if (s == null)
+                {
+                    return false;
+                }
                 try
                 {
                     string[] faces = await face.GetIdentifiedNameAsync(s);
@@ -233,13 +237,18 @@ namespace Wimi
                     {
                         await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                         {
-                            string name = faces[0];
-                            if (!IsIdentified)
+                            if (IsIdentified)
                             {
+                                faces.Where(x => x.Equals(CurrentUser));
+                            }
+                            else
+                            {
+                                string name = faces[0];
                                 if (name != "외부인")
                                 {
                                     comment = "안녕하세요 " + name + "님, ";
                                     CurrentUser = name;
+                                    Debug.WriteLine(CurrentUser);
                                 }
                                 else
                                 {
@@ -275,6 +284,10 @@ namespace Wimi
             }
             using (Stream s = await captured.OpenStreamForReadAsync())
             {
+                if(s == null)
+                {
+                    return;
+                }
                 try
                 {
                     Dictionary<Guid, Emotion> emotions = await face.GetEmotionByGuidAsync(s);
@@ -303,9 +316,8 @@ namespace Wimi
 
         private async Task<bool> DetectCalledByFaceTrackerAsync()
         {
-            faceTimer.Stop();
 
-            if (!Webcam.IsInitialized() || !face.IsInit()) //chris - if the webcam isn't connected,
+            if (!Webcam.IsInitialized() || !face.IsInit() || IsIdentified) //chris - if the webcam isn't connected,
             {
                 return false;
             }
@@ -314,6 +326,8 @@ namespace Wimi
             {
                 return false;
             }
+
+            faceTimer.Stop();
 
             StorageFile captured = await Webcam.CapturePhoto();
             bool suc = await DetectFace(captured);

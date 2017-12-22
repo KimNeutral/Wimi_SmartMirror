@@ -209,6 +209,7 @@ namespace Wimi
 
         private async void WimiClose()
         {
+            expireTimer.Stop();
             SetVoice("wimi_close.mp3", true);
             //ClearPanel();
             tbHello.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
