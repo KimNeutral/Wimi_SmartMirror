@@ -62,6 +62,7 @@ namespace Wimi
             faceTimer.Tick += FaceTimer_Tick;
         }
 
+        //얼굴 감지
         private async void ProcessCurrentVideoFrame(ThreadPoolTimer timer)
         {
             if (!Webcam.IsInitialized())
@@ -86,6 +87,10 @@ namespace Wimi
                     if (FaceDetector.IsBitmapPixelFormatSupported(previewFrame.SoftwareBitmap.BitmapPixelFormat))
                     {
                         faces = await this.faceTracker.ProcessNextFrameAsync(previewFrame);
+                        if (!IsIdentified)
+                        {
+                            await this.dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () => { await DetectCalledByFaceTrackerAsync(); });
+                        }
                     }
                     else
                     {
@@ -93,7 +98,7 @@ namespace Wimi
                     }
 
                     var previewFrameSize = new Windows.Foundation.Size(previewFrame.SoftwareBitmap.PixelWidth, previewFrame.SoftwareBitmap.PixelHeight);
-                    var ignored = this.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+                    var ignored = Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                     {
                         this.SetupVisualization(previewFrameSize, faces);
                         Debug.WriteLine(previewFrameSize.Width + ", " + previewFrameSize.Height + ", Count : " + faces.Count);
@@ -111,6 +116,29 @@ namespace Wimi
 
         }
 
+        //private async Task<StorageFile> ConvertSoftwareBitmapToStorageFileAsync(SoftwareBitmap softwareBitmap)
+        //{
+        //    string fileName = DateTime.UtcNow.ToString("yyyy.MMM.dd HH-mm-ss") + " Wimi Face" + ".jpg";
+        //    CreationCollisionOption collisionOption = CreationCollisionOption.GenerateUniqueName;
+        //    StorageFile file = await ApplicationData.Current.TemporaryFolder.CreateFileAsync(fileName, collisionOption);
+
+        //    using(Stream stream = await file.OpenStreamForWriteAsync())
+        //    {
+        //        BitmapEncoder bitmapEncoder = await BitmapEncoder.CreateAsync(BitmapEncoder.JpegEncoderId, stream.AsRandomAccessStream());
+        //        try
+        //        {
+        //            await bitmapEncoder.FlushAsync();
+        //        }
+        //        catch (Exception e)
+        //        {
+        //            Debug.WriteLine("ConvertSoftwareBitmapToStorageFileAsync - " + e.Message);
+        //        }
+        //    }
+
+        //    return file;
+        //}
+
+        //Canvas에 감지된 얼굴 그리기
         private void SetupVisualization(Windows.Foundation.Size framePizelSize, IList<DetectedFace> foundFaces)
         {
             this.VisualizationCanvas.Children.Clear();
@@ -192,36 +220,48 @@ namespace Wimi
 
         private async Task<bool> DetectFace(StorageFile captured)
         {
+            if(captured == null)
+            {
+                return false;
+            }
             using (Stream s = await captured.OpenStreamForReadAsync())
             {
-                string[] faces = await face.GetIdentifiedNameAsync(s);
-                if (faces.Count() > 0)
+                try
                 {
-                    await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                    string[] faces = await face.GetIdentifiedNameAsync(s);
+                    if (faces.Count() > 0)
                     {
-                        string name = faces[0];
-                        if (!IsIdentified)
+                        await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                         {
-                            if (name != "외부인")
+                            string name = faces[0];
+                            if (!IsIdentified)
                             {
-                                comment = "안녕하세요 " + name + "님, ";
-                                CurrentUser = name;
+                                if (name != "외부인")
+                                {
+                                    comment = "안녕하세요 " + name + "님, ";
+                                    CurrentUser = name;
+                                }
+                                else
+                                {
+                                    comment = "안녕하세요, 손님이시군요.";
+                                    CurrentUser = "손님";
+                                }
                             }
-                            else
-                            {
-                                comment = "안녕하세요, 손님이시군요.";
-                                CurrentUser = "손님";
-                            }
-                        }
-                    });
-                    return true;
-                }
-                else
-                {
-                    await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                        });
+                        return true;
+                    }
+                    else
                     {
-                        //tbFaceName.Text = "인식되는 사람이 없음";
-                    });
+                        await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                        {
+                            //tbFaceName.Text = "인식되는 사람이 없음";
+                        });
+                        return false;
+                    }
+                }
+                catch(Exception e)
+                {
+                    Debug.WriteLine("DetectFace - " + e.Message);
                     return false;
                 }
             }
@@ -229,31 +269,41 @@ namespace Wimi
 
         private async Task DetectEmotion(StorageFile captured)
         {
+            if (captured == null)
+            {
+                return;
+            }
             using (Stream s = await captured.OpenStreamForReadAsync())
             {
-                Dictionary<Guid, Emotion> emotions = await face.GetEmotionByGuidAsync(s);
-                foreach (var emo in emotions)
+                try
                 {
-                    await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+                    Dictionary<Guid, Emotion> emotions = await face.GetEmotionByGuidAsync(s);
+                    foreach (var emo in emotions)
                     {
-                        tbEmotion.Text = emo.Value.ToString();
-                        if (!IsIdentified)
+                        await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
                         {
-                            string cmt = EmotionUtil.GetCommentByEmotion(emo.Value);
-                            HueAtrBool = await HueControl.HueLightWithEmotion(emo.Value);
-                            comment += cmt;
-                            faceTimer.Start();
-                        }
-                    });
-                    break;
+                            tbEmotion.Text = emo.Value.ToString();
+                            if (!IsIdentified)
+                            {
+                                string cmt = EmotionUtil.GetCommentByEmotion(emo.Value);
+                                HueAtrBool = await HueControl.HueLightWithEmotion(emo.Value);
+                                comment += cmt;
+                                faceTimer.Start();
+                            }
+                        });
+                        break;
+                    }
+                }
+                catch(Exception e)
+                {
+                    Debug.WriteLine("DetectEmotion - " + e.Message);    
                 }
             }
         }
 
-        private async Task<bool> DetectCalledByWimi()
+        private async Task<bool> DetectCalledByFaceTrackerAsync()
         {
             faceTimer.Stop();
-            IsIdentified = false;
 
             if (!Webcam.IsInitialized() || !face.IsInit()) //chris - if the webcam isn't connected,
             {
@@ -267,9 +317,10 @@ namespace Wimi
 
             StorageFile captured = await Webcam.CapturePhoto();
             bool suc = await DetectFace(captured);
+            comment = "";
             if (!suc)
             {
-                comment = "인식하지 못했어요. 다시 한번 해주세요.";
+                //comment = "인식하지 못했어요. 다시 한번 해주세요.";
             }
             else
             {
@@ -283,21 +334,21 @@ namespace Wimi
                 {
                     ment += CurrentUser + "!";
                     ShowSchedule();
+                    IsIdentified = true;
                     faceTimer.Start();
                 }
-                IsIdentified = true;
                 tbFaceName.Text = CurrentUser;
                 spUser.Visibility = Visibility.Visible;
                 ShowTbHello(ment);
+                SetVoice(comment);
             }
-            SetVoice(comment);
             
             return suc;
         }
 
         private async void btnCapture_Click(object sender, RoutedEventArgs e)
         {
-            await DetectCalledByWimi();
+            await DetectCalledByFaceTrackerAsync();
         }
     }
 }
