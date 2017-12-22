@@ -39,12 +39,25 @@ namespace DSFace
 
                 mediaCapture = new MediaCapture();
                 await mediaCapture.InitializeAsync(settings);
+
+                mediaCapture.Failed += MediaCapture_Failed;
+                mediaCapture.RecordLimitationExceeded += MediaCapture_RecordLimitationExceeded;
                 initialized = true;
 
                 this.videoProperties = mediaCapture.VideoDeviceController.GetMediaStreamProperties(MediaStreamType.VideoPreview) as VideoEncodingProperties;
                 return true;
             }
             return true;
+        }
+
+        private void MediaCapture_RecordLimitationExceeded(MediaCapture sender)
+        {
+            Debug.WriteLine("MediaCapture_RecordLimitationExceeded");
+        }
+
+        private void MediaCapture_Failed(MediaCapture sender, MediaCaptureFailedEventArgs errorEventArgs)
+        {
+            Debug.WriteLine("MediaCapture_Failed");
         }
 
         /// <summary>
@@ -120,7 +133,7 @@ namespace DSFace
             }
             catch(Exception e)
             {
-                Debug.WriteLine(e.Message);
+                Debug.WriteLine("CapturePhoto - " + e.Message);
                 return null;
             }
 
@@ -133,7 +146,7 @@ namespace DSFace
         /// </summary>
         private string GenerateNewFileName()
         {
-            return DateTime.UtcNow.ToString("yyyy.MMM.dd HH-mm-ss") + " Facial Recognition Door";
+            return DateTime.UtcNow.ToString("yyyy.MMM.dd HH-mm-ss") + " Wimi Face";
         }
 
         /// <summary>
