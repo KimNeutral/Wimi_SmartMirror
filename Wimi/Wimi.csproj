@@ -149,6 +149,7 @@
   <ItemGroup>
     <Content Include="Assets\bigBlue.png" />
     <Content Include="Assets\circle.gif" />
+    <Content Include="Assets\Faces\박지석\WIN_20171222_09_22_32_Pro.jpg" />
     <Content Include="Assets\Icons\Bus.png" />
     <Content Include="Assets\Icons\Hue.png" />
     <Content Include="Assets\Icons\Music.png" />
