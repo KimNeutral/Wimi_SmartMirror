@@ -65,6 +65,11 @@ namespace Wimi
         //얼굴 감지
         private async void ProcessCurrentVideoFrame(ThreadPoolTimer timer)
         {
+            if (Webcam == null)
+            {
+                return;
+            }
+
             if (!Webcam.IsInitialized())
             {
                 return;
@@ -171,13 +176,15 @@ namespace Wimi
 
         private async void FaceTimer_Tick(object sender, object e)
         {
-            if (!Webcam.IsInitialized() || !face.IsInit())
+            if (face == null || Webcam == null)
             {
                 return;
             }
 
-            if (face == null)
+            if (!Webcam.IsInitialized() || !face.IsInit())
+            {
                 return;
+            }
 
             StorageFile captured = await Webcam.CapturePhoto();
 
@@ -239,22 +246,23 @@ namespace Wimi
                         {
                             if (IsIdentified)
                             {
-                                faces.Where(x => x.Equals(CurrentUser));
+                                string user = faces.Where(x => x.Equals(CurrentUser)).First();
+                                if (!string.IsNullOrEmpty(user))
+                                {
+                                    return;
+                                }
+                            }
+                            string name = faces[0];
+                            if (name != "외부인")
+                            {
+                                comment = "안녕하세요 " + name + "님, ";
+                                CurrentUser = name;
+                                Debug.WriteLine(CurrentUser);
                             }
                             else
                             {
-                                string name = faces[0];
-                                if (name != "외부인")
-                                {
-                                    comment = "안녕하세요 " + name + "님, ";
-                                    CurrentUser = name;
-                                    Debug.WriteLine(CurrentUser);
-                                }
-                                else
-                                {
-                                    comment = "안녕하세요, 손님이시군요.";
-                                    CurrentUser = "손님";
-                                }
+                                comment = "안녕하세요, 손님이시군요.";
+                                CurrentUser = "손님";
                             }
                         });
                         return true;
@@ -316,13 +324,12 @@ namespace Wimi
 
         private async Task<bool> DetectCalledByFaceTrackerAsync()
         {
-
-            if (!Webcam.IsInitialized() || !face.IsInit() || IsIdentified) //chris - if the webcam isn't connected,
+            if (face == null || Webcam == null)
             {
                 return false;
             }
 
-            if(face == null)
+            if (!Webcam.IsInitialized() || !face.IsInit() || IsIdentified) //chris - if the webcam isn't connected,
             {
                 return false;
             }
