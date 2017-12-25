@@ -321,8 +321,10 @@ namespace Wimi
                 }
                 SetVoice(hello);
             }
+#region 조명제어
             else if (str.Contains("불") || str.Contains("조명"))
             {
+
                 if (!HueControl.IsInit())
                 {
                     SetVoice("조명제어는 현재 지원하지 않는 기능입니다.");
@@ -335,7 +337,48 @@ namespace Wimi
                 {
                     await HueControl.HueLightOff();
                 }
+                else if (str.Contains("노란"))      
+                {
+                    await HueControl.SetColor("yellow");
+                }
+                else if (str.Contains("빨간"))      
+                {
+                    await HueControl.SetColor("red");
+                }
+                else if (str.Contains("갈색"))
+                {
+                    await HueControl.SetColor("brown");
+                }
+                else if (str.Contains("녹색"))
+                {
+                    await HueControl.SetColor("green");
+                }
+                else if (str.Contains("파란"))
+                {
+                    await HueControl.SetColor("blue");
+                }
+                else if (str.Contains("보라"))
+                {
+                    await HueControl.SetColor("purple");
+                }
+                else if (str.Contains("분홍") || str.Contains("핑크"))
+                {
+                    await HueControl.SetColor("pink");
+                }
+                else if (str.Contains("파란"))
+                {
+                    await HueControl.SetColor("blue");
+                }
+                else if (str.Contains("흰") || str.Contains("백색"))
+                {
+                    await HueControl.SetColor("white");
+                }
             }
+            else if (str.Contains("형광"))
+            {
+                await HueControl.SetColor("white");
+            }
+#endregion
             else if (str.Contains("연구"))
             {
                 ShowLocationAsync();
