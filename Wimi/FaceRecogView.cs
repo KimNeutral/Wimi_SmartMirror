@@ -30,6 +30,7 @@ namespace Wimi
         private ThreadPoolTimer frameProcessingTimer;
         private SemaphoreSlim frameProcessingSemaphore = new SemaphoreSlim(1);
 
+        private SemaphoreSlim CallFaceRecogSemaphore = new SemaphoreSlim(1);
 
         WebcamHelper Webcam = new WebcamHelper();
         FaceRec face = null;
@@ -307,7 +308,7 @@ namespace Wimi
                             if (!IsIdentified)
                             {
                                 string cmt = EmotionUtil.GetCommentByEmotion(emo.Value);
-                                HueAtrBool = await HueControl.HueLightWithEmotion(emo.Value);
+                                //HueAtrBool = await HueControl.HueLightWithEmotion(emo.Value);
                                 comment += cmt;
                                 faceTimer.Start();
                             }
@@ -324,6 +325,7 @@ namespace Wimi
 
         private async Task<bool> DetectCalledByFaceTrackerAsync()
         {
+
             if (face == null || Webcam == null)
             {
                 return false;
@@ -363,7 +365,6 @@ namespace Wimi
                 ShowTbHello(ment);
                 SetVoice(comment);
             }
-            
             return suc;
         }
 

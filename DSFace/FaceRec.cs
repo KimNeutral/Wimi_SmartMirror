@@ -23,16 +23,16 @@ namespace DSFace
 
         public FaceRec()
         {
-            _faceServiceClient = new FaceServiceClient(Constraints.FaceKey, "https://eastasia.api.cognitive.microsoft.com/face/v1.0");
+            _faceServiceClient = new FaceServiceClient(Constraints.FaceKey, "https://westus.api.cognitive.microsoft.com/face/v1.0");
             Persons = new List<DPerson>();
         }
 
-        public async Task InitListAsync()
+        public async Task<bool> InitListAsync()
         {
             try
             {
                 if (string.IsNullOrEmpty(Constraints.FaceKey))
-                    return;
+                    return false;
 
                 await CreateWhiteListPersonGroupAsync();
 
@@ -62,10 +62,12 @@ namespace DSFace
                 await TrainAsync();
                 isInit = true;
                 Debug.WriteLine("Initalize Completed");
+                return true;
             }
             catch(Exception e)
             {
                 Debug.WriteLine("Failed To Init! - " +  e.Message);
+                return false;
             }
         }
 
@@ -125,7 +127,7 @@ namespace DSFace
             }
             catch (FaceAPIException e)
             {
-                Debug.WriteLine("Could not find any faces. - " + e.Message);
+                Debug.WriteLine("Could not find any faces. - " + e.ErrorMessage);
                 return new Face[0];
             }
         }
@@ -157,7 +159,7 @@ namespace DSFace
             }
             catch (FaceAPIException e)
             {
-                Debug.WriteLine("UploadAndGetEmotionByGuidAsync - " + e.Message);
+                Debug.WriteLine("UploadAndGetEmotionByGuidAsync - " + e.ErrorMessage);
                 return new Dictionary<Guid, DSEmotion.Emotion>();
             }
         }
@@ -178,7 +180,7 @@ namespace DSFace
             }
             catch (FaceAPIException e)
             {
-                Debug.WriteLine("UploadAndGetFaceRectangleAsync - " + e.Message);
+                Debug.WriteLine("UploadAndGetFaceRectangleAsync - " + e.ErrorMessage);
                 return new FaceRectangle[0];
             }
         }
@@ -199,7 +201,7 @@ namespace DSFace
             }
             catch (FaceAPIException e)
             {
-                Debug.WriteLine("UploadAndGetFaceIdAsync - " + e.Message);
+                Debug.WriteLine("UploadAndGetFaceIdAsync - " + e.ErrorMessage);
                 return new Guid[0];
             }
         }
@@ -247,7 +249,7 @@ namespace DSFace
             //}
             //catch(Exception e)
             //{
-            //    Debug.WriteLine("Fail to Add Person Face. - "+ e.Message);
+            //    Debug.WriteLine("Fail to Add Person Face. - "+ e.ErrorMessage);
             //}
         }
 

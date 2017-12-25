@@ -160,6 +160,7 @@
     <Content Include="Assets\Puppy_Love.mp3">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Assets\school.png" />
     <Content Include="Assets\wimi.mp3">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

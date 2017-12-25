@@ -98,7 +98,11 @@ namespace Wimi
                 if (USE_FACERECOG)
                 {
                     InitFaceRecAsync();
-                    await face.InitListAsync();
+                    bool result = await face.InitListAsync();
+                    if (!result)
+                    {
+                        tbCameraStat.Text = "현재 얼굴 인식을 사용할 수 없습니다.";
+                    }
                 }
             }
             else

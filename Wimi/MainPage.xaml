@@ -104,11 +104,11 @@
                         </TextBlock>
                     </StackPanel>
 
-                    <!--카메라프리뷰-->
+                    <!--카메라프리뷰-->   
                     <StackPanel>
                         <Grid>
-                            <CaptureElement x:Name="captureElement" Width="400"/>
-                            <Canvas Name="VisualizationCanvas" Width="400" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,0,0,0" />
+                            <CaptureElement Width="400" x:Name="captureElement"/>
+                            <Canvas Width="400" Name="VisualizationCanvas" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
                         </Grid>
                         <TextBlock x:Name="tbCameraStat"></TextBlock>
                         <!--임시얼굴인식버튼(Hello Or Wimi 명령으로 대체)-->
@@ -246,7 +246,7 @@
                     <RowDefinition Height="*"></RowDefinition>
                 </Grid.RowDefinitions>
                 <TextBlock Text="랩실 현황판" FontSize="40" Margin="190,0,0,0"></TextBlock>
-                <ListView x:Name="lvLocation" Grid.Row="1" Background="Transparent" IsHitTestVisible="False" IsEnabled="False" Style="{StaticResource RemoveListAnimation}"
+                <ListView Visibility="Collapsed" x:Name="lvLocation" Grid.Row="1" Background="Transparent" IsHitTestVisible="False" IsEnabled="False" Style="{StaticResource RemoveListAnimation}"
                          HorizontalAlignment="Center" VerticalAlignment="Top" ItemsSource="{Binding Source={StaticResource cvs}}">
                     <ListView.ItemTemplate>
                         <DataTemplate>
@@ -281,6 +281,7 @@
                         </GroupStyle>
                     </ListView.GroupStyle>
                 </ListView>
+                <Image HorizontalAlignment="Center" VerticalAlignment="Center" Source="Assets/school.png"></Image>
             </Grid>
 
             <!--명령어 목록-->
