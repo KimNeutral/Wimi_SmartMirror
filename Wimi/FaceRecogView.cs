@@ -30,14 +30,14 @@ namespace Wimi
         private ThreadPoolTimer frameProcessingTimer;
         private SemaphoreSlim frameProcessingSemaphore = new SemaphoreSlim(1);
 
-        private SemaphoreSlim CallFaceRecogSemaphore = new SemaphoreSlim(1);
-
         WebcamHelper Webcam = new WebcamHelper();
         FaceRec face = null;
 
         DispatcherTimer faceTimer = new DispatcherTimer();
 
-        bool IsIdentified = false;
+        private bool IsIdentified = false;
+        private bool IsCallFaceRecog = false;
+
         string comment = "";
 
         public string CurrentUser = "Guest";
@@ -328,7 +328,10 @@ namespace Wimi
 
         private async Task<bool> DetectCalledByFaceTrackerAsync()
         {
-
+            if (IsCallFaceRecog)
+            {
+                return false;
+            }
             if (face == null || Webcam == null)
             {
                 return false;
@@ -338,7 +341,7 @@ namespace Wimi
             {
                 return false;
             }
-
+            IsCallFaceRecog = true;
             faceTimer.Stop();
 
             StorageFile captured = await Webcam.CapturePhoto();
@@ -368,6 +371,7 @@ namespace Wimi
                 ShowTbHello(ment);
                 SetVoice(comment);
             }
+            IsCallFaceRecog = false;
             return suc;
         }
 
