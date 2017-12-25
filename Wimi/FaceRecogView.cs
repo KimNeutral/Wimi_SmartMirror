@@ -55,8 +55,8 @@ namespace Wimi
                 this.faceTracker = await FaceTracker.CreateAsync();
             }
 
-            // Use a 66 millisecond interval for our timer, i.e. 15 frames per second
-            TimeSpan timerInterval = TimeSpan.FromMilliseconds(66);
+            // Use a 66 millisecond interval for our timer, i.e. 10 frames per second
+            TimeSpan timerInterval = TimeSpan.FromMilliseconds(100);
             this.frameProcessingTimer = Windows.System.Threading.ThreadPoolTimer.CreatePeriodicTimer(new Windows.System.Threading.TimerElapsedHandler(ProcessCurrentVideoFrame), timerInterval);
 
             faceTimer.Interval = new TimeSpan(0, 0, 1);
@@ -247,10 +247,13 @@ namespace Wimi
                         {
                             if (IsIdentified)
                             {
-                                string user = faces.Where(x => x.Equals(CurrentUser)).First();
-                                if (!string.IsNullOrEmpty(user))
+                                var users = faces.Where(x => x.Equals(CurrentUser));
+                                if(users.Count() != 0)
                                 {
-                                    return;
+                                    if (!string.IsNullOrEmpty(users.First()))
+                                    {
+                                        return;
+                                    }
                                 }
                             }
                             string name = faces[0];
