@@ -213,7 +213,7 @@ namespace Wimi
                 {
                     Debug.WriteLine(ex.Message);
                 }
-                if (CntErr == 5)
+                if (CntErr >= 3)
                 {
                     faceTimer.Stop();
                     CurrentUser = "";
