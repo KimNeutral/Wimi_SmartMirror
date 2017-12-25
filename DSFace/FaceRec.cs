@@ -23,7 +23,7 @@ namespace DSFace
 
         public FaceRec()
         {
-            _faceServiceClient = new FaceServiceClient(Constraints.FaceKey, "https://westus.api.cognitive.microsoft.com/face/v1.0");
+            _faceServiceClient = new FaceServiceClient(Constraints.FaceKey, $"https://{Constraints.SERVER}.api.cognitive.microsoft.com/face/v1.0");
             Persons = new List<DPerson>();
         }
 
@@ -298,7 +298,7 @@ namespace DSFace
             {
                 if (identifyResult.Candidates.Length == 0)
                 {
-                    Debug.WriteLine("No one identified");
+                    Debug.WriteLine("Guest Found");
                     name.Add("외부인");
                 }
                 else
