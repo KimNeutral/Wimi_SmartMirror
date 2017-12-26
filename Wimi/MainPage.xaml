@@ -97,7 +97,7 @@
 
     <!--기본 컨텐츠 영역-->
     <Grid x:Name="gridRoot" Loaded="Grid_Loaded">
-        <TextBlock x:Name="tbHelp" FontWeight="SemiLight" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="30" FontSize="50">Say "Hi Wimi" to Command</TextBlock>
+        <!--<TextBlock x:Name="tbHelp" FontWeight="SemiLight" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="30" FontSize="50">Say "Hi Wimi" to Command</TextBlock>-->
         <Grid x:Name="gridConentRoot">
             <Grid.RowDefinitions>
                 <RowDefinition Height="400"/>
@@ -161,10 +161,10 @@
                 <StackPanel Orientation="Horizontal"  Loaded="tbWeather_Loaded">
                     <StackPanel Orientation="Horizontal" Margin="0,-10,0,0">
                         <TextBlock x:Name="tbTc" Margin="12,0,0,12"
-                               FontSize="100" VerticalAlignment="Bottom" Text="25"/>
+                               FontSize="120" VerticalAlignment="Bottom" Text="25"/>
                         <TextBlock Text="℃" Margin="0,0,0,40" FontSize="42" VerticalAlignment="Center"/>
                         <TextBlock x:Name="tbSky" FontFamily="Segoe UI Symbol" Text="&#xE288;"
-                               FontSize="80" />
+                               FontSize="90" />
                     </StackPanel>
                     <!--<TextBlock x:Name="tbWeather" FontSize="60" Loaded="tbWeather_Loaded"/>
                     <TextBlock Text="℃" FontSize="60"/>-->
@@ -174,10 +174,10 @@
             <!--시계-->
             <Grid Grid.Row="2" Margin="50">
                 <StackPanel HorizontalAlignment="Left" VerticalAlignment="Bottom">
-                    <TextBlock x:Name="tbDateTime" Margin="0,0,0,0" FontSize="36" HorizontalAlignment="Left"/>
-                    <StackPanel Orientation="Horizontal" Margin="0,-20,0,0">
-                        <TextBlock x:Name="tbAmPm" Margin="6,24,10,0"  FontSize="20" FontWeight="SemiBold" VerticalAlignment="Top"></TextBlock>
-                        <TextBlock x:Name="tbTime" FontSize="100" HorizontalAlignment="Left" Foreground="WhiteSmoke"></TextBlock>
+                    <TextBlock x:Name="tbDateTime" Margin="0,0,0,0" FontSize="30" HorizontalAlignment="Left"/>
+                    <StackPanel Orientation="Horizontal" Margin="0,-30,0,0">
+                        <TextBlock x:Name="tbAmPm" Margin="0,36,10,0"  FontSize="30" FontWeight="Normal" VerticalAlignment="Top"></TextBlock>
+                        <TextBlock x:Name="tbTime" FontSize="120" HorizontalAlignment="Left" Foreground="WhiteSmoke"></TextBlock>
                     </StackPanel>
                 </StackPanel>
             </Grid>
