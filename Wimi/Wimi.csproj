@@ -161,6 +161,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\school.png" />
+    <Content Include="Assets\Speaker_volume.png" />
     <Content Include="Assets\wimi.mp3">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

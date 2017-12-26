@@ -326,6 +326,7 @@
                 <TextBlock x:Name="tbMediaName" Grid.Row="0" Margin="10" FontSize="48" FontWeight="ExtraLight" HorizontalAlignment="Center"></TextBlock>
                 <Image x:Name="imageSpeaker1" Source="Assets/speaker.png" Grid.Row="1" Width="200" Stretch="Uniform" HorizontalAlignment="Left" Margin="80"></Image>
                 <Image x:Name="imageSpeaker2" Source="Assets/speaker.png" Grid.Row="1" Width="200" Stretch="Uniform" HorizontalAlignment="Right" Margin="80" VerticalAlignment="Center"></Image>
+                <Image x:Name="VolumeSpeaker" Source="Assets/Speaker_volume.png" Grid.Row="1" Width="200" Stretch="Uniform" Margin="80" HorizontalAlignment="Center" VerticalAlignment="Center"></Image>
                 <MediaElement x:Name="mediaElement" Grid.Row="1" Height="480" HorizontalAlignment="Center" VerticalAlignment="Center"
                       AutoPlay="True" AreTransportControlsEnabled="True" Source="Assets/Puppy_Love.mp3" Volume="0.1" Stretch="Uniform" MediaEnded="mediaElement_MediaEnded">
                     <MediaElement.TransportControls>
