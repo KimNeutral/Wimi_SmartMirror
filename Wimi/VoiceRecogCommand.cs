@@ -275,7 +275,11 @@ namespace Wimi
             Dictionary<string, string> replaceDictionary = new Dictionary<string, string>()
             {
                 { "급십", "급식" },
-                { "육십", "급식" }
+                { "육십", "급식" },
+                { "자 께", "작게" },
+                { "밖에", "작게" },
+                { "모레", "노래" },
+
             };
 
             foreach(KeyValuePair<string, string> pair in replaceDictionary)
