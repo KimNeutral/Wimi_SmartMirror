@@ -42,7 +42,7 @@ namespace Wimi
 
             lstMusicPlaying.InsertRange(0, lstMusic); //chris: deep copy, no reference
 
-            mediaElement.Volume = 1;
+            mediaElement.Volume = 0.5d;
             mediaElement.Stop();
         }
 
@@ -96,14 +96,14 @@ namespace Wimi
             if (b)
             {
                 if(mediaElement.Volume != 1)
-                    mediaElement.Volume += 0.25f;
+                    mediaElement.Volume += 0.25d;
             }
             else
             {
                 if(mediaElement.Volume != 0)
-                    mediaElement.Volume -= 0.25f;
+                    mediaElement.Volume -= 0.25d;
             }
-            tbVolumeText.Text = ((int)mediaElement.Volume*100).ToString()+"%";
+            tbVolumeText.Text = ((int)(mediaElement.Volume*100)).ToString()+"%";
         }
 
         public void PauseMusic()
