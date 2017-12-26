@@ -97,7 +97,7 @@
 
     <!--기본 컨텐츠 영역-->
     <Grid x:Name="gridRoot" Loaded="Grid_Loaded">
-        <TextBlock x:Name="tbHelp" FontWeight="SemiLight" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="30" FontSize="50">Say "Hello Wimi" to Command</TextBlock>
+        <TextBlock x:Name="tbHelp" FontWeight="SemiLight" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="30" FontSize="50">Say "Hi Wimi" to Command</TextBlock>
         <Grid x:Name="gridConentRoot">
             <Grid.RowDefinitions>
                 <RowDefinition Height="400"/>
