@@ -119,9 +119,9 @@
 
                     <!--카메라프리뷰-->   
                     <StackPanel>
-                        <Grid>
-                            <CaptureElement Width="400" x:Name="captureElement"/>
-                            <Canvas Width="400" Name="VisualizationCanvas" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                        <Grid Height="200">
+                            <CaptureElement Width="270" Height="200" x:Name="captureElement"/>
+                            <Canvas Width="270" Name="VisualizationCanvas" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
                         </Grid>
                         <TextBlock x:Name="tbCameraStat"></TextBlock>
                         <!--임시얼굴인식버튼(Hello Or Wimi 명령으로 대체)-->
