@@ -43,6 +43,9 @@ namespace Wimi
         public string CurrentUser = "Guest";
         int CntErr = 0;
 
+        private const int MINFACE_WIDTH = 85;
+        private const int MINFACE_HEIGHT = 85;
+
         private async void InitFaceRecAsync()
         {
             if (face == null)
@@ -95,7 +98,12 @@ namespace Wimi
                         faces = await this.faceTracker.ProcessNextFrameAsync(previewFrame);
                         if (!IsIdentified && faces.Count > 0)
                         {
-                            await this.dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () => { await DetectCalledByFaceTrackerAsync(); });
+                            var fs = faces.Where(x => x.FaceBox.Width * x.FaceBox.Height > MINFACE_WIDTH * MINFACE_HEIGHT);
+                            Debug.WriteLine(faces[0].FaceBox.Width + ", " + faces[0].FaceBox.Height);
+                            if (fs.Count() > 0)
+                            {
+                                await this.dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () => { await DetectCalledByFaceTrackerAsync(); });
+                            }
                         }
                     }
                     else
@@ -107,7 +115,6 @@ namespace Wimi
                     var ignored = Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                     {
                         this.SetupVisualizationAsync(previewFrameSize, faces);
-                        //Debug.WriteLine(previewFrameSize.Width + ", " + previewFrameSize.Height + ", Count : " + faces.Count);
                     });
                 }
             }
@@ -121,28 +128,6 @@ namespace Wimi
             }
 
         }
-
-        //private async Task<StorageFile> ConvertSoftwareBitmapToStorageFileAsync(SoftwareBitmap softwareBitmap)
-        //{
-        //    string fileName = DateTime.UtcNow.ToString("yyyy.MMM.dd HH-mm-ss") + " Wimi Face" + ".jpg";
-        //    CreationCollisionOption collisionOption = CreationCollisionOption.GenerateUniqueName;
-        //    StorageFile file = await ApplicationData.Current.TemporaryFolder.CreateFileAsync(fileName, collisionOption);
-
-        //    using(Stream stream = await file.OpenStreamForWriteAsync())
-        //    {
-        //        BitmapEncoder bitmapEncoder = await BitmapEncoder.CreateAsync(BitmapEncoder.JpegEncoderId, stream.AsRandomAccessStream());
-        //        try
-        //        {
-        //            await bitmapEncoder.FlushAsync();
-        //        }
-        //        catch (Exception e)
-        //        {
-        //            Debug.WriteLine("ConvertSoftwareBitmapToStorageFileAsync - " + e.Message);
-        //        }
-        //    }
-
-        //    return file;
-        //}
 
         //Canvas에 감지된 얼굴 그리기
         private void SetupVisualizationAsync(Windows.Foundation.Size framePizelSize, IList<DetectedFace> foundFaces)
