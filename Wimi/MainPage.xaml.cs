@@ -22,7 +22,7 @@ namespace Wimi
     /// </summary>
     public partial class MainPage : Page
     {
-        const bool USE_FACERECOG = false; //chris: for test
+        const bool USE_FACERECOG = true; //chris: for test
 
         DispatcherTimer ClockTimer = new DispatcherTimer();
         Music mu = new Music();

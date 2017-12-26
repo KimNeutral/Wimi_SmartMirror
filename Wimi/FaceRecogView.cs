@@ -359,6 +359,8 @@ namespace Wimi
                 if (CurrentUser.Equals("손님"))
                 {
                     ment += "Guest";
+                    IsCallFaceRecog = false;
+                    return true;
                 }
                 else
                 {
