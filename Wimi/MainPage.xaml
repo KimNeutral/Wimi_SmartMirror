@@ -467,7 +467,7 @@
             </Grid>
 
             <!--볼륨 상태-->
-            <Grid x:Name="gridVolumeStat" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Grid x:Name="gridVolumeStat" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Collapsed">
                 <Image x:Name="imageVolumeSpeaker" Source="Assets/Speaker_volume.png" Width="200" Stretch="Uniform" Margin="80,100,80,80"></Image>
                 <TextBlock x:Name="tbVolumeText" FontWeight="Bold" Foreground="Black" FontSize="35" Text="50%" Width="100" Margin="80,100,160,80" VerticalAlignment="Center" TextAlignment="Center"></TextBlock>
             </Grid>

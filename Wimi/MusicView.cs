@@ -26,6 +26,31 @@ namespace Wimi
         List<StorageFile> lstMusic = new List<StorageFile>();
         List<StorageFile> lstMusicPlaying = new List<StorageFile>();
 
+        private DispatcherTimer VolumeTimer = new DispatcherTimer();
+        private DateTime VolumeTimerStart { get; set; }
+        private const int VolumeInterval = 3;
+
+        private void InitVolumeCommand()
+        {
+            VolumeTimer.Interval = new TimeSpan(0, 0, 1);
+            VolumeTimer.Tick += VolumeTimer_Tick;
+        }
+        public void StartViewVolume()
+        {
+            gridVolumeStat.Visibility = Visibility.Visible;
+            VolumeTimerStart = DateTime.Now;
+            VolumeTimer.Start();
+        }
+        private void VolumeTimer_Tick(object sender, object e)
+        {
+            var currentValue = DateTime.Now - this.VolumeTimerStart;
+            var remainSec = VolumeInterval - currentValue.Seconds;
+            if (remainSec <= -1)
+            {
+                gridVolumeStat.Visibility = Visibility.Collapsed;
+                return;
+            }
+        }
         private async void initMusicList()
         {
             QueryOptions queryOption = new QueryOptions(CommonFileQuery.OrderByTitle, new string[] { ".mp3", ".mp4", ".wma", ".flac" });
@@ -41,7 +66,7 @@ namespace Wimi
             }
 
             lstMusicPlaying.InsertRange(0, lstMusic); //chris: deep copy, no reference
-
+            InitVolumeCommand();
             mediaElement.Volume = 0.5d;
             mediaElement.Stop();
         }
@@ -93,6 +118,7 @@ namespace Wimi
 
         public void SetMusicVolume(bool b)
         {
+            StartViewVolume();
             if (b)
             {
                 if(mediaElement.Volume != 1)
