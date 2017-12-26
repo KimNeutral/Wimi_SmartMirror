@@ -281,7 +281,8 @@ namespace Wimi
                 { "너 에", "노래" },
                 { "모레", "노래" },
                 { "몸 처", "멈춰" },
-                { "들어", "틀어" }
+                { "들어", "틀어" },
+                { "소비", "소리" }
             };
 
             foreach(KeyValuePair<string, string> pair in replaceDictionary)
