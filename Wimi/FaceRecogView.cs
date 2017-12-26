@@ -46,6 +46,8 @@ namespace Wimi
         private const int MINFACE_WIDTH = 85;
         private const int MINFACE_HEIGHT = 85;
 
+        private const int MAX_RETRY = 4;
+
         private async void InitFaceRecAsync()
         {
             if (face == null)
@@ -198,15 +200,17 @@ namespace Wimi
                 {
                     Debug.WriteLine(ex.Message);
                 }
-                if (CntErr >= 3)
+                if (CntErr >= MAX_RETRY)
                 {
                     faceTimer.Stop();
+                    CntErr = 0;
                     CurrentUser = "";
                     tbFaceName.Text = "";
                     spUser.Visibility = Visibility.Collapsed;
                     tbHello.Visibility = Visibility.Collapsed;
                     IsIdentified = false;
                     HideSchedule();
+                    await LockScreenAsync();
                     //ClearPanel();
                 }
             }
@@ -355,6 +359,7 @@ namespace Wimi
                 tbFaceName.Text = CurrentUser;
                 spUser.Visibility = Visibility.Visible;
                 ShowTbHello(ment);
+                await UnlockScreenAsync();
                 //SetVoice(comment);//감정읽어줌
             }
             IsCallFaceRecog = false;

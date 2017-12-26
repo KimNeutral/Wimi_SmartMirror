@@ -114,6 +114,9 @@
     <Compile Include="LocationView.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="LockView.cs">
+      <DependentUpon>MainPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
@@ -157,18 +160,20 @@
     <Content Include="Assets\Icons\Siri.png" />
     <Content Include="Assets\Icons\Weather.png" />
     <Content Include="Assets\line.gif" />
-    <Content Include="Assets\Puppy_Love.mp3">
+    <Content Include="Assets\Sounds\lock.mp3" />
+    <Content Include="Assets\Sounds\Puppy_Love.mp3">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\school.png" />
+    <Content Include="Assets\Sounds\unlock.mp3" />
     <Content Include="Assets\Speaker_volume.png" />
-    <Content Include="Assets\wimi.mp3">
+    <Content Include="Assets\Sounds\wimi.mp3">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\wimi_close.mp3">
+    <Content Include="Assets\Sounds\wimi_close.mp3">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\wimi_succeed.mp3">
+    <Content Include="Assets\Sounds\wimi_succeed.mp3">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\speaker.png" />
@@ -221,6 +226,10 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <ProjectReference Include="..\BingHelper\BingHelper.csproj">
+      <Project>{c5685815-9838-48b3-b799-521f5b7118d7}</Project>
+      <Name>BingHelper</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DSBingSpeech\DSBingSpeech.csproj">
       <Project>{57af6892-03af-44b2-8fff-31dd01fab823}</Project>
       <Name>DSBingSpeech</Name>

@@ -6,6 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:animations="using:Microsoft.Toolkit.Uwp.UI.Animations"
     xmlns:appstudiocontrols="using:AppStudio.Uwp.Controls"
     mc:Ignorable="d"
     FontFamily="Segoe UI"
@@ -180,9 +181,19 @@
             </Grid>
         </Grid>
 
+        <!--잠금화면-->
         <Grid x:Name="gridLockScreen">
-            <Image Stretch="Fill"></Image>
-            <TextBlock x:Name="tbLockTime" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
+            <Image Stretch="UniformToFill" Source="Assets/bigBlue.png"></Image>
+            <Image x:Name="imageLockScreen" Stretch="UniformToFill"></Image>
+            <Grid Background="Gray" Opacity="0.2"></Grid>
+            <StackPanel Orientation="Horizontal" Margin="-30,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center">
+                <TextBlock x:Name="tbLockAmPm" Margin="0,45,10,0"  FontSize="40" FontWeight="Normal" ></TextBlock>
+                <TextBlock x:Name="tbLockTime" Width="600" FontSize="160" HorizontalAlignment="Left"></TextBlock>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Right">
+                
+            </StackPanel>
+            <MediaElement x:Name="mediaElementLock" Width="0"></MediaElement>
         </Grid>        
 
         <!--음성명령 처리영역-->
@@ -349,7 +360,7 @@
                 <Image x:Name="imageSpeaker1" Source="Assets/speaker.png" Grid.Row="1" Width="200" Stretch="Uniform" HorizontalAlignment="Left" Margin="80"></Image>
                 <Image x:Name="imageSpeaker2" Source="Assets/speaker.png" Grid.Row="1" Width="200" Stretch="Uniform" HorizontalAlignment="Right" Margin="80" VerticalAlignment="Center"></Image>
                 <MediaElement x:Name="mediaElement" Grid.Row="1" Height="480" HorizontalAlignment="Center" VerticalAlignment="Center"
-                      AutoPlay="True" AreTransportControlsEnabled="True" Source="Assets/Puppy_Love.mp3" Volume="0.1" Stretch="Uniform" MediaEnded="mediaElement_MediaEnded">
+                      AutoPlay="True" AreTransportControlsEnabled="True" Source="Assets/Sounds/Puppy_Love.mp3" Volume="0.1" Stretch="Uniform" MediaEnded="mediaElement_MediaEnded">
                     <MediaElement.TransportControls>
                         <MediaTransportControls IsFullWindowButtonVisible="True"/>
                     </MediaElement.TransportControls>
@@ -395,7 +406,7 @@
 
             <!--뉴스헤드라인-->
             <Grid x:Name="gridNews" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Visibility="Collapsed">
-                <appstudiocontrols:VariableSizedGrid x:Name="lbNewsInfo" Margin="12"
+                <!--<appstudiocontrols:VariableSizedGrid x:Name="lbNewsInfo" Margin="12"
                                             AspectRatio="0.5"
                                             Orientation="Horizontal"
                                             MaximumRowsOrColumns="4"            
@@ -411,7 +422,7 @@
                             </Grid>
                         </DataTemplate>
                     </appstudiocontrols:VariableSizedGrid.ItemTemplate>
-                </appstudiocontrols:VariableSizedGrid>
+                </appstudiocontrols:VariableSizedGrid>-->
                 <!--Note: 다음뉴스가 공식은 아니므로 문제발생시 대체를 위해 남겨둔다-->
                 <!--<ListBox x:Name="lbNewsInfo" Background="Transparent" IsHitTestVisible="False" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Collapsed" Margin="-30,0,0,0">
                 <ListBox.ItemTemplate>

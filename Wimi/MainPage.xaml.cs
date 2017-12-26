@@ -37,7 +37,7 @@ namespace Wimi
             Window.Current.CoreWindow.KeyDown += CoreWindow_KeyDown;
 
             ClockTimer.Tick += ClockTimer_Tick;
-            ClockTimer.Interval = new TimeSpan(0, 0, 2);
+            ClockTimer.Interval = new TimeSpan(0, 0, 1);
             ClockTimer.Start();
         }
 
@@ -94,13 +94,16 @@ namespace Wimi
         public void SetTime()
         {
             DateTime dt = DateTime.Now;
-            tbDateTime.Text = dt.ToString("dddd, MMM d").ToUpper() + "th";
+            tbDateTime.Text = dt.ToString("dddd, MMM d").ToUpper() + "th"; ;
             tbTime.Text = dt.ToString("h:mm");
-            tbAmPm.Text = dt.ToString("tt");
+            tbLockTime.Text = dt.ToString("hh:mm:ss");
+            tbAmPm.Text = tbLockAmPm.Text = dt.ToString("tt");
         }
 
         private async void Grid_Loaded(object sender, RoutedEventArgs e)
         {
+            await InitLockScreenAsync();
+
             ApplicationView view = ApplicationView.GetForCurrentView();
             view.TryEnterFullScreenMode();
 

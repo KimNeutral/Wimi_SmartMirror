@@ -16,7 +16,7 @@ namespace Wimi
         async Task GetNewsInfo()
         {
             lNewsList = await news.GetDaumNewsAsync();
-            lbNewsInfo.ItemsSource = lNewsList;
+            //lbNewsInfo.ItemsSource = lNewsList;
         }
 
         private void ShowNews()

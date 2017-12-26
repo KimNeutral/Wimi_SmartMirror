@@ -119,7 +119,7 @@ namespace Wimi
                     WimiClose();
                 }
 #if false
-    #region 영어인식파트
+                #region 영어인식파트
                 else
                 {
                     if (gridCommand.Visibility == Windows.UI.Xaml.Visibility.Collapsed)
@@ -201,7 +201,7 @@ namespace Wimi
                             }
                     }
                 }
-    #endregion
+                #endregion
 #endif
             }
         }

@@ -150,7 +150,7 @@ namespace Wimi
 
                         if (isFilePath)
                         {
-                            Windows.Storage.StorageFolder folder = await Windows.ApplicationModel.Package.Current.InstalledLocation.GetFolderAsync("Assets");
+                            Windows.Storage.StorageFolder folder = await Windows.ApplicationModel.Package.Current.InstalledLocation.GetFolderAsync(@"Assets\Sounds");
                             Windows.Storage.StorageFile file = await folder.GetFileAsync(str);
                             var stream = await file.OpenAsync(Windows.Storage.FileAccessMode.Read);
                             feedbackMediaElement.SetSource(stream, file.ContentType);
