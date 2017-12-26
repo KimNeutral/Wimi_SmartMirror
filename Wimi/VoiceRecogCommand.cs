@@ -87,7 +87,7 @@ namespace Wimi
                         expireTimer.Stop();
                         double pVolume = mediaElement.Volume;
                         _isWimiRecording = true;
-                        mediaElement.Volume = 0.1;
+                        mediaElement.Volume = mediaElement.Volume * 0.25;
                         CurrentUser = "";
                         tbFaceName.Text = "";
                         ClearPanel();
@@ -102,10 +102,6 @@ namespace Wimi
                         tbRecog.Text = "Listening..." + INTERVAL;
                         await gridVoiceHelper.Offset(0, 0, 400, 0, EasingType.Linear).StartAsync();
                         VoiceRecogEffect.Play();
-                        //if (USE_FACERECOG && false)
-                        //{
-                        //    await DetectCalledByFaceTrackerAsync();//얼굴인식
-                        //}
 
                         string result = await StartRecordingAsync();
                         tbRecog.Text = result;//음성인식 결과 출력 디버그용.
@@ -113,7 +109,9 @@ namespace Wimi
                         bool Ordered = await CommandByVoiceAsync(result);
                         _isWimiRecording = false;
                         if (Ordered)//명령 수행이 없을 시에 10초후 창을 닫음.
+                        {
                             StartExpiring();
+                        }
                     }
                 }
                 else if(tag == "Bye")
@@ -279,6 +277,7 @@ namespace Wimi
                 { "자 께", "작게" },
                 { "밖에", "작게" },
                 { "잡게", "작게" },
+                { "너 에", "노래" },
                 { "모레", "노래" },
                 { "들어", "틀어" }
             };
@@ -331,11 +330,11 @@ namespace Wimi
                 {
                     StopMusic();
                 }
-                else if (str.Contains("크게"))
+                else if (str.Contains("크") || str.Contains("높"))
                 {
                     SetMusicVolume(true);
                 }
-                else if (str.Contains("작게"))
+                else if (str.Contains("작") || str.Contains("낮"))
                 {
                     SetMusicVolume(false);
                 }

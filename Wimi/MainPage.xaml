@@ -74,6 +74,19 @@
                 <LinearColorKeyFrame KeyTime="0:0:07" Value="#FF0000"/>
             </ColorAnimationUsingKeyFrames>
         </Storyboard>
+
+        <Storyboard x:Key="VolumeStatFadeOutAnimation">
+            <DoubleAnimation
+              Storyboard.TargetName="gridVolumeStat"
+              Storyboard.TargetProperty="Opacity"
+              From="1.0" To="0.0" Duration="0:0:1"/>
+        </Storyboard>
+        <Storyboard x:Key="VolumeStatFadeInAnimation">
+            <DoubleAnimation
+              Storyboard.TargetName="gridVolumeStat"
+              Storyboard.TargetProperty="Opacity"
+              From="0.0" To="1.0" Duration="0:0:1"/>
+        </Storyboard>
         <CollectionViewSource x:Key="cvs" x:Name="cvs" IsSourceGrouped="True" />
     </Page.Resources>
 
@@ -212,7 +225,7 @@
                     <RowDefinition Height="*"></RowDefinition>
                 </Grid.RowDefinitions>
                 <TextBlock Text="투데이즈 급식" FontSize="40" Margin="190,0,0,0"></TextBlock>-->
-                <Grid Grid.Row="1" Margin="200,0">
+                <Grid Grid.Row="1">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="0.3*"></ColumnDefinition>
                         <ColumnDefinition Width="0.3*"></ColumnDefinition>
@@ -466,10 +479,11 @@
                 </ListBox>
             </Grid>
 
+
             <!--볼륨 상태-->
-            <Grid x:Name="gridVolumeStat" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Collapsed">
+            <Grid x:Name="gridVolumeStat" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="0.0">
                 <Image x:Name="imageVolumeSpeaker" Source="Assets/Speaker_volume.png" Width="200" Stretch="Uniform" Margin="80,100,80,80"></Image>
-                <TextBlock x:Name="tbVolumeText" FontWeight="Bold" Foreground="Black" FontSize="35" Text="50%" Width="100" Margin="80,100,160,80" VerticalAlignment="Center" TextAlignment="Center"></TextBlock>
+                <TextBlock x:Name="tbVolumeText" FontWeight="Normal" Foreground="Black" FontSize="35" Text="50%" Width="100" Margin="80,100,160,80" VerticalAlignment="Center" TextAlignment="Center"></TextBlock>
             </Grid>
         </Grid>
 
