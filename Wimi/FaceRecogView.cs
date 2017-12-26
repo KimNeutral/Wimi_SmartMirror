@@ -202,12 +202,12 @@ namespace Wimi
                         else
                         {
                             CntErr = 0;
+                            await DetectEmotion(captured);
                         }
                     } else
                     {
                         CntErr++;
                     }
-                    await DetectEmotion(captured);
                 }
                 catch (Exception ex)
                 {
