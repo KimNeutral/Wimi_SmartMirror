@@ -434,7 +434,7 @@ namespace Wimi
         {
             //{"들을 내용1", "내용2"},"태그이름");
             helloConstraint = new SpeechRecognitionListConstraint(new List<string>()
-            { "Hello Wimi" }, "Wimi");
+            { "Hello Wimi", "Hi Wimi" }, "Wimi");
             ByeConstraint = new SpeechRecognitionListConstraint(new List<string>()
             { "Good bye" }, "Bye");
 #if false
