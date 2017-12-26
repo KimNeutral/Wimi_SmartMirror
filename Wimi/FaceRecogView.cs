@@ -332,6 +332,7 @@ namespace Wimi
             {
                 return false;
             }
+
             if (face == null || Webcam == null)
             {
                 return false;
@@ -347,7 +348,7 @@ namespace Wimi
             StorageFile captured = await Webcam.CapturePhoto();
             bool suc = await DetectFace(captured);
             comment = "";
-            if (!suc)
+            if (!suc || string.IsNullOrEmpty(CurrentUser))
             {
                 //comment = "인식하지 못했어요. 다시 한번 해주세요.";
             }

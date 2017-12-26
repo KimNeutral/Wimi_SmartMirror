@@ -58,7 +58,7 @@ namespace Wimi
 
         private void ShowTbHello(string ment)
         {
-            ClearPanel();
+            //ClearPanel();
             tbHello.Text = ment;
             tbHello.Visibility = Visibility.Visible;
         }
