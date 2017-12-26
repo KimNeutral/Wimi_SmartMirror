@@ -10,6 +10,7 @@ using Windows.UI.Xaml.Media;
 using DSBingSpeech;
 using System.Threading;
 using Windows.UI.Xaml;
+using System.Diagnostics;
 
 namespace Wimi
 {
@@ -225,11 +226,13 @@ namespace Wimi
             gridCommand.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
             gridConentRoot.Blur(0, 800).Start();
         }
+
         private void StartExpiring()
         {
             ExpireTimerStart = DateTime.Now;
             expireTimer.Start();
         }
+
         private void ExpireTimer_Tick(object sender, object e)
         {
             var currentValue = DateTime.Now - this.ExpireTimerStart;
@@ -250,6 +253,7 @@ namespace Wimi
             audioRecorder.StartRecord();//음성 녹화 시작.
             await Task.Delay((INTERVAL + 1) * 1000);
             string result = await audioRecorder.StopRecord();
+            result = ReviseSentence(result);
             return result;
         }
 
@@ -264,6 +268,25 @@ namespace Wimi
                 return;
             }
             tbRecog.Text = "Listening..." + remainSec;
+        }
+
+        private string ReviseSentence(string str)
+        {
+            Dictionary<string, string> replaceDictionary = new Dictionary<string, string>()
+            {
+                { "급십", "급식" },
+                { "육십", "급식" }
+            };
+
+            foreach(KeyValuePair<string, string> pair in replaceDictionary)
+            {
+                if (str.Contains(pair.Key))
+                {
+                    Debug.WriteLine(pair.Key + " Revised!");
+                }
+                str = str.Replace(pair.Key, pair.Value);
+            }
+            return str;
         }
 
         private async Task<bool> CommandByVoiceAsync(string str)
@@ -328,50 +351,54 @@ namespace Wimi
                 if (!HueControl.IsInit())
                 {
                     SetVoice("조명제어는 현재 지원하지 않는 기능입니다.");
+                    
                 }
-                if (str.Contains("켜"))           //불켜
+                else
                 {
-                    await HueControl.HueLightOn();
-                }
-                else if (str.Contains("꺼"))      //불꺼
-                {
-                    await HueControl.HueLightOff();
-                }
-                else if (str.Contains("노란"))      
-                {
-                    await HueControl.SetColor("yellow");
-                }
-                else if (str.Contains("빨간"))      
-                {
-                    await HueControl.SetColor("red");
-                }
-                else if (str.Contains("갈색"))
-                {
-                    await HueControl.SetColor("brown");
-                }
-                else if (str.Contains("녹색"))
-                {
-                    await HueControl.SetColor("green");
-                }
-                else if (str.Contains("파란"))
-                {
-                    await HueControl.SetColor("blue");
-                }
-                else if (str.Contains("보라"))
-                {
-                    await HueControl.SetColor("purple");
-                }
-                else if (str.Contains("분홍") || str.Contains("핑크"))
-                {
-                    await HueControl.SetColor("pink");
-                }
-                else if (str.Contains("파란"))
-                {
-                    await HueControl.SetColor("blue");
-                }
-                else if (str.Contains("흰") || str.Contains("백색"))
-                {
-                    await HueControl.SetColor("white");
+                    if (str.Contains("켜"))           //불켜
+                    {
+                        await HueControl.HueLightOn();
+                    }
+                    else if (str.Contains("꺼"))      //불꺼
+                    {
+                        await HueControl.HueLightOff();
+                    }
+                    else if (str.Contains("노란"))
+                    {
+                        await HueControl.SetColor("yellow");
+                    }
+                    else if (str.Contains("빨간"))
+                    {
+                        await HueControl.SetColor("red");
+                    }
+                    else if (str.Contains("갈색"))
+                    {
+                        await HueControl.SetColor("brown");
+                    }
+                    else if (str.Contains("녹색"))
+                    {
+                        await HueControl.SetColor("green");
+                    }
+                    else if (str.Contains("파란"))
+                    {
+                        await HueControl.SetColor("blue");
+                    }
+                    else if (str.Contains("보라"))
+                    {
+                        await HueControl.SetColor("purple");
+                    }
+                    else if (str.Contains("분홍") || str.Contains("핑크"))
+                    {
+                        await HueControl.SetColor("pink");
+                    }
+                    else if (str.Contains("파란"))
+                    {
+                        await HueControl.SetColor("blue");
+                    }
+                    else if (str.Contains("흰") || str.Contains("백색"))
+                    {
+                        await HueControl.SetColor("white");
+                    }
                 }
             }
             else if (str.Contains("형광"))
