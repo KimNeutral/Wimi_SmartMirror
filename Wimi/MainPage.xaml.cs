@@ -11,6 +11,7 @@ using Windows.UI.Xaml.Navigation;
 using Windows.UI.Xaml.Shapes;
 using System.Threading;
 using System.Collections.Generic;
+using Windows.UI.ViewManagement;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 // ref. http://uwpcommunitytoolkit.readthedocs.io/en/master/
@@ -33,9 +34,24 @@ namespace Wimi
             BackgroundBrush.ImageSource = null; //chris: 이미지 액자로 활용시 BackgroundBrush에 이미지를 설정하면 된다.
             //GradientAnimation.Begin(); //chris: 음성인식되는중 배경을 쓸지도 몰라서 코드는 남겨둠.
 
+            Window.Current.CoreWindow.KeyDown += CoreWindow_KeyDown;
+
             ClockTimer.Tick += ClockTimer_Tick;
             ClockTimer.Interval = new TimeSpan(0, 0, 2);
             ClockTimer.Start();
+        }
+
+        private void CoreWindow_KeyDown(CoreWindow sender, KeyEventArgs e)
+        {
+            ApplicationView view = ApplicationView.GetForCurrentView();
+            if (e.VirtualKey == Windows.System.VirtualKey.Escape)
+            {
+                view.ExitFullScreenMode();
+            }
+            else if (e.VirtualKey == Windows.System.VirtualKey.Enter)
+            {
+                view.TryEnterFullScreenMode();
+            }
         }
 
         private void ClearPanel()
@@ -85,6 +101,9 @@ namespace Wimi
 
         private async void Grid_Loaded(object sender, RoutedEventArgs e)
         {
+            ApplicationView view = ApplicationView.GetForCurrentView();
+            view.TryEnterFullScreenMode();
+
             await gridVoiceHelper.Offset(0, -400, 0, 0, EasingType.Linear).StartAsync();
 
             InitExpireCommand();

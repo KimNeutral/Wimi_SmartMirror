@@ -434,6 +434,10 @@ namespace Wimi
             {
                 ShowMeal();
             }
+            else if (str.Contains("전체화면"))
+            {
+                SetFullScreen();
+            }
             else//명령을 찿지 못했을때.
             {
                 return true;

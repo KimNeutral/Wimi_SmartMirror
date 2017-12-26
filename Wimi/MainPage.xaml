@@ -183,6 +183,11 @@
             </Grid>
         </Grid>
 
+        <Grid x:Name="gridLockScreen">
+            <Image Stretch="Fill"></Image>
+            <TextBlock x:Name="tbLockTime" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
+        </Grid>        
+
         <!--음성명령 처리영역-->
         <Grid x:Name="gridCommand" Margin="0,0,0,0" Visibility="Collapsed">
             <Grid.RowDefinitions>
