@@ -280,6 +280,7 @@ namespace Wimi
                 { "잡게", "작게" },
                 { "너 에", "노래" },
                 { "모레", "노래" },
+                { "몸 처", "멈춰" },
                 { "들어", "틀어" }
             };
 
@@ -327,7 +328,7 @@ namespace Wimi
                 {
                     PauseMusic();
                 }
-                else if (str.Contains("정지") || str.Contains("멈"))   //음악 멈춰
+                else if (str.Contains("정지") || str.Contains("멈") || str.Contains("꺼"))   //음악 멈춰
                 {
                     StopMusic();
                 }
