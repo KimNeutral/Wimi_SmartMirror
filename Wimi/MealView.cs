@@ -17,9 +17,11 @@ namespace Wimi
             gridMeal.Visibility = Windows.UI.Xaml.Visibility.Visible;
             MealList = meal.GetMealMenu();
             var menu = MealList.Find(x => x.Date.Equals(new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day)));
+            var nextMenu = MealList.Find(x => x.Date.Equals(new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day).AddDays(1)));
             lvMealBreakfast.ItemsSource = menu.Breakfast;
             lvMealLunch.ItemsSource = menu.Lunch;
             lvMealDinner.ItemsSource = menu.Dinner;
+            lvMealNextBreakFast.ItemsSource = nextMenu.Breakfast;
         }
     }
 }
