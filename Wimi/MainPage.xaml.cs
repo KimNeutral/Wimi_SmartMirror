@@ -10,6 +10,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Windows.UI.Xaml.Shapes;
 using System.Threading;
+using System.Collections.Generic;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 // ref. http://uwpcommunitytoolkit.readthedocs.io/en/master/
@@ -40,11 +41,17 @@ namespace Wimi
         private void ClearPanel()
         {
             int count = VisualTreeHelper.GetChildrenCount(gridCommand);
+            List<string> whiteList = new List<string>()
+            {
+                "gridVolumeStat",
+                "gridVoiceHelper"
+            };
+            
             for (int i = 0; i < count; i++)
             {
                 UIElement child = (UIElement)VisualTreeHelper.GetChild(gridCommand, i);
 
-                if (child is Grid && !((Grid)child).Name.Equals("gridVoiceHelper"))
+                if (child is Grid && string.IsNullOrEmpty(whiteList.Find(x => x.Equals(((Grid)child).Name))))
                 {
                     child.Visibility = Visibility.Collapsed;
                 }
