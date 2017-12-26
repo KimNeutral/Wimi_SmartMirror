@@ -103,6 +103,7 @@ namespace Wimi
                 if(mediaElement.Volume != 0)
                     mediaElement.Volume -= 0.25f;
             }
+            tbVolumeText.Text = ((int)mediaElement.Volume*100).ToString()+"%";
         }
 
         public void PauseMusic()
