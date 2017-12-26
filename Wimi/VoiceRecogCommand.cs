@@ -279,7 +279,7 @@ namespace Wimi
                 { "자 께", "작게" },
                 { "밖에", "작게" },
                 { "모레", "노래" },
-
+                { "들어", "틀어" }
             };
 
             foreach(KeyValuePair<string, string> pair in replaceDictionary)
@@ -318,7 +318,7 @@ namespace Wimi
             }
             else if (str.Contains("음악") || str.Contains("노래"))
             {
-                if (str.Contains("재생") || str.Contains("틀") || str.Contains("들"))   //음악 틀어줘
+                if (str.Contains("재생") || str.Contains("틀"))   //음악 틀어줘
                 {
                     await PlayMusic();
                 }
@@ -418,7 +418,7 @@ namespace Wimi
             {
                 ShowHelp();
             }
-            else if (str.Contains("급식") || str.Contains("육십") || str.Contains("급십"))
+            else if (str.Contains("급식"))
             {
                 ShowMeal();
             }
