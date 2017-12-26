@@ -262,10 +262,10 @@
             <!--위치 조회-->
             <Grid x:Name="gridLocation" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Visibility="Collapsed">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="50"></RowDefinition>
+                    <RowDefinition Height="40"></RowDefinition>
                     <RowDefinition Height="*"></RowDefinition>
                 </Grid.RowDefinitions>
-                <TextBlock Text="랩실 현황판" FontSize="40" Margin="190,0,0,0"></TextBlock>
+                <TextBlock Text="랩실 현황판" FontSize="30" Margin="190,0,0,0"></TextBlock>
                 <ListView Visibility="Collapsed" x:Name="lvLocation" Grid.Row="1" Background="Transparent" IsHitTestVisible="False" IsEnabled="False" Style="{StaticResource RemoveListAnimation}"
                          HorizontalAlignment="Center" VerticalAlignment="Top" ItemsSource="{Binding Source={StaticResource cvs}}">
                     <ListView.ItemTemplate>
@@ -301,7 +301,7 @@
                         </GroupStyle>
                     </ListView.GroupStyle>
                 </ListView>
-                <Image HorizontalAlignment="Center" Grid.Row="1"  VerticalAlignment="Center" Source="Assets/school.png"></Image>
+                <Image HorizontalAlignment="Center" Margin="0,0,0,50" Grid.Row="1"  VerticalAlignment="Center" Source="Assets/school.png"></Image>
             </Grid>
 
             <!--명령어 목록-->

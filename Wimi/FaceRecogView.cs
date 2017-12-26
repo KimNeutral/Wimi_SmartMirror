@@ -244,32 +244,29 @@ namespace Wimi
                     string[] faces = await face.GetIdentifiedNameAsync(s);
                     if (faces.Count() > 0)
                     {
-                        await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                        if (IsIdentified)
                         {
-                            if (IsIdentified)
+                            var users = faces.Where(x => x.Equals(CurrentUser));
+                            if(users.Count() != 0)
                             {
-                                var users = faces.Where(x => x.Equals(CurrentUser));
-                                if(users.Count() != 0)
+                                if (!string.IsNullOrEmpty(users.First()))
                                 {
-                                    if (!string.IsNullOrEmpty(users.First()))
-                                    {
-                                        return;
-                                    }
+                                    return true;
                                 }
                             }
-                            string name = faces[0];
-                            if (name != "외부인")
-                            {
-                                comment = "안녕하세요 " + name + "님, ";
-                                CurrentUser = name;
-                                Debug.WriteLine(CurrentUser);
-                            }
-                            else
-                            {
-                                comment = "안녕하세요, 손님이시군요.";
-                                CurrentUser = "손님";
-                            }
-                        });
+                        }
+                        string name = faces[0];
+                        if (name != "외부인")
+                        {
+                            comment = "안녕하세요 " + name + "님, ";
+                            CurrentUser = name;
+                            Debug.WriteLine(CurrentUser);
+                        }
+                        else
+                        {
+                            comment = "안녕하세요, 손님이시군요.";
+                            CurrentUser = "손님";
+                        }
                         return true;
                     }
                     else
