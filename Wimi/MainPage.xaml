@@ -84,7 +84,7 @@
 
     <!--기본 컨텐츠 영역-->
     <Grid x:Name="gridRoot" Loaded="Grid_Loaded">
-        <TextBlock x:Name="tbHelp" FontWeight="SemiLight" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="30" FontSize="50">Say "Wimi" to Command</TextBlock>
+        <TextBlock x:Name="tbHelp" FontWeight="SemiLight" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="30" FontSize="50">Say "Hello Wimi" to Command</TextBlock>
         <Grid x:Name="gridConentRoot">
             <Grid.RowDefinitions>
                 <RowDefinition Height="400"/>
@@ -242,7 +242,7 @@
             <!--위치 조회-->
             <Grid x:Name="gridLocation" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Visibility="Collapsed">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="100"></RowDefinition>
+                    <RowDefinition Height="50"></RowDefinition>
                     <RowDefinition Height="*"></RowDefinition>
                 </Grid.RowDefinitions>
                 <TextBlock Text="랩실 현황판" FontSize="40" Margin="190,0,0,0"></TextBlock>
@@ -281,7 +281,7 @@
                         </GroupStyle>
                     </ListView.GroupStyle>
                 </ListView>
-                <Image HorizontalAlignment="Center" VerticalAlignment="Center" Source="Assets/school.png"></Image>
+                <Image HorizontalAlignment="Center" Grid.Row="1"  VerticalAlignment="Center" Source="Assets/school.png"></Image>
             </Grid>
 
             <!--명령어 목록-->
