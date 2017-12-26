@@ -340,6 +340,17 @@ namespace Wimi
                     SetMusicVolume(false);
                 }
             }
+            else if (str.Contains("소리") || str.Contains("볼륨"))
+            {
+                if (str.Contains("크") || str.Contains("높"))
+                {
+                    SetMusicVolume(true);
+                }
+                else if (str.Contains("작") || str.Contains("낮"))
+                {
+                    SetMusicVolume(false);
+                }
+            }
             else if (str.Contains("안녕"))        //안녕
             {
                 string hello = "안녕하세요!";
