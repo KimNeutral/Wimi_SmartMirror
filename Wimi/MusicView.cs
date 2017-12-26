@@ -15,6 +15,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml;
 using Windows.Storage.Search;
 using Windows.Storage;
+using Windows.UI.Xaml.Media.Animation;
 
 namespace Wimi
 {
@@ -28,7 +29,7 @@ namespace Wimi
 
         private DispatcherTimer VolumeTimer = new DispatcherTimer();
         private DateTime VolumeTimerStart { get; set; }
-        private const int VolumeInterval = 3;
+        private const int VolumeInterval = 2;
 
         private void InitVolumeCommand()
         {
@@ -37,8 +38,9 @@ namespace Wimi
         }
         public void StartViewVolume()
         {
-            gridVolumeStat.Visibility = Visibility.Visible;
             VolumeTimerStart = DateTime.Now;
+            Storyboard storyBoard = (Storyboard)this.Resources["VolumeStatFadeInAnimation"];
+            storyBoard.Begin();
             VolumeTimer.Start();
         }
         private void VolumeTimer_Tick(object sender, object e)
@@ -47,7 +49,9 @@ namespace Wimi
             var remainSec = VolumeInterval - currentValue.Seconds;
             if (remainSec <= -1)
             {
-                gridVolumeStat.Visibility = Visibility.Collapsed;
+                Storyboard storyBoard = (Storyboard)this.Resources["VolumeStatFadeOutAnimation"];
+                storyBoard.Begin();
+                VolumeTimer.Stop();
                 return;
             }
         }
