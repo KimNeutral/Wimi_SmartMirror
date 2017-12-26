@@ -24,7 +24,6 @@ namespace Wimi
         private MediaElement feedbackMediaElement;
         public Boolean TTSflag;
 
-
         private async void TellmeWeatherAsync()
         {
             Weather weather = new Weather();
@@ -163,7 +162,6 @@ namespace Wimi
 
                             // Set the source and start playing the synthesized audio stream.
                             feedbackMediaElement.SetSource(synthesisStream, synthesisStream.ContentType);
-                            feedbackMediaElement.Play();
                         }
                     }
                     catch (System.IO.FileNotFoundException)

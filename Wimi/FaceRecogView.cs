@@ -219,9 +219,10 @@ namespace Wimi
                     CurrentUser = "";
                     tbFaceName.Text = "";
                     spUser.Visibility = Visibility.Collapsed;
+                    tbHello.Visibility = Visibility.Collapsed;
                     IsIdentified = false;
                     HideSchedule();
-                    ClearPanel();
+                    //ClearPanel();
                 }
             }
         }
@@ -372,7 +373,7 @@ namespace Wimi
                 tbFaceName.Text = CurrentUser;
                 spUser.Visibility = Visibility.Visible;
                 ShowTbHello(ment);
-                SetVoice(comment);
+                //SetVoice(comment);//감정읽어줌
             }
             IsCallFaceRecog = false;
             return suc;
