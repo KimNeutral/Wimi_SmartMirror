@@ -275,10 +275,9 @@
                 <TextBlock Text="투데이즈 급식" FontSize="40" Margin="190,0,0,0"></TextBlock>-->
                 <Grid Grid.Row="1">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="0.25*"></ColumnDefinition>
-                        <ColumnDefinition Width="0.25*"></ColumnDefinition>
-                        <ColumnDefinition Width="0.25*"></ColumnDefinition>
-                        <ColumnDefinition Width="0.25*"></ColumnDefinition>
+                        <ColumnDefinition Width="0.3*"></ColumnDefinition>
+                        <ColumnDefinition Width="0.3*"></ColumnDefinition>
+                        <ColumnDefinition Width="0.3*"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
                     <StackPanel Grid.Column="0" Margin="50,0,50,50">
                         <TextBlock FontSize="30" Margin="10,0,0,10">아침</TextBlock>
@@ -298,7 +297,7 @@
                         <ListView x:Name="lvMealDinner" Background="Transparent" IsHitTestVisible="False" Foreground="White">
                         </ListView>
                     </StackPanel>
-                    <StackPanel Grid.Column="3" Margin="50,0,50,50">
+                    <StackPanel Grid.Column="3" Margin="50,0,50,50" Visibility="Collapsed">
                         <TextBlock FontSize="30" Margin="10,0,0,10">내일 아침</TextBlock>
                         <MenuFlyoutSeparator></MenuFlyoutSeparator>
                         <ListView x:Name="lvMealNextBreakFast" Background="Transparent" IsHitTestVisible="False" Foreground="White">
