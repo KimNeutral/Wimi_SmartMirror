@@ -31,6 +31,7 @@ namespace Wimi
             var wt = await weather.GetForecastInfoByCountAsync(5);
             if(wt.Count > 0)
             {
+                wt[0].tmx = wt[4].tmx;
                 wt[0].tmn = wt[4].tmn;
                 gridCurWeather.DataContext = wt[0];
             }
