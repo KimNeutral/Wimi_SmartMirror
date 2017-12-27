@@ -80,7 +80,7 @@ namespace Wimi
             
             if (!string.IsNullOrEmpty(tag))
             {
-                if (tag == "Wimi" && !_isWimiRecording && !_isLocked)
+                if (tag == "Wimi" && !_isWimiRecording)
                 {
                     if (audioRecorder.GetStatues())
                     {
@@ -98,7 +98,8 @@ namespace Wimi
                         gridCommand.Visibility = Windows.UI.Xaml.Visibility.Visible;
                         gridConentRoot.Blur(20, 800).Start();
                         tbRecog.Text = "Listening..." + INTERVAL;
-                        await gridVoiceHelper.Offset(0, 0, 400, 0, EasingType.Linear).StartAsync();
+
+                        await gridCommand.Offset(0, 0, 400, 0, EasingType.Linear).StartAsync();
                         VoiceRecogEffect.Play();
 
                         string result = await StartRecordingAsync();
@@ -218,7 +219,7 @@ namespace Wimi
             }
 
             VoiceRecogEffect.Stop();
-            await gridVoiceHelper.Offset(0, -300, 400, 0, EasingType.Linear).StartAsync();
+            await gridCommand.Offset(0, -(float)Window.Current.Bounds.Height, 400, 0, EasingType.Linear).StartAsync();
             gridCommand.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
             gridConentRoot.Blur(0, 800).Start();
         }

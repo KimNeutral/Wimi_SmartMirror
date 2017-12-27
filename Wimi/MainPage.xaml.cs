@@ -107,7 +107,7 @@ namespace Wimi
             ApplicationView view = ApplicationView.GetForCurrentView();
             view.TryEnterFullScreenMode();
 
-            await gridVoiceHelper.Offset(0, -400, 0, 0, EasingType.Linear).StartAsync();
+            await gridCommand.Offset(0, -(float)Window.Current.Bounds.Height, 0, 0, EasingType.Linear).StartAsync();
             InitSearchTimer();
             InitExpireCommand();
             InitVoiceCommand();

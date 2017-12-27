@@ -44,7 +44,6 @@ namespace Wimi
             {
                 await this.dispatcher.TryRunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
                 {
-                    lvSearchRank.ItemsSource = lstRankUnit;
                     CarouselSearchRank.Items.Clear();
                     foreach(var e in lstRankUnit)
                     {

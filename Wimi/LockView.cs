@@ -8,6 +8,8 @@ using BingHelper;
 using Windows.UI.Xaml.Media.Imaging;
 using Microsoft.Toolkit.Uwp.UI.Animations;
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Media;
+using Windows.UI;
 
 namespace Wimi
 {
@@ -16,6 +18,8 @@ namespace Wimi
         private bool _isLocked = true;
         public async Task InitLockScreenAsync()
         {
+            gridCommand.Background = new SolidColorBrush(Colors.Black);
+
             BingImage bingImage = new BingImage();
             var bingUnit = await bingImage.GetTodayBingUnit(BingImageResolution.LARGE);
             if(bingUnit != null)
@@ -27,6 +31,7 @@ namespace Wimi
         public async Task LockScreenAsync()
         {
             _isLocked = true;
+            gridCommand.Background = new SolidColorBrush(Colors.Black);
             await gridLockScreen.Offset(offsetX: 0, offsetY: -(float)Window.Current.Bounds.Height, duration: 0, delay: 0, easingType: EasingType.Linear).StartAsync();
             //gridLockScreen.Visibility = Windows.UI.Xaml.Visibility.Visible;
             await InitLockScreenAsync();
@@ -38,6 +43,7 @@ namespace Wimi
         public async Task UnlockScreenAsync()
         {
             _isLocked = false;
+            gridCommand.Background = new SolidColorBrush(Colors.Transparent);
             SetVoice("unlock.mp3", true);
             await gridLockScreen.Offset(offsetX: 0, offsetY: -(float)Window.Current.Bounds.Height, duration: 2000, delay: 50, easingType: EasingType.Quintic).StartAsync();
         }

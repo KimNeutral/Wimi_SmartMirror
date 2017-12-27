@@ -181,6 +181,58 @@
             </Grid>
         </Grid>
 
+
+        <!--잠금화면-->
+        <Grid x:Name="gridLockScreen">
+            <Image Stretch="UniformToFill" Source="Assets/bigBlue.png"></Image>
+            <Image x:Name="imageLockScreen" Stretch="UniformToFill"></Image>
+            <Grid Background="Gray" Opacity="0.2"></Grid>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.35*"></ColumnDefinition>
+                    <ColumnDefinition Width="0.4*"></ColumnDefinition>
+                    <ColumnDefinition Width="0.35*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <TextBlock x:Name="tbLockAmPm" Margin="0,53,10,0"  FontSize="40" FontWeight="Normal" ></TextBlock>
+                    <TextBlock x:Name="tbLockTime" Width="610" FontSize="180" HorizontalAlignment="Left"></TextBlock>
+                </StackPanel>
+                <controls:Carousel 
+                    Margin="0,20,0,0"
+                    x:Name="CarouselSearchRank"
+                    Height="50"
+                    Width="500"
+                    Grid.Column="2"
+                    HorizontalAlignment="Left"
+                    ItemDepth="1"
+                    ItemMargin="10"
+                    Orientation="Vertical"
+                    SelectedIndex="0">
+                    <controls:Carousel.EasingFunction>
+                        <CubicEase EasingMode="EaseOut" />
+                    </controls:Carousel.EasingFunction>
+                    <controls:Carousel.ItemTemplate>
+                        <DataTemplate>
+                            <Grid HorizontalAlignment="Left" Width="500" Margin="0,0,0,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="40"></ColumnDefinition>
+                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Foreground="White" Grid.Column="0" FontSize="30" FontWeight="SemiBold" TextAlignment="Right">
+                                <Run Text="{Binding num}" Foreground="LawnGreen"></Run><Run Text=""></Run>
+                                </TextBlock>
+                                <TextBlock Margin="10,0,0,0" Foreground="White" Grid.Column="1" FontSize="30" FontWeight="SemiBold" Text="{Binding content}"></TextBlock>
+                            </Grid>
+                        </DataTemplate>
+                    </controls:Carousel.ItemTemplate>
+                </controls:Carousel>
+            </Grid>
+
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Right">
+
+            </StackPanel>
+        </Grid>
+
         <!--음성명령 처리영역-->
         <Grid x:Name="gridCommand" Margin="0,0,0,0" Visibility="Collapsed">
             <Grid.RowDefinitions>
@@ -495,75 +547,6 @@
                 <Image x:Name="imageVolumeSpeaker" Source="Assets/Speaker_volume.png" Width="200" Stretch="Uniform" Margin="80,100,80,80"></Image>
                 <TextBlock x:Name="tbVolumeText" FontWeight="Normal" Foreground="Black" FontSize="35" Text="50%" Width="100" Margin="80,100,160,80" VerticalAlignment="Center" TextAlignment="Center"></TextBlock>
             </Grid>
-        </Grid>
-        
-        <!--잠금화면-->
-        <Grid x:Name="gridLockScreen">
-            <Image Stretch="UniformToFill" Source="Assets/bigBlue.png"></Image>
-            <Image x:Name="imageLockScreen" Stretch="UniformToFill"></Image>
-            <Grid Background="Gray" Opacity="0.2"></Grid>
-            <StackPanel Grid.Column="0" Margin="50,0,50,200" VerticalAlignment="Center" HorizontalAlignment="Left">
-                <!--<TextBlock FontSize="30" Margin="10,0,0,10">현재 네이버 검색순위</TextBlock>-->
-                <ListView Visibility="Collapsed" x:Name="lvSearchRank" Background="Transparent" IsHitTestVisible="False" Foreground="White" Height="435" FontSize="25">
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="30"></ColumnDefinition>
-                                    <ColumnDefinition Width="*"></ColumnDefinition>
-                                </Grid.ColumnDefinitions>
-                                <TextBlock Foreground="White" Grid.Column="0" FontSize="30" Text="{Binding num}"></TextBlock>
-                                <TextBlock Foreground="White" Grid.Column="1" FontSize="30" Text="{Binding content}"></TextBlock>
-                            </Grid>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
-
-            </StackPanel>
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="0.35*"></ColumnDefinition>
-                    <ColumnDefinition Width="0.4*"></ColumnDefinition>
-                    <ColumnDefinition Width="0.35*"></ColumnDefinition>
-                </Grid.ColumnDefinitions>
-                <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
-                    <TextBlock x:Name="tbLockAmPm" Margin="0,53,10,0"  FontSize="40" FontWeight="Normal" ></TextBlock>
-                    <TextBlock x:Name="tbLockTime" Width="610" FontSize="180" HorizontalAlignment="Left"></TextBlock>
-                </StackPanel>
-                <controls:Carousel 
-                    Margin="0,20,0,0"
-                    x:Name="CarouselSearchRank"
-                    Height="50"
-                    Width="500"
-                    Grid.Column="2"
-                    HorizontalAlignment="Left"
-                    ItemDepth="1"
-                    ItemMargin="10"
-                    Orientation="Vertical"
-                    SelectedIndex="0">
-                    <controls:Carousel.EasingFunction>
-                        <CubicEase EasingMode="EaseOut" />
-                    </controls:Carousel.EasingFunction>
-                    <controls:Carousel.ItemTemplate>
-                        <DataTemplate>
-                            <Grid HorizontalAlignment="Left" Width="500" Margin="0,0,0,0">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="40"></ColumnDefinition>
-                                    <ColumnDefinition Width="*"></ColumnDefinition>
-                                </Grid.ColumnDefinitions>
-                                <TextBlock Foreground="White" Grid.Column="0" FontSize="30" FontWeight="SemiBold" TextAlignment="Right">
-                                <Run Text="{Binding num}" Foreground="LawnGreen"></Run><Run Text=""></Run>
-                                </TextBlock>
-                                <TextBlock Margin="10,0,0,0" Foreground="White" Grid.Column="1" FontSize="30" FontWeight="SemiBold" Text="{Binding content}"></TextBlock>
-                            </Grid>
-                        </DataTemplate>
-                    </controls:Carousel.ItemTemplate>
-                </controls:Carousel>
-            </Grid>
-            
-            <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Right">
-
-            </StackPanel>
         </Grid>
 
         <!--not used-->
