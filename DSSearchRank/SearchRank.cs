@@ -1,4 +1,5 @@
 ﻿using HtmlAgilityPack;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -14,6 +15,7 @@ namespace DSSearchRank
         }
         public async Task<List<RankUnit>> getSearchRank()
         {
+            lstRankUnit.Clear();
             try
             {
                 HtmlWeb web = new HtmlWeb();
@@ -49,7 +51,7 @@ namespace DSSearchRank
                     });
                     n++;
                 }
-            }catch(HtmlWebException e)
+            }catch(Exception e)
             {
                 return new List<RankUnit>();
             }
