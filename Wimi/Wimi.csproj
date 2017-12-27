@@ -163,11 +163,11 @@
     <Content Include="Assets\Icons\Siri.png" />
     <Content Include="Assets\Icons\Weather.png" />
     <Content Include="Assets\line.gif" />
+    <Content Include="Assets\school.png" />
     <Content Include="Assets\Sounds\lock.mp3" />
     <Content Include="Assets\Sounds\Puppy_Love.mp3">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\school.png" />
     <Content Include="Assets\Sounds\unlock.mp3" />
     <Content Include="Assets\Speaker_volume.png" />
     <Content Include="Assets\Sounds\wimi.mp3">
