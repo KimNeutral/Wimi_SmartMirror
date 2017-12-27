@@ -37,11 +37,11 @@ namespace DSSearchRank
                         string attributeValue = node.GetAttributeValue("class", "");
                         if (attributeValue == "ah_r")
                         {
-                            Nnum = node.InnerText;
+                            Nnum = node.InnerText.Trim();
                         }
                         else if (attributeValue == "ah_k")
                         {
-                            Ncontent = node.InnerText;
+                            Ncontent = node.InnerText.Trim();
                         }
                     }
                     lstRankUnit.Add(new RankUnit()
