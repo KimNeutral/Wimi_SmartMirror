@@ -80,7 +80,7 @@ namespace Wimi
             
             if (!string.IsNullOrEmpty(tag))
             {
-                if (tag == "Wimi" && !_isWimiRecording)
+                if (tag == "Wimi" && !_isWimiRecording && !_isLocked)
                 {
                     if (audioRecorder.GetStatues())
                     {
@@ -114,7 +114,7 @@ namespace Wimi
                         }
                     }
                 }
-                else if(tag == "Bye")
+                else if(tag == "Bye" && gridCommand.Visibility == Visibility.Visible)
                 {
                     WimiClose();
                 }
@@ -308,7 +308,7 @@ namespace Wimi
             //명령어 추가 필요 아마 키워드를 통한 명령을 하지싶음.
             if (str.Contains("날씨"))             //날씨알려줘
             {
-                ShowForecast();
+                ShowForecastAsync();
                 TellmeWeatherAsync();
             }
             else if (str.Contains("버스"))        //버스 정보

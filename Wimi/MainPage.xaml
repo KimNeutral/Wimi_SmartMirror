@@ -15,7 +15,7 @@
     <Page.Resources>
         <Style x:Key="WeatherText" TargetType="TextBlock">
             <Setter Property="HorizontalAlignment" Value="Center"/>
-            <Setter Property="FontSize" Value="36"/>
+            <Setter Property="FontSize" Value="25"/>
             <Setter Property="FontWeight" Value="ExtraLight"/>
         </Style>
 
@@ -103,7 +103,7 @@
             <!--우측상단 사용자 정보-->
             <Grid x:Name="gridUser" Margin="50" HorizontalAlignment="Right" VerticalAlignment="Top">
                 <StackPanel>
-                    <!--카메라프리뷰-->   
+                    <!--카메라프리뷰-->
                     <StackPanel>
                         <Grid Height="200">
                             <CaptureElement Width="270" Height="200" x:Name="captureElement"/>
@@ -114,7 +114,7 @@
                         <Button x:Name="btnCapture" Content="인식" Click="btnCapture_Click" Visibility="Collapsed"/>
                     </StackPanel>
 
-                        
+
                     <StackPanel x:Name="spUser" Margin="12" Orientation="Vertical" Visibility="Collapsed">
                         <!--얼굴인식누구-->
                         <TextBlock x:Name="tbFaceName" Text="Guest" FontSize="30" HorizontalAlignment="Right"/>
@@ -181,21 +181,6 @@
             </Grid>
         </Grid>
 
-        <!--잠금화면-->
-        <Grid x:Name="gridLockScreen">
-            <Image Stretch="UniformToFill" Source="Assets/bigBlue.png"></Image>
-            <Image x:Name="imageLockScreen" Stretch="UniformToFill"></Image>
-            <Grid Background="Gray" Opacity="0.2"></Grid>
-            <StackPanel Orientation="Horizontal" Margin="-30,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center">
-                <TextBlock x:Name="tbLockAmPm" Margin="0,45,10,0"  FontSize="40" FontWeight="Normal" ></TextBlock>
-                <TextBlock x:Name="tbLockTime" Width="600" FontSize="160" HorizontalAlignment="Left"></TextBlock>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Right">
-                
-            </StackPanel>
-            <MediaElement x:Name="mediaElementLock" Width="0"></MediaElement>
-        </Grid>        
-
         <!--음성명령 처리영역-->
         <Grid x:Name="gridCommand" Margin="0,0,0,0" Visibility="Collapsed">
             <Grid.RowDefinitions>
@@ -207,8 +192,6 @@
                 <ColumnDefinition Width="500"/>
                 <ColumnDefinition Width=".5*"/>
             </Grid.ColumnDefinitions>
-
-
 
             <!--음성인식정보-->
             <Grid x:Name="gridVoiceHelper" Grid.Row="0" Grid.Column="1"
@@ -446,57 +429,64 @@
 
             <!--날씨예보-->
             <Grid x:Name="gridWeather" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Visibility="Collapsed">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="140"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
-                <TextBlock Grid.Row="0" FontSize="56" HorizontalAlignment="Center" VerticalAlignment="Top" FontWeight="ExtraLight">
-                    <Run Text="최고기온" Foreground="OrangeRed"/>
-                    <Run Text="은 "/>
-                    <Run x:Name="tbMaxTemp" Foreground="OrangeRed" FontSize="84"/>
-                    <Run Text="도, " FontSize="42"/>
-                    <Run Text="최저기온" Foreground="RoyalBlue"/>
-                    <Run Text="은 "/>
-                    <Run x:Name="tbMinTemp" Foreground="RoyalBlue" FontSize="84"/>
-                    <Run Text="도 " FontSize="42"/>
-                    <Run Text="입니다"/>
-                </TextBlock>
-                <ListBox x:Name="lbForcastInfo" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Top"
-                     Background="Transparent" IsHitTestVisible="False">
-                    <ListBox.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <StackPanel Orientation="Horizontal"/>
-                        </ItemsPanelTemplate>
-                    </ListBox.ItemsPanel>
-                    <ListBox.ItemTemplate>
-                        <DataTemplate>
-                            <Grid Margin="0,0,0,0" Width="150">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="42"/>
-                                    <RowDefinition Height="100"/>
-                                    <RowDefinition Height="60"/>
-                                    <RowDefinition Height="50"/>
-                                    <RowDefinition Height="50"/>
-                                </Grid.RowDefinitions>
-                                <TextBlock Text="{Binding strHour}" Grid.Row="0" Style="{StaticResource WeatherText}"/>
-                                <TextBlock Text="{Binding statSymbol}" Grid.Row="1" FontSize="72" FontFamily="Segoe UI Symbol" Style="{StaticResource WeatherText}"/>
-                                <TextBlock Grid.Row="2" Style="{StaticResource WeatherText}">
-                                <Run Text="{Binding temp}"></Run>
-                                <Run Text="℃" FontSize="20"></Run>
-                                </TextBlock>
-                                <TextBlock Grid.Row="3" Style="{StaticResource WeatherText}">
-                                <Run Text="{Binding reh}"></Run>
-                                <Run Text="%" FontSize="20"></Run>
-                                </TextBlock>
-                                <TextBlock Grid.Row="4" Style="{StaticResource WeatherText}">
-                                <Run Text="{Binding wdKor}" FontSize="28"></Run>
-                                <Run Text="{Binding ws}"></Run>
-                                <Run Text="㎧" FontSize="20"></Run>
-                                </TextBlock>
-                            </Grid>
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
-                </ListBox>
+                <Grid BorderThickness="0" BorderBrush="White" CornerRadius="5" Margin="540,0, 540, 160" Padding="0,20,0,0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="300"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid x:Name="gridCurWeather" Width="750">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width=".5*"></ColumnDefinition>
+                            <ColumnDefinition Width=".5*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel>
+                            <TextBlock Text="구지면" FontSize="40"></TextBlock>
+                            <TextBlock Margin="5,0,0,0" Text="September 27, 2017" FontSize="20"></TextBlock>
+                            <TextBlock x:Name="tbCurWeatherIcon" Text="{Binding statSymbol}" Grid.Row="1" FontSize="118" FontFamily="Segoe UI Symbol" Margin="-10,0,0,10"/>
+                            <TextBlock x:Name="tbCurKrWeather" Text="{Binding wfKor}" FontSize="30"></TextBlock>
+                        </StackPanel>
+                        <StackPanel Grid.Column="1" VerticalAlignment="Bottom" Margin="0,0,0,0">
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,-30,0,0">
+                                <TextBlock x:Name="tbCurDegree" Text="{Binding temp}" FontSize="180"></TextBlock>
+                                <TextBlock Text="°" FontSize="120" Margin="0,20,0,0"></TextBlock>
+                            </StackPanel>
+                            <TextBlock FontSize="35" HorizontalAlignment="Right" Margin="0,-20,50,0">
+                                <Run x:Name="tbCurHighTemp" Text="{Binding tmx}"></Run>°/<Run x:Name="tbCurLowTemp" Text="{Binding tmn}" Foreground="DodgerBlue"></Run><Run Text="°" Foreground="DodgerBlue"></Run>
+                            </TextBlock>
+                        </StackPanel>
+                    </Grid>
+
+                    <StackPanel Grid.Row="1">
+                        <MenuFlyoutSeparator Margin="0,10" Background="LightGray"></MenuFlyoutSeparator>
+                        <ListBox x:Name="lbForcastInfo"  HorizontalAlignment="Center" VerticalAlignment="Top"
+                            Background="Transparent" IsHitTestVisible="False">
+                            <ListBox.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Orientation="Horizontal"/>
+                                </ItemsPanelTemplate>
+                            </ListBox.ItemsPanel>
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Margin="0" Width="150">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="42"/>
+                                            <RowDefinition Height="90"/>
+                                            <RowDefinition Height="75"/>
+                                        </Grid.RowDefinitions>
+                                        <TextBlock Text="{Binding strHour}" Grid.Row="0" Style="{StaticResource WeatherText}"/>
+                                        <TextBlock Text="{Binding statSymbol}" Grid.Row="1" FontSize="55" FontFamily="Segoe UI Symbol" Style="{StaticResource WeatherText}"/>
+                                        <TextBlock Grid.Row="2" Style="{StaticResource WeatherText}">
+                                        <Run Text="{Binding temp}"></Run>°
+                                        <!--<Run Text="/"></Run>-->
+                                        <!--<Run Text="{Binding reh}"></Run>
+                                        <Run Text="%" FontSize="20"></Run>-->
+                                        </TextBlock>
+                                    </Grid>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </StackPanel>
+                </Grid>
             </Grid>
 
 
@@ -506,7 +496,22 @@
                 <TextBlock x:Name="tbVolumeText" FontWeight="Normal" Foreground="Black" FontSize="35" Text="50%" Width="100" Margin="80,100,160,80" VerticalAlignment="Center" TextAlignment="Center"></TextBlock>
             </Grid>
         </Grid>
+        
+        <!--잠금화면-->
+        <Grid x:Name="gridLockScreen">
+            <Image Stretch="UniformToFill" Source="Assets/bigBlue.png"></Image>
+            <Image x:Name="imageLockScreen" Stretch="UniformToFill"></Image>
+            <Grid Background="Gray" Opacity="0.2"></Grid>
+            <StackPanel Orientation="Horizontal" Margin="-30,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center">
+                <TextBlock x:Name="tbLockAmPm" Margin="0,45,10,0"  FontSize="40" FontWeight="Normal" ></TextBlock>
+                <TextBlock x:Name="tbLockTime" Width="600" FontSize="160" HorizontalAlignment="Left"></TextBlock>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Right">
 
+            </StackPanel>
+            <MediaElement x:Name="mediaElementLock" Width="0"></MediaElement>
+        </Grid>
+        
         <!--not used-->
         <Grid x:Name="GridVoice" Opacity="1">
             <Grid.Background>
