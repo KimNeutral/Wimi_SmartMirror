@@ -1,13 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using DSSearchRank;
 using Windows.UI.Xaml.Controls;
-using System.Diagnostics;
-using Windows.UI.Core;
 
 namespace Wimi
 {
@@ -47,10 +42,8 @@ namespace Wimi
             List<RankUnit> lstRankUnit = await searchRank.getSearchRank();
             if (lstRankUnit.Count != 0)
             {
-                Debug.WriteLine(Environment.CurrentManagedThreadId);
                 await this.dispatcher.TryRunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
                 {
-                    Debug.WriteLine(Environment.CurrentManagedThreadId);
                     lvSearchRank.ItemsSource = lstRankUnit;
                     CarouselSearchRank.Items.Clear();
                     foreach(var e in lstRankUnit)

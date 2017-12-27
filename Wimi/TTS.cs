@@ -28,8 +28,12 @@ namespace Wimi
         {
             Weather weather = new Weather();
             String WeatherResult="";
-            SKWeatherHourly.Hourly nowWeather = new SKWeatherHourly.Hourly();
-            nowWeather = await weather.GetCurrentWeatherHourlyAsync();
+            SKWeatherHourly.Hourly nowWeather = await weather.GetCurrentWeatherHourlyAsync();
+
+            if(nowWeather == null)
+            {
+                return;
+            }
 
             string tc = nowWeather.temperature.tc.Split(new char[] { '.' })[0];
             string hu = nowWeather.humidity.Split(new char[] { '.' })[0];

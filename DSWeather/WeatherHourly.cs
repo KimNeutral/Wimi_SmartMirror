@@ -36,7 +36,7 @@ namespace DSWeather
             }
             catch (Exception e)
             {
-                Debug.WriteLine("GetCurrentWeatherAsync - {0}", e.Message);
+                Debug.WriteLine("GetCurrentWeatherAsync - " + e.Message);
                 return null;
             }
         }

@@ -367,7 +367,6 @@ namespace Wimi
                 if (!HueControl.IsInit())
                 {
                     SetVoice("조명제어는 현재 지원하지 않는 기능입니다.");
-                    
                 }
                 else
                 {
