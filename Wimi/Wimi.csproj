@@ -130,6 +130,9 @@
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RankView.cs">
+      <DependentUpon>MainPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="TTS.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
@@ -265,6 +268,10 @@
     <ProjectReference Include="..\DSSchedule\DSSchedule.csproj">
       <Project>{08fa5575-d39a-41a6-b0cd-d16161decb5d}</Project>
       <Name>DSSchedule</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DSSearchRank\DSSearchRank.csproj">
+      <Project>{fa4513a9-bf65-4a38-8f97-10965048d840}</Project>
+      <Name>DSSearchRank</Name>
     </ProjectReference>
     <ProjectReference Include="..\DSWeather\DSWeather.csproj">
       <Project>{de9c5525-752d-4d16-97fc-3dc21d91fb50}</Project>
