@@ -88,8 +88,6 @@ namespace Wimi
                         double pVolume = mediaElement.Volume;
                         _isWimiRecording = true;
                         mediaElement.Volume = mediaElement.Volume * 0.25;
-                        CurrentUser = "";
-                        tbFaceName.Text = "";
                         ClearPanel();
 
                         if (mediaElement.CurrentState == MediaElementState.Playing && mediaElement.IsFullWindow == true)
@@ -308,7 +306,7 @@ namespace Wimi
             //명령어 추가 필요 아마 키워드를 통한 명령을 하지싶음.
             if (str.Contains("날씨"))             //날씨알려줘
             {
-                ShowForecastAsync();
+                await ShowForecastAsync();
                 TellmeWeatherAsync();
             }
             else if (str.Contains("버스"))        //버스 정보

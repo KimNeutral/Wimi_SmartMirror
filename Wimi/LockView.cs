@@ -18,7 +18,10 @@ namespace Wimi
         {
             BingImage bingImage = new BingImage();
             var bingUnit = await bingImage.GetTodayBingUnit(BingImageResolution.LARGE);
-            imageLockScreen.Source = new BitmapImage(new Uri(bingUnit.Path));
+            if(bingUnit != null)
+            {
+                imageLockScreen.Source = new BitmapImage(new Uri(bingUnit.Path));
+            }
         }
 
         public async Task LockScreenAsync()

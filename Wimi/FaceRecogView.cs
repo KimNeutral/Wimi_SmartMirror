@@ -191,7 +191,8 @@ namespace Wimi
                             CntErr = 0;
                             await DetectEmotion(captured);
                         }
-                    } else
+                    }
+                    else
                     {
                         CntErr++;
                     }
