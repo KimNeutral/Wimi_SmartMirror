@@ -108,7 +108,7 @@ namespace Wimi
                         mediaElement.Volume = pVolume;
                         bool Ordered = await CommandByVoiceAsync(result);
                         _isWimiRecording = false;
-                        if (Ordered)//명령 수행이 없을 시에 10초후 창을 닫음.
+                        //if (Ordered)//명령 수행이 없을 시에 10초후 창을 닫음.
                         {
                             StartExpiring();
                         }
