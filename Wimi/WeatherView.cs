@@ -16,7 +16,16 @@ namespace Wimi
             SKWeatherHourly.Hourly hour = await weather.GetCurrentWeatherHourlyAsync();
             if(hour == null)
             {
-                return null;
+                var wt = await weather.GetForecastInfoByCountAsync(1);
+                if(wt.Count > 0)
+                {
+                    tbSky.Text = wt[0].statSymbol;
+                    return wt[0].temp + "";
+                }
+                else
+                {
+                    return null;
+                }
             }
             tbSky.Text = WeatherIcon(hour);
             string temp = hour.temperature.tc;
