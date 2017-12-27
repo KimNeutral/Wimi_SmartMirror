@@ -109,12 +109,13 @@ namespace Wimi
                         _isWimiRecording = false;
                         //if (Ordered)//명령 수행이 없을 시에 10초후 창을 닫음.
                         {
-                            StartExpiring();
+                            //StartExpiring();
                         }
                     }
                 }
                 else if(tag == "Bye" && gridCommand.Visibility == Visibility.Visible)
                 {
+                    SetVoice("wimi_close.mp3", true);
                     WimiClose();
                 }
 #if false
@@ -208,14 +209,13 @@ namespace Wimi
         private async void WimiClose()
         {
             expireTimer.Stop();
-            SetVoice("wimi_close.mp3", true);
             //ClearPanel();
             tbHello.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
 
             if (mediaElement.CurrentState == MediaElementState.Playing)
             {
                 //chris: idle화면으로 나가더라도 계속 플레이하고 싶으면 주석처리하고, idle에서 stop명령 수행가능하도록 처리하면 된다.
-                StopMusic();
+                //StopMusic();
             }
 
             VoiceRecogEffect.Stop();
@@ -237,6 +237,7 @@ namespace Wimi
             if (remainSec <= -1)
             {
                 expireTimer.Stop();
+                SetVoice("wimi_close.mp3", true);
                 WimiClose();
                 return;
             }
@@ -281,7 +282,10 @@ namespace Wimi
                 { "모레", "노래" },
                 { "몸 처", "멈춰" },
                 { "들어", "틀어" },
-                { "소비", "소리" }
+                { "소비", "소리" },
+                { "하면", "화면" },
+                { "상금", "잠금" },
+                { "성금", "잠금" }
             };
 
             foreach(KeyValuePair<string, string> pair in replaceDictionary)
@@ -437,6 +441,11 @@ namespace Wimi
             else if (str.Contains("전체화면"))
             {
                 SetFullScreen();
+            }
+            else if (str.Contains("잠금") || str.Contains("잠궈"))
+            {
+                WimiClose();
+                await LockScreenAsync();
             }
             else//명령을 찿지 못했을때.
             {

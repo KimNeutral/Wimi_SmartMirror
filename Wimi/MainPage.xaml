@@ -194,14 +194,14 @@
                     <ColumnDefinition Width="0.35*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
                 <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
-                    <TextBlock x:Name="tbLockAmPm" Margin="0,53,10,0"  FontSize="40" FontWeight="Normal" ></TextBlock>
-                    <TextBlock x:Name="tbLockTime" Width="610" FontSize="180" HorizontalAlignment="Left"></TextBlock>
+                    <TextBlock x:Name="tbLockAmPm" Margin="0,55,10,0"  FontSize="40" FontWeight="Normal" ></TextBlock>
+                    <TextBlock x:Name="tbLockTime" Width="620" FontSize="180" HorizontalAlignment="Left" FontWeight="SemiLight"></TextBlock>
                 </StackPanel>
                 <controls:Carousel 
                     Margin="0,20,0,0"
                     x:Name="CarouselSearchRank"
                     Height="50"
-                    Width="500"
+                    Width="400"
                     Grid.Column="2"
                     HorizontalAlignment="Left"
                     ItemDepth="1"
@@ -213,7 +213,7 @@
                     </controls:Carousel.EasingFunction>
                     <controls:Carousel.ItemTemplate>
                         <DataTemplate>
-                            <Grid HorizontalAlignment="Left" Width="500" Margin="0,0,0,0">
+                            <Grid HorizontalAlignment="Left" Width="400" Margin="20,0,0,0">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="40"></ColumnDefinition>
                                     <ColumnDefinition Width="*"></ColumnDefinition>

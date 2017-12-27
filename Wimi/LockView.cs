@@ -30,6 +30,10 @@ namespace Wimi
 
         public async Task LockScreenAsync()
         {
+            if (_isLocked)
+            {
+                return;
+            }
             _isLocked = true;
             gridCommand.Background = new SolidColorBrush(Colors.Black);
             await gridLockScreen.Offset(offsetX: 0, offsetY: -(float)Window.Current.Bounds.Height, duration: 0, delay: 0, easingType: EasingType.Linear).StartAsync();
@@ -42,6 +46,10 @@ namespace Wimi
 
         public async Task UnlockScreenAsync()
         {
+            if (!_isLocked)
+            {
+                return;
+            }
             _isLocked = false;
             gridCommand.Background = new SolidColorBrush(Colors.Transparent);
             SetVoice("unlock.mp3", true);
