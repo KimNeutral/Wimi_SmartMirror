@@ -108,7 +108,7 @@ namespace Wimi
             view.TryEnterFullScreenMode();
 
             await gridVoiceHelper.Offset(0, -400, 0, 0, EasingType.Linear).StartAsync();
-
+            InitSearchTimer();
             InitExpireCommand();
             InitVoiceCommand();
             initMusicList();

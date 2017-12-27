@@ -504,7 +504,19 @@
             <Grid Background="Gray" Opacity="0.2"></Grid>
             <StackPanel Grid.Column="0" Margin="50,0,50,200" VerticalAlignment="Center" HorizontalAlignment="Left">
                 <TextBlock FontSize="30" Margin="10,0,0,10">현재 네이버 검색순위</TextBlock>
-                <ListView x:Name="lvSearchRank" Background="Transparent" IsHitTestVisible="False" IsEnabled="False" Foreground="White" Height="400" FontSize="25">
+                <ListView x:Name="lvSearchRank" Background="Transparent" IsHitTestVisible="False" IsEnabled="False" Foreground="White" Height="435" FontSize="25">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="30"></ColumnDefinition>
+                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Foreground="White" Grid.Column="0" FontSize="30" Text="{Binding num}"></TextBlock>
+                                <TextBlock Foreground="White" Grid.Column="1" FontSize="30" Text="{Binding content}"></TextBlock>
+                            </Grid>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
                 </ListView>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="-30,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center">

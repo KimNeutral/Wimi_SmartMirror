@@ -28,12 +28,7 @@ namespace Wimi
         private async void asyncSetRankListViewAsync()
         {
             List<RankUnit> lstRankUnit = await searchRank.getSearchRank();
-            List<string> items = new List<string>();
-            foreach (RankUnit item in lstRankUnit)
-            {
-                items.Add(item.content);
-            }
-            lvSearchRank.ItemsSource = items;
+            lvSearchRank.ItemsSource = lstRankUnit;
         }
     }
 }
