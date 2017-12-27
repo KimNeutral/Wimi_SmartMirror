@@ -211,6 +211,7 @@ namespace Wimi
                     tbHello.Visibility = Visibility.Collapsed;
                     IsIdentified = false;
                     HideSchedule();
+                    WimiClose();
                     await LockScreenAsync();
                     //ClearPanel();
                 }
