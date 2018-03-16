@@ -14,6 +14,8 @@ namespace DSBingSpeech
         private const string CONVERSATION = "conversation";
         private const string DICTATION = "dictation";
 
+        private const string BING_SPEECH_KEY = "<user_azure_bing_speech_api_key>";
+
         private readonly string _language = "ko-KR";
         //private readonly string _language = "en-US";
         private readonly string _requestUri;
@@ -41,7 +43,7 @@ namespace DSBingSpeech
                     client.DefaultRequestHeaders.Accept.Add(MediaTypeWithQualityHeaderValue.Parse("application/json"));
                     client.DefaultRequestHeaders.Accept.Add(MediaTypeWithQualityHeaderValue.Parse("text/xml"));
                     client.DefaultRequestHeaders.TransferEncoding.Add(TransferCodingHeaderValue.Parse("chunked"));
-                    client.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", "4fbb88204e0e4cb398afbc6b08035836");
+                    client.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", BING_SPEECH_KEY);
                     //4fbb88204e0e4cb398afbc6b08035836
                     //26d7094ca0fc41f88b8bc482d89cc478
                     //둘 중 하나 
