@@ -10,6 +10,7 @@ using System.Diagnostics;
 
 namespace DSWeather
 {
+    // SKWeather API 종료로 인한 클래스 사용 불가.
     public partial class Weather
     {
         SKWeatherHourly skHourly = new SKWeatherHourly();

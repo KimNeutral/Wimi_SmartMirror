@@ -10,6 +10,7 @@ using System.Diagnostics;
 
 namespace DSWeather
 {
+    // SKWeather API 종료로 인한 클래스 사용 불가.
     public partial class Weather
     {
         public bool isLoadedWeather = false;
@@ -19,11 +20,6 @@ namespace DSWeather
         Uri resourceUri = null;
         string resource = "http://apis.skplanetx.com/weather/current/minutely?version=1&&stnid=828";
         CancellationTokenSource cts;
-        //SKDust skDust = new SKDust();
-
-        //var httpClient = new HttpClient();
-        //var resourceUri = new Uri("http://apis.skplanetx.com/weather/current/minutely?version=1&&stnid=828");
-        //var cts = new CancellationTokenSource();
 
         public Weather()
         {
